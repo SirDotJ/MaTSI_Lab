@@ -60,7 +60,11 @@ public class HamiltonPathEncryptor implements Encryptor {
 		int offset = substringLength * substringCount;
 		StringBuilder leftover = new StringBuilder();
 		for (int i = 0; i < leftoverCount; i++) {
-			leftover.append(message.charAt(offset + this.hamiltonPath.get(i)));
+			try {
+				leftover.append(message.charAt(offset + this.hamiltonPath.get(i)));
+			} catch (Exception skip) {
+				leftoverCount++;
+			}
 		}
 		encryptedMessage.append(leftover);
 
@@ -75,7 +79,7 @@ public class HamiltonPathEncryptor implements Encryptor {
 		int leftoverCount = message.length() % substringLength;
 
 		// Шаблон, используется для определения подстрок и их непоследовательного заполнения
-		StringBuilder substringTemplate = new StringBuilder();
+		StringBuilder substringTemplate = new StringBuilder(new String());
 		substringTemplate.append("-".repeat(substringLength));
 
 		for (int i = 0; i < substringCount; i++) {

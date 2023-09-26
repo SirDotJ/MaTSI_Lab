@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="610.0" maxWidth="560.0" minHeight="610.0" minWidth="560.0" prefHeight="610.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="610.0" maxWidth="560.0" minHeight="610.0" minWidth="560.0" prefHeight="610.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.HamiltonPathDetailsController">
    <children>
       <Separator orientation="VERTICAL" prefHeight="36.0" prefWidth="8.0" />
       <Label prefHeight="35.0" prefWidth="228.0" text="Используемый граф">
@@ -29,7 +29,7 @@
                </font>
             </Label>
             <Separator prefHeight="2.0" prefWidth="45.0" />
-            <TextField id="displayedPathTextField" prefHeight="23.0" prefWidth="227.0" />
+            <TextField id="displayedPathTextField" fx:id="displayedPathOutput" editable="false" prefHeight="23.0" prefWidth="227.0" />
             <Separator prefHeight="8.0" prefWidth="132.0" />
          </children>
       </HBox>
@@ -43,60 +43,60 @@
             <Circle fill="#eeecec" layoutX="328.0" layoutY="372.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fill="#eeecec" layoutX="188.0" layoutY="359.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fill="#eeecec" layoutX="70.0" layoutY="238.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text layoutX="130.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+            <Text layoutX="130.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="358.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+            <Text layoutX="358.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="464.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+            <Text layoutX="464.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="358.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+            <Text layoutX="358.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="448.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+            <Text layoutX="448.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="322.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+            <Text layoutX="322.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="182.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7">
+            <Text layoutX="182.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="64.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8">
+            <Text layoutX="64.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Line id="edgeLine12" endX="184.0" endY="10.0" layoutX="158.0" layoutY="100.0" startY="-1.0" />
-            <Line id="edgeLine23" endX="70.0" endY="63.0" layoutX="386.0" layoutY="117.0" startY="4.0" />
-            <Line id="edgeLine35" endX="74.0" endY="90.0" layoutX="396.0" layoutY="127.0" startX="64.0" startY="210.0" />
-            <Line id="edgeLine24" layoutX="364.0" layoutY="132.0" startY="106.0" />
-            <Line id="edgeLine34" endX="238.0" endY="11.0" layoutX="210.0" layoutY="195.0" startX="176.0" startY="56.0" />
-            <Line id="edgeLine45" endX="110.0" endY="39.0" layoutX="328.0" layoutY="307.0" startX="51.0" startY="-32.0" />
-            <Line id="edgeLine56" endX="82.0" endY="-8.0" layoutX="350.0" layoutY="373.0" startY="-1.0" />
-            <Line id="edgeLine46" endX="91.0" endY="73.0" layoutX="244.0" layoutY="277.0" startX="112.0" startY="5.0" />
-            <Line id="edgeLine17" endX="-59.0" endY="-117.0" layoutX="195.0" layoutY="238.0" startX="-12.5" startY="99.0" />
-            <Line id="edgeLine48" endX="147.0" endY="17.0" layoutX="195.0" layoutY="243.0" startX="-103.0" startY="-5.0" />
-            <Line id="edgeLine47" endX="138.0" endY="-18.0" layoutX="210.0" layoutY="291.0" startY="57.0" />
-            <Line id="edgeLine67" endX="163.0" endY="-22.0" layoutX="143.0" layoutY="394.0" startX="67.0" startY="-28.0" />
-            <Line id="edgeLine78" endX="89.0" endY="17.0" layoutX="77.0" layoutY="338.0" startX="3.2928924560546875" startY="-81.0" />
-            <Line id="edgeLine18" endX="44.0" endY="-63.0" layoutX="77.0" layoutY="178.0" startX="2.2928924560546875" startY="40.0" />
+            <Line id="edgeLine12" fx:id="line01" endX="184.0" endY="10.0" layoutX="158.0" layoutY="100.0" startY="-1.0" />
+            <Line id="edgeLine23" fx:id="line12" endX="70.0" endY="63.0" layoutX="386.0" layoutY="117.0" startY="4.0" />
+            <Line id="edgeLine35" fx:id="line24" endX="74.0" endY="90.0" layoutX="396.0" layoutY="127.0" startX="64.0" startY="210.0" />
+            <Line id="edgeLine24" fx:id="line13" layoutX="364.0" layoutY="132.0" startY="106.0" />
+            <Line id="edgeLine34" fx:id="line23" endX="238.0" endY="11.0" layoutX="210.0" layoutY="195.0" startX="176.0" startY="56.0" />
+            <Line id="edgeLine45" fx:id="line34" endX="110.0" endY="39.0" layoutX="328.0" layoutY="307.0" startX="51.0" startY="-32.0" />
+            <Line id="edgeLine56" fx:id="line45" endX="82.0" endY="-8.0" layoutX="350.0" layoutY="373.0" startY="-1.0" />
+            <Line id="edgeLine46" fx:id="line35" endX="91.0" endY="73.0" layoutX="244.0" layoutY="277.0" startX="112.0" startY="5.0" />
+            <Line id="edgeLine17" fx:id="line06" endX="-49.40000915527344" endY="-117.00000762939453" layoutX="195.0" layoutY="238.0" startX="-12.5" startY="99.0" />
+            <Line id="edgeLine48" fx:id="line37" endX="147.0" endY="17.0" layoutX="195.0" layoutY="243.0" startX="-103.0" startY="-5.0" />
+            <Line id="edgeLine47" fx:id="line36" endX="138.0" endY="-18.0" layoutX="210.0" layoutY="291.0" startY="57.0" />
+            <Line id="edgeLine67" fx:id="line56" endX="163.0" endY="-22.0" layoutX="143.0" layoutY="394.0" startX="67.0" startY="-28.0" />
+            <Line id="edgeLine78" fx:id="line67" endX="89.0" endY="17.0" layoutX="77.0" layoutY="338.0" startX="3.2928924560546875" startY="-81.0" />
+            <Line id="edgeLine18" fx:id="line07" endX="44.0" endY="-63.0" layoutX="77.0" layoutY="178.0" startX="2.2928924560546875" startY="40.0" />
          </children>
       </AnchorPane>
       <Separator orientation="VERTICAL" prefHeight="36.0" prefWidth="8.0" />

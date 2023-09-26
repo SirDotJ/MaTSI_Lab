@@ -78,7 +78,6 @@ public class HamiltonPathController {
 			errorPopup.showAndWait();
 			return;
 		}
-		this.encryptor.setHamiltonPath(key);
 		String message = this.messageInput.getText();
 		String encryptedMessage = this.encryptor.encrypt(message);
 		this.encryptedMessageOutput.setText(encryptedMessage);
@@ -95,7 +94,6 @@ public class HamiltonPathController {
 			errorPopup.showAndWait();
 			return;
 		}
-		this.encryptor.setHamiltonPath(key);
 		String encryptedMessage = this.messageInput.getText();
 		String decryptedMessage = this.encryptor.decrypt(encryptedMessage);
 		this.encryptedMessageOutput.setText(decryptedMessage);
@@ -104,9 +102,9 @@ public class HamiltonPathController {
 		try {
 			FXMLLoader loader = new FXMLLoader(this.getClass().getClassLoader().getResource("MaTDP_HamiltonPathDetails.fxml"));
 			Parent detailsRoot = loader.load();
-//			RearrangementDetailsController controller = loader.getController();
-//			controller.displayEncryptionTable(this.encryptor.getEncryptionTable());
-
+			HamiltonPathDetailsController controller = loader.getController();
+			controller.initializeConnections();
+			controller.setPath(this.foundHamiltonPathOutput.getText());
 			Stage detailsStage = new Stage();
 			detailsStage.setTitle("Алгоритм Гамильтонового пути");
 			detailsStage.setScene(new Scene(detailsRoot));
