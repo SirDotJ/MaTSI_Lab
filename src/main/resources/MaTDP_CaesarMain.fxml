@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" />
@@ -28,12 +27,12 @@
                </font>
             </Label>
             <Separator prefHeight="7.0" prefWidth="113.0" />
-            <TextField id="keyInputTextField" prefHeight="35.0" prefWidth="44.0">
+            <TextField id="keyInputTextField" prefHeight="35.0" prefWidth="85.0">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Separator prefHeight="4.0" prefWidth="176.0" />
+            <Separator prefHeight="4.0" prefWidth="131.0" />
             <Button id="detailsButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="84.0" text="Детали" />
             <Separator prefHeight="23.0" prefWidth="125.0" />
          </children>

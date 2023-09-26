@@ -34,7 +34,6 @@ public class MainApplication extends Application {
 	}
 	private Scene setupScene() throws IOException {
 		Pane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(SCENE_FILE)));
-		// Дополнительные манипуляции над фундаментом
 		return new Scene(root);
 	}
 }
