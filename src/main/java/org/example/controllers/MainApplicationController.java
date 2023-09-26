@@ -29,6 +29,8 @@ public class MainApplicationController {
 	@FXML
 	private RadioButton vigenereMethodButton;
 	@FXML
+	private RadioButton bofortMethodButton;
+	@FXML
 	private void setDisplayScene(String fxmlFileName) {
 		this.methodDisplay.getChildren().clear();
 		Node leafNode = null;
@@ -61,6 +63,12 @@ public class MainApplicationController {
 	public void loadVigenereMethod(ActionEvent event) {
 		if (vigenereMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_VigenereMain.fxml");
+		}
+	}
+	@FXML
+	public void loadBofortMethod(ActionEvent event) {
+		if(bofortMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_BofortMain.fxml");
 		}
 	}
 }

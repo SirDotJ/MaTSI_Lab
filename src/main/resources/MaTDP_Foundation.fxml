@@ -121,6 +121,11 @@
                               <Font size="16.0" />
                            </font>
                         </RadioButton>
+                        <RadioButton id="radioButtonHamiltonPath" fx:id="bofortMethodButton" mnemonicParsing="false" onAction="#loadBofortMethod" text="Шифр Бофорта" toggleGroup="$currentMethod">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </RadioButton>
                      </children>
                   </VBox>
           </children>
