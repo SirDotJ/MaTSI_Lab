@@ -16,7 +16,7 @@ public class CaesarEncryptor implements Encryptor {
 			'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'
 	));
 	private final int key;
-	CaesarEncryptor(int key) {
+	public CaesarEncryptor(int key) {
 		// Проверка на ключ со значением большего размера алфавита и его соответствующее преобразование
 		if (Math.abs(key) > CYRILLIC_ALPHABET_LOWERCASE.size())
 			key = key % CYRILLIC_ALPHABET_LOWERCASE.size();

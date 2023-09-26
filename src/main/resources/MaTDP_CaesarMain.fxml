@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.CaesarController">
    <children>
-      <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" />
-      <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" />
+      <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
+      <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
       <Label text="Шифр Цезаря">
          <font>
             <Font size="24.0" />
@@ -20,47 +20,47 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
          <children>
-            <Separator prefHeight="7.0" prefWidth="36.0" />
+            <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
             <Label prefHeight="24.0" prefWidth="57.0" text="Ключ:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator prefHeight="7.0" prefWidth="113.0" />
-            <TextField id="keyInputTextField" prefHeight="35.0" prefWidth="85.0">
+            <Separator prefHeight="7.0" prefWidth="113.0" visible="false" />
+            <TextField id="keyInputTextField" fx:id="keyText" prefHeight="35.0" prefWidth="85.0">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Separator prefHeight="4.0" prefWidth="131.0" />
+            <Separator prefHeight="4.0" prefWidth="131.0" visible="false" />
             <Button id="detailsButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="84.0" text="Детали" />
-            <Separator prefHeight="23.0" prefWidth="125.0" />
+            <Separator prefHeight="23.0" prefWidth="125.0" visible="false" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Separator prefHeight="7.0" prefWidth="40.0" />
+            <Separator prefHeight="7.0" prefWidth="40.0" visible="false" />
             <Label prefHeight="28.0" prefWidth="134.0" text="Входной текст:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator prefHeight="12.0" prefWidth="50.0" />
-            <TextArea id="messageInputTextField" prefHeight="84.0" prefWidth="301.0">
+            <Separator prefHeight="12.0" prefWidth="50.0" visible="false" />
+            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="84.0" prefWidth="301.0" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
             </TextArea>
-            <Separator prefHeight="7.0" prefWidth="129.0" />
+            <Separator prefHeight="7.0" prefWidth="129.0" visible="false" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Separator prefHeight="5.0" prefWidth="179.0" />
-            <Button id="encryptButton" mnemonicParsing="false" text="Зашифровать" />
-            <Separator prefHeight="6.0" prefWidth="92.0" />
-            <Button id="decryptButton" mnemonicParsing="false" text="Расшифровать" />
-            <Separator prefHeight="13.0" prefWidth="113.0" />
+            <Separator prefHeight="5.0" prefWidth="179.0" visible="false" />
+            <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" text="Зашифровать" />
+            <Separator prefHeight="6.0" prefWidth="92.0" visible="false" />
+            <Button id="decryptButton" mnemonicParsing="false" onAction="#decrypt" text="Расшифровать" />
+            <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -72,7 +72,7 @@
                </font>
             </Label>
             <Separator prefHeight="7.0" prefWidth="36.0" />
-            <TextArea id="encryptedTextOutputTextField" editable="false" prefHeight="87.0" prefWidth="298.0">
+            <TextArea id="encryptedTextOutputTextField" fx:id="outputEncryptedMessage" editable="false" prefHeight="87.0" prefWidth="298.0" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
@@ -80,6 +80,6 @@
             <Separator prefHeight="3.0" prefWidth="122.0" />
          </children>
       </HBox>
-      <Separator orientation="VERTICAL" prefHeight="49.0" prefWidth="9.0" />
+      <Separator orientation="VERTICAL" prefHeight="49.0" prefWidth="9.0" visible="false" />
    </children>
 </VBox>
