@@ -1,7 +1,11 @@
 package org.example.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 import org.example.lab1.RearrangementEncryptor;
 
 import javafx.scene.control.TextField;
@@ -89,6 +93,7 @@ public class RearrangementController {
 		this.encryptor = new RearrangementEncryptor(key1, key2);
 		String encryptedMessage = encryptor.encrypt(message);
 		this.encryptedMessageTextArea.setText(encryptedMessage);
+
 	}
 	public void decrypt() {
 		ArrayList<Integer> key1;
@@ -118,5 +123,26 @@ public class RearrangementController {
 		this.encryptor = new RearrangementEncryptor(key1, key2);
 		String decryptedMessage = encryptor.decrypt(encryptedMessage);
 		this.encryptedMessageTextArea.setText(decryptedMessage);
+	}
+	public void openDetails() {
+		try {
+			FXMLLoader loader = new FXMLLoader(this.getClass().getClassLoader().getResource("MaTDP_RearrangementDetails.fxml"));
+			Parent detailsRoot = loader.load();
+			RearrangementDetailsController controller = loader.getController();
+			controller.displayEncryptionTable(this.encryptor.getEncryptionTable());
+			controller.displayDecryptionTable(this.encryptor.getDecryptionTable());
+
+			Stage detailsStage = new Stage();
+			detailsStage.setTitle("Алгоритм Перестановки");
+			detailsStage.setScene(new Scene(detailsRoot));
+			detailsStage.show();
+		} catch (Exception e) {
+			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
+			errorPopup.setTitle("Неизвестная ошибка");
+			errorPopup.setHeaderText("Произошла неизвестная ошибка");
+			errorPopup.setContentText("Окно с деталями не смогло запуститься");
+			e.printStackTrace();
+			errorPopup.showAndWait();
+		}
 	}
 }

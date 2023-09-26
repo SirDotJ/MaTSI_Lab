@@ -95,7 +95,7 @@ public class RearrangementEncryptor implements Encryptor {
 	}
 
 	public void printEncryptionTable() {
-		if(this.encryptionTable.isEmpty()) {
+		if(this.encryptionTable == null || this.encryptionTable.isEmpty()) {
 			System.out.println("Ошибка: таблица шифровки пуста");
 			return;
 		}
@@ -108,7 +108,7 @@ public class RearrangementEncryptor implements Encryptor {
 		});
 	}
 	public void printDecryptionTable() {
-		if(this.decryptionTable.isEmpty()) {
+		if(this.decryptionTable == null || this.decryptionTable.isEmpty()) {
 			System.out.println("Ошибка: таблица расшифровки пуста");
 			return;
 		}
@@ -119,5 +119,33 @@ public class RearrangementEncryptor implements Encryptor {
 			}
 			System.out.println();
 		});
+	}
+	public String getEncryptionTable() {
+		if(this.encryptionTable == null || this.encryptionTable.isEmpty()) {
+			return "Таблицы зашифровки нет";
+		}
+		StringBuilder builder = new StringBuilder();
+		encryptionTable.forEach((subString) -> {
+			builder.append('|');
+			for (int i = 0; i < subString.length(); i++) {
+				builder.append(subString.charAt(i) + "|");
+			}
+			builder.append("\n");
+		});
+		return builder.toString();
+	}
+	public String getDecryptionTable() {
+		if (this.decryptionTable == null || this.decryptionTable.isEmpty()) {
+			return "Таблицы расшифровки нет";
+		}
+		StringBuilder builder = new StringBuilder();
+		decryptionTable.forEach((subString) -> {
+			builder.append('|');
+			for (int i = 0; i < subString.length(); i++) {
+				builder.append(subString.charAt(i) + "|");
+			}
+			builder.append("\n");
+		});
+		return builder.toString();
 	}
 }
