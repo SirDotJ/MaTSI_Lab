@@ -27,6 +27,8 @@ public class MainApplicationController {
 	@FXML
 	private RadioButton hamiltonMethodButton;
 	@FXML
+	private RadioButton vigenereMethodButton;
+	@FXML
 	private void setDisplayScene(String fxmlFileName) {
 		this.methodDisplay.getChildren().clear();
 		Node leafNode = null;
@@ -53,6 +55,12 @@ public class MainApplicationController {
 	public void loadHamiltonMethod(ActionEvent event) {
 		if (hamiltonMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_HamiltonPathMain.fxml");
+		}
+	}
+	@FXML
+	public void loadVigenereMethod(ActionEvent event) {
+		if (vigenereMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_VigenereMain.fxml");
 		}
 	}
 }
