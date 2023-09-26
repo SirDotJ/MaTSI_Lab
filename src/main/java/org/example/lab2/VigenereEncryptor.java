@@ -8,10 +8,10 @@ import java.util.Arrays;
 
 public class VigenereEncryptor implements Encryptor {
 	final static public ArrayList<Character> CYRILLIC_ALPHABET_LOWERCASE = new ArrayList<>(Arrays.asList(
-			'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'
+			'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', '_'
 	));
 	final static public ArrayList<Character> CYRILLIC_ALPHABET_UPPERCASE = new ArrayList<>(Arrays.asList(
-			'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'
+			'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', '_'
 	));
 
 	public static void main(String[] args) {
@@ -36,7 +36,6 @@ public class VigenereEncryptor implements Encryptor {
 		for (int i = 0; i < this.key.length(); i++) {
 			char letter = this.key.charAt(i);
 			int position = Character.isUpperCase(letter) ? CYRILLIC_ALPHABET_UPPERCASE.indexOf(letter) : CYRILLIC_ALPHABET_LOWERCASE.indexOf(letter);
-			position++; // для учёта начала считывания с 1-цы в алгоритме
 			output.add(position);
 		}
 		return output;
@@ -49,10 +48,10 @@ public class VigenereEncryptor implements Encryptor {
 			char letter = message.charAt(i);
 			boolean isUpper = Character.isUpperCase(letter);
 
-			int oldLetterIndex = CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter)) + 1;
+			int oldLetterIndex = CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter));
 			int newLetterIndex = (oldLetterIndex + keyEffect.get(j++)) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-			char newLetter = isUpper ? CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex-1) :
-									   CYRILLIC_ALPHABET_LOWERCASE.get(newLetterIndex-1);
+			char newLetter = isUpper ? CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex) :
+									   CYRILLIC_ALPHABET_LOWERCASE.get(newLetterIndex);
 			output.append(newLetter);
 
 			if (j >= keyEffect.size())
@@ -68,12 +67,12 @@ public class VigenereEncryptor implements Encryptor {
 			char letter = message.charAt(i);
 			boolean isUpper = Character.isUpperCase(letter);
 
-			int oldLetterIndex = CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter)) + 1;
+			int oldLetterIndex = CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter));
 			int newLetterIndex = (oldLetterIndex - keyEffect.get(j++)) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
 			if (newLetterIndex < 0)
 				newLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(newLetterIndex);
-			char newLetter = isUpper ? CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex-1) :
-									   CYRILLIC_ALPHABET_LOWERCASE.get(newLetterIndex-1);
+			char newLetter = isUpper ? CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex) :
+									   CYRILLIC_ALPHABET_LOWERCASE.get(newLetterIndex);
 			output.append(newLetter);
 
 			if (j >= keyEffect.size())
