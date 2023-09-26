@@ -9,24 +9,36 @@ public class HamiltonPathEncryptor implements Encryptor {
 	private ArrayList<Integer> hamiltonPath = new ArrayList<>();
 	final private ArrayList<ArrayList<Integer>> adjacencyMatrix;
 	final private ArrayList<Integer> vertices;
-	HamiltonPathEncryptor(ArrayList<ArrayList<Integer>> adjacencyMatrix) throws IllegalArgumentException {
+	public HamiltonPathEncryptor(ArrayList<ArrayList<Integer>> adjacencyMatrix, ArrayList<Integer> hamiltonPath) throws IllegalArgumentException {
 		this.adjacencyMatrix = adjacencyMatrix;
 		this.vertices = new ArrayList<>();
 		for (int i = 0; i < adjacencyMatrix.size(); i++) {
 			this.vertices.add(i);
 		}
-
-		// Нахождение гамильтонового пути (предполагается, что граф должен иметь хотя бы один такой путь)
+		this.hamiltonPath = hamiltonPath;
+	}
+	public HamiltonPathEncryptor(ArrayList<ArrayList<Integer>> adjacencyMatrix) throws IllegalArgumentException {
+		this.adjacencyMatrix = adjacencyMatrix;
+		this.vertices = new ArrayList<>();
+		for (int i = 0; i < adjacencyMatrix.size(); i++) {
+			this.vertices.add(i);
+		}
+		this.hamiltonPath = this.generateHamiltonPath();
+	}
+	// Нахождение гамильтонового пути (предполагается, что граф должен иметь хотя бы один такой путь)
+	public ArrayList<Integer> generateHamiltonPath() {
+		ArrayList<Integer> newHamiltonPath = new ArrayList<>();
 		do {
 			for (int i = 0; i < this.vertices.size(); i++) {
-			this.hamiltonPath.clear();
-			this.hamiltonPath.add(i);
-			ArrayList<Integer> availableVertices = this.getAvailableVertices(this.hamiltonPath, i);
-			this.hamiltonPath = recursiveFindHamiltonPath(this.hamiltonPath, availableVertices);
-			if(this.hamiltonPath.size() == this.vertices.size())
+			newHamiltonPath.add(i);
+			ArrayList<Integer> availableVertices = this.getAvailableVertices(newHamiltonPath, i);
+			newHamiltonPath = recursiveFindHamiltonPath(newHamiltonPath, availableVertices);
+			if(newHamiltonPath.size() == this.vertices.size())
 				break;
+			newHamiltonPath.clear();
 			}
-		} while (!pathIsValid(this.hamiltonPath));
+		} while (!pathIsValid(newHamiltonPath));
+		return newHamiltonPath;
 	}
 
 	@Override
@@ -102,7 +114,7 @@ public class HamiltonPathEncryptor implements Encryptor {
 		int chosenVertex = getRandomVertice(availableVertices);
 		currentHamiltonPath.add(chosenVertex);
 		ArrayList<Integer> newHamiltonPathVariant = new ArrayList<>(currentHamiltonPath);
-		ArrayList<Integer> newAvailableVertices = this.getAvailableVertices(currentHamiltonPath, chosenVertex);
+		ArrayList<Integer> newAvailableVertices = this.getAvailableVertices(newHamiltonPathVariant, chosenVertex);
 		return recursiveFindHamiltonPath(newHamiltonPathVariant, newAvailableVertices);
 	}
 	private boolean pathIsValid(ArrayList<Integer> potentialHamiltonPath) {
@@ -131,5 +143,13 @@ public class HamiltonPathEncryptor implements Encryptor {
 		int lowerBound = 0;
 		int upperBound = availableVertices.size() - 1;
 		return availableVertices.get((int) ((Math.random() * (upperBound - lowerBound)) + lowerBound));
+	}
+
+	public ArrayList<Integer> getHamiltonPath() {
+		return hamiltonPath;
+	}
+
+	public void setHamiltonPath(ArrayList<Integer> hamiltonPath) {
+		this.hamiltonPath = hamiltonPath;
 	}
 }
