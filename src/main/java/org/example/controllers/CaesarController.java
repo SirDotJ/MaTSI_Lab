@@ -1,9 +1,15 @@
 package org.example.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.lab1.CaesarEncryptor;
 import org.example.lab1.GlobalVariables;
 
@@ -23,9 +29,6 @@ public class CaesarController {
 	}
 	private String getInput() throws InvalidAlgorithmParameterException {
 		String currentText = this.inputMessage.getText();
-
-		if (!currentText.equals(currentText.toUpperCase()))
-			throw new InvalidAlgorithmParameterException("Text must be all upper case");
 
 		if (currentText.contains(" "))
 			throw new InvalidAlgorithmParameterException("Text must not have spaces, use " + GlobalVariables.SPACE_CHARACTER + " instead");
@@ -95,5 +98,21 @@ public class CaesarController {
 		this.encryptor = new CaesarEncryptor(key);
 		String decryptedText = this.encryptor.decrypt(encryptedText);
 		this.outputEncryptedMessage.setText(decryptedText);
+	}
+	public void openDetails() {
+		try {
+			Parent detailsRoot = FXMLLoader.load(this.getClass().getClassLoader().getResource("MaTDP_CaesarDetails.fxml"));
+			Stage detailsStage = new Stage();
+			detailsStage.setTitle("Алгоритм Цезаря");
+			detailsStage.setScene(new Scene(detailsRoot));
+			detailsStage.show();
+		} catch (Exception e) {
+			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
+			errorPopup.setTitle("Неизвестная ошибка");
+			errorPopup.setHeaderText("Произошла неизвестная ошибка");
+			errorPopup.setContentText("Окно с деталями не смогло запуститься");
+			e.printStackTrace();
+			errorPopup.showAndWait();
+		}
 	}
 }

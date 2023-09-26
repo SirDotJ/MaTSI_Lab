@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="CENTER" maxHeight="270.0" maxWidth="785.0" minHeight="270.0" minWidth="785.0" prefHeight="270.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="270.0" maxWidth="785.0" minHeight="270.0" minWidth="785.0" prefHeight="270.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.CaesarDetailsController">
    <children>
       <Separator orientation="VERTICAL" prefHeight="36.0" prefWidth="8.0" />
       <Label text="Алфавит кириллицы с шифровкой">
@@ -18,44 +17,11 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TableView id="alphabetsOutputTableView" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn prefWidth="52.0" text="Вид" />
-          <TableColumn prefWidth="25.0" text="А" />
-            <TableColumn prefWidth="25.0" text="Б" />
-            <TableColumn prefWidth="22.0" text="В" />
-            <TableColumn prefWidth="22.0" text="Г" />
-            <TableColumn prefWidth="22.0" text="Д" />
-            <TableColumn prefWidth="22.0" text="Е" />
-            <TableColumn prefWidth="22.0" text="Ё" />
-            <TableColumn prefWidth="22.0" text="Ж" />
-            <TableColumn prefWidth="22.0" text="З" />
-            <TableColumn prefWidth="22.0" text="И" />
-            <TableColumn prefWidth="22.0" text="Й" />
-            <TableColumn prefWidth="22.0" text="К" />
-            <TableColumn prefWidth="22.0" text="Л" />
-            <TableColumn prefWidth="22.0" text="М" />
-            <TableColumn prefWidth="22.0" text="Н" />
-            <TableColumn prefWidth="22.0" text="О" />
-            <TableColumn prefWidth="22.0" text="П" />
-            <TableColumn prefWidth="22.0" text="Р" />
-            <TableColumn prefWidth="22.0" text="С" />
-            <TableColumn prefWidth="22.0" text="Т" />
-            <TableColumn prefWidth="22.0" text="У" />
-            <TableColumn prefWidth="22.0" text="Ф" />
-            <TableColumn prefWidth="22.0" text="Х" />
-            <TableColumn prefWidth="22.0" text="Ц" />
-            <TableColumn prefWidth="22.0" text="Ч" />
-            <TableColumn prefWidth="22.0" text="Ш" />
-            <TableColumn prefWidth="22.0" text="Щ" />
-            <TableColumn prefWidth="22.0" text="Ъ" />
-            <TableColumn prefWidth="22.0" text="Ы" />
-            <TableColumn prefWidth="22.0" text="Ь" />
-            <TableColumn prefWidth="22.0" text="Э" />
-            <TableColumn prefWidth="22.0" text="Ю" />
-            <TableColumn prefWidth="22.0" text="Я" />
-        </columns>
-      </TableView>
+      <TextArea fx:id="alphabetOutput" editable="false" prefHeight="200.0" prefWidth="200.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextArea>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Separator prefHeight="6.0" prefWidth="54.0" />
@@ -65,8 +31,12 @@
                </font>
             </Label>
             <Separator prefHeight="5.0" prefWidth="25.0" />
-            <TextField id="keyInputTextField" prefHeight="21.0" prefWidth="40.0" />
-            <Separator prefHeight="15.0" prefWidth="609.0" />
+            <TextField id="keyInputTextField" fx:id="keyValueInputField" prefHeight="23.0" prefWidth="89.0" />
+            <Separator prefHeight="0.0" prefWidth="31.0" />
+            <Button mnemonicParsing="false" onAction="#encrypt" prefHeight="23.0" prefWidth="112.0" text="Зашифровать" />
+            <Separator prefHeight="0.0" prefWidth="29.0" />
+            <Button mnemonicParsing="false" onAction="#decrypt" prefHeight="23.0" prefWidth="114.0" text="Расшифровать" />
+            <Separator prefHeight="15.0" prefWidth="269.0" />
          </children>
       </HBox>
       <Separator orientation="VERTICAL" prefHeight="60.0" prefWidth="12.0" />

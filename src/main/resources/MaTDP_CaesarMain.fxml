@@ -33,7 +33,7 @@
                </font>
             </TextField>
             <Separator prefHeight="4.0" prefWidth="131.0" visible="false" />
-            <Button id="detailsButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="84.0" text="Детали" />
+            <Button id="detailsButton" mnemonicParsing="false" onAction="#openDetails" prefHeight="22.0" prefWidth="84.0" text="Детали" />
             <Separator prefHeight="23.0" prefWidth="125.0" visible="false" />
          </children>
       </HBox>
