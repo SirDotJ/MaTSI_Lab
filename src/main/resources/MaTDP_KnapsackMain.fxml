@@ -55,10 +55,9 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Separator prefHeight="5.0" prefWidth="179.0" visible="false" />
+            <Separator prefHeight="7.0" prefWidth="281.0" visible="false" />
             <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" text="Зашифровать" />
             <Separator prefHeight="6.0" prefWidth="92.0" visible="false" />
-            <Button id="decryptButton" mnemonicParsing="false" onAction="#decrypt" text="Расшифровать" />
             <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
          </children>
       </HBox>

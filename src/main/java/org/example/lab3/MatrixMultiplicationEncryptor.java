@@ -50,6 +50,7 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
         return determinantMatrixForElementsInverse;
     }
 
+
     private static double[][] inverseMatrix (double[][] matrix) {
         double[][] matrixInverse = new double[sizeMatrix][sizeMatrix];
         double determinant = matrix[0][0] * matrix[1][1] * matrix[2][2] +
@@ -110,6 +111,7 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
         return resultEncryption;
     }
 
+    // works but waits for rework
     public String decrypt (String text) {
 		double[][] matrix = this.key.clone();
         String[] strArray = text.split(" ");
