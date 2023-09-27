@@ -1,6 +1,7 @@
 package org.example.lab3;
 
 import org.example.common.Encryptor;
+import org.example.common.GlobalVariables;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -8,39 +9,29 @@ import java.util.Arrays;
 
 public class MatrixMultiplicationEncryptor implements Encryptor {
 	public static int sizeMatrix = 3;
-    final static public ArrayList<Character> CYRILLIC_ALPHABET_UPPERCASE = new ArrayList<>(Arrays.asList(
-			'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', '_'
-	));
-	private static int lengthAlphabet = CYRILLIC_ALPHABET_UPPERCASE.size();
-	private ArrayList<ArrayList<Double>> key;
+	private static int lengthAlphabet = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.size();
+	private double[][] key;
 	public MatrixMultiplicationEncryptor(String key) {
-		this.key = new ArrayList<>();
 		String[] rows = key.split("\n");
-		ArrayList<String> data = new ArrayList<>();
+		String[] exampleRow = rows[0].split(" ");
+		this.key = new double[rows.length][exampleRow.length];
 		for (int i = 0; i < rows.length; i++) {
-			String[] numbers = rows[i].split(" ");
-			ArrayList<Double> rowNumbers = new ArrayList<>();
-			for (int j = 0; j < data.size(); j++) {
-				rowNumbers.add(Double.parseDouble(numbers[j]));
+			String[] row = rows[i].split(" ");
+			for (int j = 0; j < row.length; j++) {
+				this.key[i][j] = Double.parseDouble(row[j]);
 			}
-			this.key.add(rowNumbers);
 		}
 	}
 
-    private static ArrayList<ArrayList<Double>> transposeMatrix(ArrayList<ArrayList<Double>> matrix){
-        ArrayList<ArrayList<Double>> temp = new ArrayList<>(sizeMatrix);
-		for (int i = 0; i < temp.size(); i++) {
-			temp.set(i, new ArrayList<>(sizeMatrix));
-		}
-
+    private static double[][] transposeMatrix(double[][] matrix){
+        double[][] temp = new double[sizeMatrix][sizeMatrix];
         for (int i = 0; i < sizeMatrix; i++)
             for (int j = 0; j < sizeMatrix; j++)
-                temp.get(j).set(i, matrix.get(i).get(j));
-
+                temp[j][i] = matrix[i][j];
         return temp;
     }
 
-    private static double determinantMatrixForElementsInverse (ArrayList<ArrayList<Double>> matrix, int i, int j) {
+    private static double determinantMatrixForElementsInverse (double[][] matrix, int i, int j) {
         double determinantMatrixForElementsInverse;
         double[] matrixForElementsInverse = new double[(sizeMatrix - 1) * (sizeMatrix - 1)]; //вспомогательная матрица
         int count = 0;
@@ -48,7 +39,7 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
             for (int n = 0; n < sizeMatrix; n++) {
                 if (m == i || n == j)
                     continue;
-                matrixForElementsInverse[count] = matrix.get(m).get(n);
+                matrixForElementsInverse[count] = matrix[m][n];
                 count++;
             }
         }
@@ -59,12 +50,12 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
         return determinantMatrixForElementsInverse;
     }
 
-    private static double[][] inverseMatrix (ArrayList<ArrayList<Double>> matrix) {
+    private static double[][] inverseMatrix (double[][] matrix) {
         double[][] matrixInverse = new double[sizeMatrix][sizeMatrix];
-        double determinant = matrix.get(0).get(0) * matrix.get(1).get(1) * matrix.get(2).get(2) +
-                matrix.get(0).get(2) * matrix.get(1).get(0) * matrix.get(2).get(1) + matrix.get(0).get(1) * matrix.get(1).get(2) * matrix.get(2).get(0)-
-                (matrix.get(0).get(2) * matrix.get(1).get(1) * matrix.get(2).get(0) + matrix.get(0).get(1) * matrix.get(1).get(0) * matrix.get(2).get(2) +
-                        matrix.get(0).get(0) * matrix.get(1).get(2) * matrix.get(2).get(1));
+        double determinant = matrix[0][0] * matrix[1][1] * matrix[2][2] +
+                matrix[0][2] * matrix[1][0] * matrix[2][1] + matrix[0][1] * matrix[1][2] * matrix[2][0] -
+                (matrix[0][2] * matrix[1][1] * matrix[2][0] + matrix[0][1] * matrix[1][0] * matrix[2][2] +
+                        matrix[0][0] * matrix[1][2] * matrix[2][1]);
 
         for (int i = 0; i < sizeMatrix; i++) {
             for (int j = 0; j < sizeMatrix; j++) {
@@ -74,27 +65,28 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
 
         return matrixInverse;
     }
-	@Override
-	public String encrypt(String message) {
-		int[] numberText;
-        int textLength = message.length();
+
+    public String encrypt (String text) {
+        int[] numberText;
+		double[][] matrix = this.key.clone();
+        int textLength = text.length();
         String resultEncryption = new String();
 
         //определение кратности строки на 3 символа
         while(textLength%sizeMatrix != 0) {
-            message += " ";
+            text += " ";
             textLength++;
         }
         numberText = new int[textLength];
         int[] resultMatrix = new int[textLength];
         //преобразование символов в порядковые номера
         for (int i = 0; i < textLength; i++) {
-            if (message.charAt(i) == ' ') {
+            if (text.charAt(i) == ' ') {
                 numberText[i] = 0;
             }
             else {
                 for (int j = 0; j < lengthAlphabet; j++) {
-                    if (message.charAt(i) == CYRILLIC_ALPHABET_UPPERCASE.get(j)) {
+                    if (text.charAt(i) == GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(j)) {
                         numberText[i] = j + 1;
                     }
                 }
@@ -106,7 +98,7 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
             for (int j = 0; j < sizeMatrix; j++) {
                 int tempNumber = 0;
                 for (int m = 0; m < sizeMatrix; m++) {
-                    tempNumber += this.key.get(j).get(m) * numberText[sizeMatrix*i + m];
+                    tempNumber += matrix[j][m] * numberText[sizeMatrix*i + m];
                 }
                 resultMatrix[sizeMatrix * i + j] = tempNumber;
             }
@@ -116,18 +108,18 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
             resultEncryption += resultMatrix[i] + " ";
         }
         return resultEncryption;
-	}
+    }
 
-	@Override
-	public String decrypt(String message) {
-		String[] strArray = message.split(" ");
+    public String decrypt (String text) {
+		double[][] matrix = this.key.clone();
+        String[] strArray = text.split(" ");
         int[] numberText = new int[strArray.length];
         for(int i = 0; i < strArray.length; i++) {
             numberText[i] = Integer.parseInt(strArray[i]);
         }
         String resultDecryption = new String();
-        this.key = transposeMatrix(this.key);
-        double[][] matrixInverse = inverseMatrix(this.key);
+        matrix = transposeMatrix(matrix);
+        double[][] matrixInverse = inverseMatrix(matrix);
         int[] resultMatrix = new int[strArray.length];
 
         for (int i = 0; i < strArray.length / sizeMatrix; i++){
@@ -145,11 +137,11 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
                 if(resultMatrix[i] == 0)
                     break;
                 else {
-                    resultDecryption += CYRILLIC_ALPHABET_UPPERCASE.get(resultMatrix[i] - 1);
+                    resultDecryption += GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(resultMatrix[i] - 1);
                     break;
                 }
             }
         }
         return resultDecryption;
-	}
+    }
 }
