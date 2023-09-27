@@ -31,6 +31,10 @@ public class MainApplicationController {
 	@FXML
 	private RadioButton bofortMethodButton;
 	@FXML
+	private RadioButton matrixMultiplicationMethodButton;
+	@FXML
+	private RadioButton knapsackMethodButton;
+	@FXML
 	private void setDisplayScene(String fxmlFileName) {
 		this.methodDisplay.getChildren().clear();
 		Node leafNode = null;
@@ -69,6 +73,18 @@ public class MainApplicationController {
 	public void loadBofortMethod(ActionEvent event) {
 		if(bofortMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_BofortMain.fxml");
+		}
+	}
+	@FXML
+	public void loadMatrixMultiplicationMethod(ActionEvent event) {
+		if(matrixMultiplicationMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_MatrixMultiplicationMain.fxml");
+		}
+	}
+	@FXML
+	public void loadKnapsackMethod(ActionEvent event) {
+		if(knapsackMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_KnapsackMain.fxml");
 		}
 	}
 }

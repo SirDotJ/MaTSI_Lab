@@ -1,6 +1,7 @@
 package org.example.lab1;
 
 import org.example.common.Encryptor;
+import org.example.common.GlobalVariables;
 
 import java.util.ArrayList;
 import java.util.Arrays;

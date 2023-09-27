@@ -7,11 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.example.lab1.CaesarEncryptor;
-import org.example.lab1.GlobalVariables;
+import org.example.common.GlobalVariables;
 
 import java.security.InvalidAlgorithmParameterException;
 

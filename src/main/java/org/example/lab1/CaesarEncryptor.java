@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.example.common.Encryptor;
+import org.example.common.GlobalVariables;
 
 // Класс определяет алгоритм Цезаря (работает только с кириллицей)
 public class CaesarEncryptor implements Encryptor {

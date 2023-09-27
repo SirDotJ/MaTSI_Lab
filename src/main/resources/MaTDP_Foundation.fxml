@@ -96,7 +96,7 @@
                 <Font size="18.0" fx:id="x1" />
               </font>
             </Label>
-                  <VBox layoutX="6.0" layoutY="41.0" prefHeight="599.0" prefWidth="207.0">
+                  <VBox layoutX="6.0" layoutY="41.0" prefHeight="599.0" prefWidth="246.0">
                      <children>
                         <RadioButton id="radioButtonCaesar" fx:id="caesarMethodButton" mnemonicParsing="false" onAction="#loadCaesarMethod" text="Алгоритм Цезаря">
                            <font>
@@ -122,6 +122,16 @@
                            </font>
                         </RadioButton>
                         <RadioButton id="radioButtonHamiltonPath" fx:id="bofortMethodButton" mnemonicParsing="false" onAction="#loadBofortMethod" text="Шифр Бофорта" toggleGroup="$currentMethod">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton id="radioButtonHamiltonPath" fx:id="matrixMultiplicationMethodButton" mnemonicParsing="false" onAction="#loadMatrixMultiplicationMethod" text="Шифр умножением матриц" toggleGroup="$currentMethod">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton id="radioButtonHamiltonPath" fx:id="knapsackMethodButton" mnemonicParsing="false" onAction="#loadKnapsackMethod" text="Шифр укладки ранца" toggleGroup="$currentMethod">
                            <font>
                               <Font size="16.0" />
                            </font>

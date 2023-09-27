@@ -1,20 +1,10 @@
 package org.example.lab2;
 
 import org.example.common.Encryptor;
-import org.example.lab1.GlobalVariables;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.example.common.GlobalVariables;
 
 public class VigenereEncryptor implements Encryptor {
-	final static public ArrayList<Character> CYRILLIC_ALPHABET_LOWERCASE = new ArrayList<>(Arrays.asList(
-			'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', '_'
-	));
-	final static public ArrayList<Character> CYRILLIC_ALPHABET_UPPERCASE = new ArrayList<>(Arrays.asList(
-			'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', '_'
-	));
-
-	public static void main(String[] args) {
+	public static void main(String[] args) { // тестирование работы класса
 		String key = "КЛЮЧ";
 		String message = "ЗАМЕНА";
 		VigenereEncryptor encryptor = new VigenereEncryptor(key);
@@ -26,58 +16,62 @@ public class VigenereEncryptor implements Encryptor {
 		System.out.println("Расшифрованное сообщение: " + decryptedMessage);
 	}
 	private String key;
-	private ArrayList<Integer> keyEffect;
 	public VigenereEncryptor(String key) {
 		this.key = key;
-		this.keyEffect = this.generateKeyEffect();
 	}
-	private ArrayList<Integer> generateKeyEffect() {
-		ArrayList<Integer> output = new ArrayList<>();
-		for (int i = 0; i < this.key.length(); i++) {
-			char letter = this.key.charAt(i);
-			int position = Character.isUpperCase(letter) ? CYRILLIC_ALPHABET_UPPERCASE.indexOf(letter) : CYRILLIC_ALPHABET_LOWERCASE.indexOf(letter);
-			output.add(position);
+	// Расширяет ключ для применения шифра над переданным сообщением добавляя себя на конец пока размер не совпадёт с сообщением
+	private String fitKeyToMessage(String message) {
+		StringBuilder keyBuilder = new StringBuilder(this.key);
+		if (message.length() > keyBuilder.length()) {
+			int currentSymbolIndex = 0;
+			for (int i = 0; i < (message.length() - this.key.length()); i++) {
+				keyBuilder.append(this.key.charAt(currentSymbolIndex++));
+				if (currentSymbolIndex >= this.key.length())
+					currentSymbolIndex = 0;
+			}
 		}
-		return output;
+		return keyBuilder.toString();
 	}
 	@Override
 	public String encrypt(String message) {
-		StringBuilder output = new StringBuilder();
-		int j = 0;
+		// Расширение ключа шифра
+		String appliedKey = this.fitKeyToMessage(message);
+
+		// Зашифровка сообщения по формуле Вижинера
+		StringBuilder encryptedMessage = new StringBuilder();
 		for (int i = 0; i < message.length(); i++) {
-			char letter = message.charAt(i);
-			boolean isUpper = Character.isUpperCase(letter);
+			char messageLetter = message.charAt(i);
+			boolean isUpper = Character.isUpperCase(messageLetter);
 
-			int oldLetterIndex = CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter));
-			int newLetterIndex = (oldLetterIndex + keyEffect.get(j++)) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-			char newLetter = isUpper ? CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex) :
-									   CYRILLIC_ALPHABET_LOWERCASE.get(newLetterIndex);
-			output.append(newLetter);
-
-			if (j >= keyEffect.size())
-				j = 0;
+			int openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(messageLetter));
+			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
+			int encryptedLetterIndex = (openMessageLetterIndex + keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(encryptedLetterIndex) :
+									   GlobalVariables.CYRILLIC_ALPHABET_LOWERCASE.get(encryptedLetterIndex);
+			encryptedMessage.append(newLetter);
 		}
-		return output.toString();
+		return encryptedMessage.toString();
 	}
 	@Override
 	public String decrypt(String message) {
-		StringBuilder output = new StringBuilder();
-		int j = 0;
+		// Расширение ключа шифра
+		String appliedKey = this.fitKeyToMessage(message);
+
+		// Расшифровка сообщения по преобразованной формуле Вижинера
+		StringBuilder decryptedMessage = new StringBuilder();
 		for (int i = 0; i < message.length(); i++) {
-			char letter = message.charAt(i);
-			boolean isUpper = Character.isUpperCase(letter);
+			char encryptedMessageLetter = message.charAt(i);
+			boolean isUpper = Character.isUpperCase(encryptedMessageLetter);
 
-			int oldLetterIndex = CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter));
-			int newLetterIndex = (oldLetterIndex - keyEffect.get(j++)) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-			if (newLetterIndex < 0)
-				newLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(newLetterIndex);
-			char newLetter = isUpper ? CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex) :
-									   CYRILLIC_ALPHABET_LOWERCASE.get(newLetterIndex);
-			output.append(newLetter);
-
-			if (j >= keyEffect.size())
-				j = 0;
+			int encryptedMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(encryptedMessageLetter));
+			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
+			int openMessageLetterIndex = (encryptedMessageLetterIndex - keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+			if (openMessageLetterIndex < 0)
+				openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(openMessageLetterIndex);
+			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(openMessageLetterIndex) :
+									   GlobalVariables.CYRILLIC_ALPHABET_LOWERCASE.get(openMessageLetterIndex);
+			decryptedMessage.append(newLetter);
 		}
-		return output.toString();
+		return decryptedMessage.toString();
 	}
 }

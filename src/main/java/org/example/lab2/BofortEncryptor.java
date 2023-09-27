@@ -1,166 +1,113 @@
 package org.example.lab2;
 
 import org.example.common.Encryptor;
+import org.example.common.GlobalVariables;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 // Для реализации была взята первая формула mod N(k_i - X_i)
 public class BofortEncryptor implements Encryptor {
+	private static enum VARIANT {
+		ONE, // Y_i = (k_i - X_i)mod N
+		TWO // Y_i = (X_i - k_i)mod N
+	}
 	final static private String TEST_KEY = "КЛЮЧ";
-	final static public ArrayList<Character> CYRILLIC_ALPHABET_LOWERCASE = new ArrayList<>(Arrays.asList(
-			'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', '_'
-	));
-	final static public ArrayList<Character> CYRILLIC_ALPHABET_UPPERCASE = new ArrayList<>(Arrays.asList(
-			'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', '_'
-	));
-	private ArrayList<Character> encryptedCyrillicAlphabetUppercase;
-	private ArrayList<Character> encryptedCyrillicAlphabetLowercase;
-	public static void main(String[] args) {
-		BofortEncryptor encryptor = new BofortEncryptor(TEST_KEY);
-		String message = "СООБЩЕНИЕ_ПОЛЬЗОВАТЕЛЮ";
-		String encryptedMessage = encryptor.encrypt(message);
-		String decryptedMessage = encryptor.decrypt(encryptedMessage);
+	public static void main(String[] args) { // Тестирование работы класса
+		String message = "СООБЩЕНИЕПОЛЬЗОВАТЕЛЮ";
+		String key = TEST_KEY;
 		System.out.println("Сообщение: " + message);
-		System.out.println("Зашифрованное сообщение: " + encryptedMessage);
-		System.out.println("Расшифрованное сообщение: " + decryptedMessage);
-//		System.out.println("Обычный алфавит:");
-//		System.out.println(encryptor.getOriginalAlphabetUppercase());
-//		System.out.println("Зашифрованный алфавит:");
-//		System.out.println(encryptor.getEncryptedAlphabetUppercase());
+		System.out.println("Ключ: " + key);
+		// Проверка формы №1
+		BofortEncryptor encryptorOne = new BofortEncryptor(key, VARIANT.ONE);
+		String encryptedMessageOne = encryptorOne.encrypt(message);
+		String decryptedMessageOne = encryptorOne.decrypt(encryptedMessageOne);
+		System.out.println("Вариант №1:");
+		System.out.println("Сообщение: " + message);
+		System.out.println("Зашифрованное сообщение: " + encryptedMessageOne);
+		System.out.println("Расшифрованное сообщение: " + decryptedMessageOne);
+
+		// Проверка формы №2
+		BofortEncryptor encryptorTwo = new BofortEncryptor(key, VARIANT.TWO);
+		String encryptedMessageTwo = encryptorTwo.encrypt(message);
+		String decryptedMessageTwo = encryptorTwo.decrypt(encryptedMessageTwo);
+		System.out.println("Вариант №1:");
+		System.out.println("Сообщение: " + message);
+		System.out.println("Зашифрованное сообщение: " + encryptedMessageTwo);
+		System.out.println("Расшифрованное сообщение: " + decryptedMessageTwo);
 	}
 	private String key;
+	private VARIANT variant;
 	public BofortEncryptor(String key) {
+		this(key, VARIANT.ONE);
+	}
+	public BofortEncryptor(String key, VARIANT variant) {
 		this.key = key;
+		this.variant = variant;
+	}
+	// Расширяет ключ для применения шифра над переданным сообщением добавляя себя на конец пока размер не совпадёт с сообщением
+	private String fitKeyToMessage(String message) {
+		StringBuilder keyBuilder = new StringBuilder(this.key);
+		if (message.length() > keyBuilder.length()) {
+			int currentSymbolIndex = 0;
+			for (int i = 0; i < (message.length() - this.key.length()); i++) {
+				keyBuilder.append(this.key.charAt(currentSymbolIndex++));
+				if (currentSymbolIndex >= this.key.length())
+					currentSymbolIndex = 0;
+			}
+		}
+		return keyBuilder.toString();
 	}
 	@Override
 	public String encrypt(String message) {
+		// Расширение ключа шифра
+		String appliedKey = this.fitKeyToMessage(message);
+
+		// Зашифровка сообщения по формуле Бофорта
 		StringBuilder encryptedMessage = new StringBuilder();
-		int messageLength = message.length();
-		int keyLength = key.length();
-		ArrayList<Integer> messageKeyNumbers = new ArrayList<>();
-		if (messageLength > keyLength) {
-			int count = 0;
-			while (keyLength < messageLength) {
-				key += key.charAt(count);
-				keyLength++;
-				count++;
+		for (int i = 0; i < message.length(); i++) {
+			char messageLetter = message.charAt(i);
+			boolean isUpper = Character.isUpperCase(messageLetter);
+
+			int openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(messageLetter));
+			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
+			int encryptedLetterIndex;
+			switch (this.variant) {
+				case TWO -> encryptedLetterIndex = (openMessageLetterIndex - keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				default -> encryptedLetterIndex = (keyLetterIndex - openMessageLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
 			}
+			if (encryptedLetterIndex < 0)
+				encryptedLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(encryptedLetterIndex);
+			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(encryptedLetterIndex) :
+									   GlobalVariables.CYRILLIC_ALPHABET_LOWERCASE.get(encryptedLetterIndex);
+			encryptedMessage.append(newLetter);
 		}
-
-		for (int i = 0; i < messageLength; i++) {
-			int numberMessage = 0;
-			int numberKey = 0;
-			for (int j = 0; j < CYRILLIC_ALPHABET_UPPERCASE.size(); j++) {
-				if (CYRILLIC_ALPHABET_UPPERCASE.get(j) == message.charAt(i)) {
-					numberMessage = j + 1;
-				}
-				if (CYRILLIC_ALPHABET_UPPERCASE.get(j) == key.charAt(i)) {
-					numberKey = j + 1;
-				}
-				if (numberMessage != 0 && numberKey != 0) {
-					if (numberMessage < numberKey) {
-                        numberMessage += CYRILLIC_ALPHABET_UPPERCASE.size();
-						messageKeyNumbers.add((numberMessage - numberKey) % CYRILLIC_ALPHABET_UPPERCASE.size());
-                    }
-                    else if (numberMessage == numberKey) {
-						messageKeyNumbers.add(CYRILLIC_ALPHABET_UPPERCASE.size());
-                    }
-                    else {
-						messageKeyNumbers.add((numberMessage - numberKey) % CYRILLIC_ALPHABET_UPPERCASE.size());
-                    }
-
-					break;
-				}
-			}
-		}
-
-		for (int i = 0; i < messageLength; i++ ) {
-            for (int j = 0; j < CYRILLIC_ALPHABET_UPPERCASE.size(); j++) {
-                if(messageKeyNumbers.get(i)-1 == j) {
-                    encryptedMessage.append(CYRILLIC_ALPHABET_UPPERCASE.get(j));
-                }
-            }
-        }
-
 		return encryptedMessage.toString();
 	}
 
 	@Override
 	public String decrypt(String message) {
-		StringBuilder decryptedMessage = new StringBuilder();
-        int lengthMessage = message.length();
-        int lengthKey = this.key.length();
-        int[] messageKeyNumber = new int [lengthMessage];
-        if (lengthMessage > lengthKey) {
-            int count = 0;
-            while( lengthKey < lengthMessage){
-                key += key.charAt(count);
-                lengthKey++;
-                count++;
-            }
-        }
+		// Расширение ключа шифра
+		String appliedKey = this.fitKeyToMessage(message);
 
-        for (int i = 0; i < lengthMessage; i++ ) {
-            int numberMessage = 0;
-            int numberKey = 0;
-            for(int j = 0; j < CYRILLIC_ALPHABET_UPPERCASE.size(); j++) {
-                if (CYRILLIC_ALPHABET_UPPERCASE.get(j) == message.charAt(i)) {
-                    numberMessage = j+1;
-                }
-                if (CYRILLIC_ALPHABET_UPPERCASE.get(j) == key.charAt(i)) {
-                    numberKey = j+1;
-                }
-                if (numberMessage != 0 && numberKey != 0 ) {
-                    messageKeyNumber[i] = (numberMessage + numberKey) % CYRILLIC_ALPHABET_UPPERCASE.size();
-                    break;
-                }
-            }
+		// Расшифровка сообщения по преобразованной формуле Бофорта
+		StringBuilder encryptedMessage = new StringBuilder();
+		for (int i = 0; i < message.length(); i++) {
+			char messageLetter = message.charAt(i);
+			boolean isUpper = Character.isUpperCase(messageLetter);
 
-        }
-
-        for (int i = 0; i < lengthMessage; i++ ) {
-            for (int j = 0; j < CYRILLIC_ALPHABET_UPPERCASE.size(); j++) {
-                if(messageKeyNumber[i]-1 == j) {
-                    decryptedMessage.append(CYRILLIC_ALPHABET_UPPERCASE.get(j));
-                }
-            }
-        }
-
-        return decryptedMessage.toString();
+			int encryptedMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(messageLetter));
+			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
+			int openMessageLetterIndex;
+			switch (this.variant) {
+				case TWO -> openMessageLetterIndex = (encryptedMessageLetterIndex + keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				default -> openMessageLetterIndex = (keyLetterIndex - encryptedMessageLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+			}
+			if (openMessageLetterIndex < 0)
+				openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(openMessageLetterIndex);
+			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(openMessageLetterIndex) :
+									   GlobalVariables.CYRILLIC_ALPHABET_LOWERCASE.get(openMessageLetterIndex);
+			encryptedMessage.append(newLetter);
+		}
+		return encryptedMessage.toString();
 	}
-	public String getOriginalAlphabetUppercase() {
-		StringBuilder output = new StringBuilder();
-		for (Character character : CYRILLIC_ALPHABET_UPPERCASE)
-			output.append(character);
-		return output.toString();
-	}
-	public String getOriginalAlphabetLowercase() {
-		StringBuilder output = new StringBuilder();
-		for (Character character : CYRILLIC_ALPHABET_LOWERCASE)
-			output.append(character);
-		return output.toString();
-	}
-//	public String getEncryptedAlphabetUppercase() {
-//		StringBuilder output = new StringBuilder();
-//		for (int i = 0; i < CYRILLIC_ALPHABET_UPPERCASE.size(); i++) {
-//			int oldIndex = i;
-//			int newIndex = (oldIndex - this.key.charAt(i)) % CYRILLIC_ALPHABET_UPPERCASE.size();
-//			if (newIndex < 0)
-//				newIndex = CYRILLIC_ALPHABET_UPPERCASE.size() - Math.abs(newIndex);
-//			output.append(CYRILLIC_ALPHABET_UPPERCASE.get(newIndex));
-//		}
-//		return output.toString();
-//	}
-//	public String getEncryptedAlphabetLowercase() {
-//		StringBuilder output = new StringBuilder();
-//		for (int i = 0; i < CYRILLIC_ALPHABET_LOWERCASE.size(); i++) {
-//			int oldIndex = i;
-//			int newIndex = (oldIndex - this.key.get(i)) % CYRILLIC_ALPHABET_LOWERCASE.size();
-//			if (newIndex < 0)
-//				newIndex = CYRILLIC_ALPHABET_LOWERCASE.size() - Math.abs(newIndex);
-//			output.append(CYRILLIC_ALPHABET_LOWERCASE.get(newIndex));
-//		}
-//		return output.toString();
-//	}
 }
