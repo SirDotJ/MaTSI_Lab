@@ -3,11 +3,9 @@ package org.example.lab2;
 import org.example.common.Encryptor;
 import org.example.common.GlobalVariables;
 
-import java.util.ArrayList;
-
 // Для реализации была взята первая формула mod N(k_i - X_i)
 public class BofortEncryptor implements Encryptor {
-	private static enum VARIANT {
+	public static enum VARIANT {
 		ONE, // Y_i = (k_i - X_i)mod N
 		TWO // Y_i = (X_i - k_i)mod N
 	}
