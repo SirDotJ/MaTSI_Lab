@@ -41,7 +41,7 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
 
         for (int i = 0; i < message.length(); i++) {
             char letter = message.charAt(i);
-            int letterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter));
+            int letterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter)) + 1;
             numbers[i] = letterIndex;
         }
 
@@ -52,7 +52,7 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
         StringBuilder message = new StringBuilder();
 
         for (int letterIndex : numbers) {
-            char letter = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(letterIndex);
+            char letter = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(letterIndex - 1);
             message.append(letter);
         }
 

@@ -25,29 +25,8 @@ public class CaesarEncryptor implements Encryptor {
 	}
 	@Override
 	public String encrypt(String message) {
-		StringBuilder decryptedMessage = new StringBuilder();
-		int alphabetRightOffset = this.key; // переменная объявляется для повышения читаемости
-		for (int i = 0; i < message.length(); i++) {
-			char letter = message.charAt(i);
-			boolean isLowerCase = Character.isLowerCase(letter);
-			int originalPosition = isLowerCase ? CYRILLIC_ALPHABET_LOWERCASE.indexOf(letter) :
-												 CYRILLIC_ALPHABET_UPPERCASE.indexOf(letter);
-			if(originalPosition == -1) { // если пробелы или другие символы вне алфавита
-				decryptedMessage.append(letter);
-				continue;
-			}
-			int newPosition = originalPosition + alphabetRightOffset;
-			if(newPosition > GlobalVariables.CYRILLIC_ALPHABET_SIZE - 1)
-				newPosition -= GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-			decryptedMessage.append(isLowerCase ? CYRILLIC_ALPHABET_LOWERCASE.get(newPosition) :
-												  CYRILLIC_ALPHABET_UPPERCASE.get(newPosition));
-		}
-		return decryptedMessage.toString();
-	}
-	@Override
-	public String decrypt(String message) {
 		StringBuilder encryptedMessage = new StringBuilder();
-		int alphabetLeftOffset = this.key; // переменная объявляется для повышения читаемости
+		int alphabetRightOffset = this.key; // переменная объявляется для повышения читаемости
 		for (int i = 0; i < message.length(); i++) {
 			char letter = message.charAt(i);
 			boolean isLowerCase = Character.isLowerCase(letter);
@@ -57,13 +36,34 @@ public class CaesarEncryptor implements Encryptor {
 				encryptedMessage.append(letter);
 				continue;
 			}
-			int newPosition = originalPosition - alphabetLeftOffset;
-			if (newPosition < 0)
-				newPosition = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(newPosition);
+			int newPosition = originalPosition + alphabetRightOffset;
+			if(newPosition > CYRILLIC_ALPHABET_UPPERCASE.size() - 1)
+				newPosition -= CYRILLIC_ALPHABET_UPPERCASE.size();
 			encryptedMessage.append(isLowerCase ? CYRILLIC_ALPHABET_LOWERCASE.get(newPosition) :
 												  CYRILLIC_ALPHABET_UPPERCASE.get(newPosition));
 		}
 		return encryptedMessage.toString();
+	}
+	@Override
+	public String decrypt(String message) {
+		StringBuilder decryptedMessage = new StringBuilder();
+		int alphabetLeftOffset = this.key; // переменная объявляется для повышения читаемости
+		for (int i = 0; i < message.length(); i++) {
+			char letter = message.charAt(i);
+			boolean isLowerCase = Character.isLowerCase(letter);
+			int originalPosition = isLowerCase ? CYRILLIC_ALPHABET_LOWERCASE.indexOf(letter) :
+												 CYRILLIC_ALPHABET_UPPERCASE.indexOf(letter);
+			if(originalPosition == -1) { // если пробелы или другие символы вне алфавита
+				decryptedMessage.append(letter);
+				continue;
+			}
+			int newPosition = originalPosition - alphabetLeftOffset;
+			if (newPosition < 0)
+				newPosition = CYRILLIC_ALPHABET_UPPERCASE.size() - Math.abs(newPosition);
+			decryptedMessage.append(isLowerCase ? CYRILLIC_ALPHABET_LOWERCASE.get(newPosition) :
+												  CYRILLIC_ALPHABET_UPPERCASE.get(newPosition));
+		}
+		return decryptedMessage.toString();
 	}
 	public void printUppercaseCyrillicAlphabet() {
 		System.out.print("|");
