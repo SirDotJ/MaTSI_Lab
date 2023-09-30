@@ -4,7 +4,7 @@ import org.example.common.Encryptor;
 import org.example.common.GlobalVariables;
 
 public class KnapsackEncryptor implements Encryptor {
-    private final static int BINARY_REPRESENTATION_LENGTH = 6;
+    public final static int BINARY_REPRESENTATION_LENGTH = 6;
 	private int[] key;
 
     public static void main(String[] args) {
