@@ -5,14 +5,13 @@ import org.example.common.GlobalVariables;
 
 // Для реализации была взята первая формула mod N(k_i - X_i)
 public class BofortEncryptor implements Encryptor {
-	public static enum VARIANT {
+	public enum VARIANT {
 		ONE, // Y_i = (k_i - X_i)mod N
 		TWO // Y_i = (X_i - k_i)mod N
 	}
-	final static private String TEST_KEY = "КЛЮЧ";
 	public static void main(String[] args) { // Тестирование работы класса
-		String message = "СООБЩЕНИЕПОЛЬЗОВАТЕЛЮ";
-		String key = TEST_KEY;
+		String message = "ПЕРЕНОС";
+		String key = "КРАН";
 		System.out.println("Сообщение: " + message);
 		System.out.println("Ключ: " + key);
 		// Проверка формы №1
@@ -70,8 +69,8 @@ public class BofortEncryptor implements Encryptor {
 			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
 			int encryptedLetterIndex;
 			switch (this.variant) {
-				case TWO -> encryptedLetterIndex = (openMessageLetterIndex - keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-				default -> encryptedLetterIndex = (keyLetterIndex - openMessageLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				case TWO -> encryptedLetterIndex = (openMessageLetterIndex - keyLetterIndex - 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				default -> encryptedLetterIndex = (keyLetterIndex - openMessageLetterIndex - 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
 			}
 			if (encryptedLetterIndex < 0)
 				encryptedLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(encryptedLetterIndex);
@@ -97,8 +96,8 @@ public class BofortEncryptor implements Encryptor {
 			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
 			int openMessageLetterIndex;
 			switch (this.variant) {
-				case TWO -> openMessageLetterIndex = (encryptedMessageLetterIndex + keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-				default -> openMessageLetterIndex = (keyLetterIndex - encryptedMessageLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				case TWO -> openMessageLetterIndex = (encryptedMessageLetterIndex + keyLetterIndex + 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				default -> openMessageLetterIndex = (keyLetterIndex - encryptedMessageLetterIndex - 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
 			}
 			if (openMessageLetterIndex < 0)
 				openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(openMessageLetterIndex);

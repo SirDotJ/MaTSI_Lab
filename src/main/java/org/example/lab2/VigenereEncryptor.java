@@ -5,8 +5,8 @@ import org.example.common.GlobalVariables;
 
 public class VigenereEncryptor implements Encryptor {
 	public static void main(String[] args) { // тестирование работы класса
-		String key = "КЛЮЧ";
-		String message = "ЗАМЕНА";
+		String key = "ГОРНЫЙ";
+		String message = "ВИЗУАЛЬНАЯ";
 		VigenereEncryptor encryptor = new VigenereEncryptor(key);
 		String encryptedMessage = encryptor.encrypt(message);
 		String decryptedMessage = encryptor.decrypt(encryptedMessage);
@@ -45,7 +45,7 @@ public class VigenereEncryptor implements Encryptor {
 
 			int openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(messageLetter));
 			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
-			int encryptedLetterIndex = (openMessageLetterIndex + keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+			int encryptedLetterIndex = (openMessageLetterIndex + keyLetterIndex + 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
 			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(encryptedLetterIndex) :
 									   GlobalVariables.CYRILLIC_ALPHABET_LOWERCASE.get(encryptedLetterIndex);
 			encryptedMessage.append(newLetter);
@@ -65,7 +65,7 @@ public class VigenereEncryptor implements Encryptor {
 
 			int encryptedMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(encryptedMessageLetter));
 			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
-			int openMessageLetterIndex = (encryptedMessageLetterIndex - keyLetterIndex) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+			int openMessageLetterIndex = (encryptedMessageLetterIndex - keyLetterIndex - 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
 			if (openMessageLetterIndex < 0)
 				openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(openMessageLetterIndex);
 			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(openMessageLetterIndex) :

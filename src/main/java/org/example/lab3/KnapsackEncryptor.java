@@ -3,14 +3,9 @@ package org.example.lab3;
 import org.example.common.Encryptor;
 import org.example.common.GlobalVariables;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class KnapsackEncryptor implements Encryptor {
-
-	private static int lengthAlphabet = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.size();
-	private static int[] key;
+    private final static int BINARY_REPRESENTATION_LENGTH = 6;
+	private int[] key;
 
     public static void main(String[] args) {
         KnapsackEncryptor encryptor = new KnapsackEncryptor("1 3 5 7 11");
@@ -33,10 +28,8 @@ public class KnapsackEncryptor implements Encryptor {
     public String turnToBinary(int number) {
         String fullBinary = Integer.toBinaryString(number);
         StringBuilder output = new StringBuilder();
-        if (fullBinary.length() < 5) {
-            for (int i = 0; i < (5 - fullBinary.length()); i++) {
-                output.append("0");
-            }
+        if (fullBinary.length() < BINARY_REPRESENTATION_LENGTH) {
+            output.append("0".repeat((BINARY_REPRESENTATION_LENGTH - fullBinary.length())));
         }
         output.append(fullBinary);
         return output.toString();
@@ -54,16 +47,6 @@ public class KnapsackEncryptor implements Encryptor {
         return runningSum;
     }
 
-    private int calculateSymbolFromSum(int number) {
-        String binaryRepresentation = this.turnToBinary(number);
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < binaryRepresentation.length(); i++) {
-            int currentNumber = Character.getNumericValue(binaryRepresentation.charAt(i));
-            builder.append(currentNumber);
-        }
-        return -1;
-    }
-
     public String encrypt (String message) {
         StringBuilder encryptedMessage = new StringBuilder();
         int[] sums = new int[message.length()];
@@ -75,7 +58,7 @@ public class KnapsackEncryptor implements Encryptor {
 
         encryptedMessage.append(sums[0]);
         for (int i = 1; i < sums.length; i++) {
-            encryptedMessage.append(" " + sums[i]);
+            encryptedMessage.append(" ").append(sums[i]);
         }
 
         return encryptedMessage.toString();
