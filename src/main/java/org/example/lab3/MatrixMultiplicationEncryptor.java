@@ -2,12 +2,11 @@ package org.example.lab3;
 
 import org.example.common.Encryptor;
 import org.example.common.GlobalVariables;
+import org.example.common.MatrixMath;
 
 import java.util.ArrayList;
 
 public class MatrixMultiplicationEncryptor implements Encryptor {
-	public static int sizeMatrix = 3;
-	private static final int lengthAlphabet = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.size();
 	private ArrayList<int[]> key = new ArrayList<>();
 	public MatrixMultiplicationEncryptor(String key) throws NullPointerException, IllegalArgumentException {
         // Парсинг текста в ключ
@@ -37,91 +36,98 @@ public class MatrixMultiplicationEncryptor implements Encryptor {
         }
 	}
 
-    public String encrypt (String text) {
-        StringBuilder builder = new StringBuilder(text);
-//        if(text.length() % this.key.length != 0) {
-//            int difference = text.length() % this.key.length;
-//            for (int i = 0; i < difference - 1; i++) {
-//                builder.append("_");
-//            }
-//        }
-//        text = builder.toString();
-//        int[] numberText;
-//		ArrayList<double[]> matrix = (ArrayList<double[]>) this.key.clone();
-//        int textLength = text.length();
-//        String resultEncryption = new String();
-//
-//        //определение кратности строки на 3 символа
-//        while(textLength%sizeMatrix != 0) {
-//            text += " ";
-//            textLength++;
-//        }
-//        numberText = new int[textLength];
-//        int[] resultMatrix = new int[textLength];
-//        //преобразование символов в порядковые номера
-//        for (int i = 0; i < textLength; i++) {
-//            if (text.charAt(i) == ' ') {
-//                numberText[i] = 0;
-//            }
-//            else {
-//                for (int j = 0; j < lengthAlphabet; j++) {
-//                    if (text.charAt(i) == GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(j)) {
-//                        numberText[i] = j + 1;
-//                    }
-//                }
-//            }
-//
-//        }
-//
-//        for (int i = 0; i < textLength / sizeMatrix; i++){
-//            for (int j = 0; j < sizeMatrix; j++) {
-//                int tempNumber = 0;
-//                for (int m = 0; m < sizeMatrix; m++) {
-//                    tempNumber += matrix[j][m] * numberText[sizeMatrix*i + m];
-//                }
-//                resultMatrix[sizeMatrix * i + j] = tempNumber;
-//            }
-//        }
-//
-//        for (int i = 0; i < textLength; i++) {
-//            resultEncryption += resultMatrix[i] + " ";
-//        }
-        return "resultEncryption";
+    private static int[] convertMessageToNumerical(String message) {
+        int[] numbers = new int[message.length()];
+
+        for (int i = 0; i < message.length(); i++) {
+            char letter = message.charAt(i);
+            int letterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(letter));
+            numbers[i] = letterIndex;
+        }
+
+        return numbers;
     }
 
-    // works but waits for rework
-    public String decrypt (String text) {
-//		ArrayList<double[]> decryptionKey = (ArrayList<double[]>) this.key.clone();
-//        String[] strArray = text.split(" ");
-//        int[] numberText = new int[strArray.length];
-//        for(int i = 0; i < strArray.length; i++) {
-//            numberText[i] = Integer.parseInt(strArray[i]);
-//        }
-//        String resultDecryption = new String();
-//        matrix = this.transposedKey();
-//        ArrayList<double[]> matrixInverse = inverseMatrix(matrix);
-//        int[] resultMatrix = new int[strArray.length];
-//
-//        for (int i = 0; i < strArray.length / sizeMatrix; i++){
-//            for (int j = 0; j < sizeMatrix; j++) {
-//                double tempNumber = 0;
-//                for (int m = 0; m < sizeMatrix; m++) {
-//                    tempNumber += matrixInverse[j][m] * numberText[sizeMatrix * i + m];
-//                }
-//                resultMatrix[sizeMatrix * i + j] = (int)tempNumber;
-//            }
-//        }
-//
-//        for(int i = 0; i < strArray.length; i++) {
-//            for(int j = 0; j < lengthAlphabet; j++) {
-//                if(resultMatrix[i] == 0)
-//                    break;
-//                else {
-//                    resultDecryption += GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(resultMatrix[i] - 1);
-//                    break;
-//                }
-//            }
-//        }
-        return "resultDecryption";
+    private static String convertNumbersToMessage(int[] numbers) {
+        StringBuilder message = new StringBuilder();
+
+        for (int letterIndex : numbers) {
+            char letter = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(letterIndex);
+            message.append(letter);
+        }
+
+        return message.toString();
+    }
+
+    private static int[] readEncryptedMessageToMassive(String encryptedMessage) {
+        String[] numbers = encryptedMessage.split(" ");
+        int[] numericalEncryptedMessage = new int[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            String number = numbers[i];
+            numericalEncryptedMessage[i] = Integer.parseInt(number);
+        }
+        return numericalEncryptedMessage;
+    }
+
+    public String encrypt (String message) {
+        StringBuilder openMessage = new StringBuilder(String.copyValueOf(message.toCharArray()));
+        int rowCount = this.key.size();
+        if (openMessage.length() % rowCount != 0) {
+            for (int i = 0; i < openMessage.length() % rowCount; i++) {
+                openMessage.append(GlobalVariables.SPACE_CHARACTER);
+            }
+        }
+        int[] numericalMessage = convertMessageToNumerical(openMessage.toString());
+
+        StringBuilder encryptedMessage = new StringBuilder();
+        for (int i = 0; i < numericalMessage.length / rowCount; i++) {
+            int indexOffset = i * rowCount;
+            ArrayList<int[]> messagePart = new ArrayList<>();
+            for (int j = 0; j < rowCount; j++) {
+                int[] number = new int[] {numericalMessage[indexOffset + j]};
+                messagePart.add(number);
+            }
+
+            ArrayList<int[]> encryptedMessagePart = MatrixMath.multiplyMatrices(this.key, messagePart);
+            for (int[] number : encryptedMessagePart) {
+                encryptedMessage.append(number[0]).append(" ");
+            }
+        }
+
+        return encryptedMessage.toString();
+    }
+
+    public String decrypt (String encryptedMessage) throws IllegalArgumentException {
+        int[] numericalEncryptedMessage = readEncryptedMessageToMassive(encryptedMessage);
+        int rowCount = this.key.size();
+        if (numericalEncryptedMessage.length % rowCount != 0)
+            throw new IllegalArgumentException("Provided message cannot be decrypted using current key");
+
+        int determinant = MatrixMath.matrixDeterminant(this.key);
+        if (determinant == 0)
+            throw new IllegalArgumentException("Key cannot be used for decryption: matrix determinant is equal to 0, hence no inverse matrix can be made");
+
+        ArrayList<int[]> decryptionKeyPart = MatrixMath.attachedMatrix(this.key); // деление на определитель будет проведено после умножения
+        decryptionKeyPart = MatrixMath.transposeMatrix(decryptionKeyPart);
+
+
+        int[] numericalDecryptedMessage = new int[numericalEncryptedMessage.length];
+        for (int i = 0; i < numericalEncryptedMessage.length / rowCount; i++) {
+            int indexOffset = i * rowCount;
+            ArrayList<int[]> messagePart = new ArrayList<>();
+            for (int j = 0; j < rowCount; j++) {
+                int[] number = new int[] {numericalEncryptedMessage[indexOffset + j]};
+                messagePart.add(number);
+            }
+
+            ArrayList<int[]> semiDecryptedMessagePart = MatrixMath.multiplyMatrices(decryptionKeyPart, messagePart);
+
+            ArrayList<int[]> decryptedMessagePart = MatrixMath.divideAllMatrixElements(semiDecryptedMessagePart, determinant);
+            for (int j = 0; j < rowCount; j++) {
+                numericalDecryptedMessage[indexOffset + j] = decryptedMessagePart.get(j)[0];
+            }
+        }
+
+        return convertNumbersToMessage(numericalDecryptedMessage);
     }
 }

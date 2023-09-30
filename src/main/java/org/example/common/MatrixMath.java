@@ -5,22 +5,22 @@ import java.util.Arrays;
 
 // Отвечает за алгоритмм выполнения операций над матрицами
 public class MatrixMath {
-    static final ArrayList<double[]> TEST_MATRIX1 = new ArrayList<>(Arrays.asList(
-            new double[] {1, 2, 3},
-            new double[] {4, 5, 6},
-            new double[] {7, 8, 9},
-            new double[] {10, 11, 12}
+    static final ArrayList<int[]> TEST_MATRIX1 = new ArrayList<>(Arrays.asList(
+            new int[] {1, 2, 3},
+            new int[] {4, 5, 6},
+            new int[] {7, 8, 9},
+            new int[] {10, 11, 12}
     ));
-    static final ArrayList<double[]> TEST_MATRIX2 = new ArrayList<>(Arrays.asList(
-            new double[] {1, 2, 3, 4, 5},
-            new double[] {6, 7, 8, 9, 10},
-            new double[] {11, 12, 13, 14, 15}
+    static final ArrayList<int[]> TEST_MATRIX2 = new ArrayList<>(Arrays.asList(
+            new int[] {1, 2, 3, 4, 5},
+            new int[] {6, 7, 8, 9, 10},
+            new int[] {11, 12, 13, 14, 15}
     ));
-    static final ArrayList<double[]> TEST_SQUARE_MATRIX = new ArrayList<>(Arrays.asList(
-            new double[] {1, 2, 6, 5},
-            new double[] {11, 5, 6, 16},
-            new double[] {7, 8, 9, 3},
-            new double[] {2, 24, 2, 34}
+    static final ArrayList<int[]> TEST_SQUARE_MATRIX = new ArrayList<>(Arrays.asList(
+            new int[] {1, 2, 6, 5},
+            new int[] {11, 5, 6, 16},
+            new int[] {7, 8, 9, 3},
+            new int[] {2, 24, 2, 34}
     ));
     public static void main(String[] args) {
         System.out.println("Квадратная матрица:");
@@ -31,7 +31,7 @@ public class MatrixMath {
         printMatrix(transposeMatrix(TEST_SQUARE_MATRIX));
         try {
             System.out.println("\nОбратная матрица:");
-            printMatrix(inverseMatrix(TEST_SQUARE_MATRIX));
+            printMatrix(attachedMatrix(TEST_SQUARE_MATRIX));
         } catch (ArithmeticException e) {
             System.out.println("Матрица не имеет обратной матрицы, так как определитель равен 0");
         }
@@ -42,7 +42,7 @@ public class MatrixMath {
         System.out.println("Умножение двух матриц выше:");
         printMatrix(multiplyMatrices(TEST_MATRIX1, TEST_MATRIX2));
     }
-    public static void printMatrix(ArrayList<double[]> matrix) {
+    public static void printMatrix(ArrayList<int[]> matrix) {
         if(matrix == null) {
             System.out.println("Переданной матрицы нет");
             return;
@@ -51,7 +51,7 @@ public class MatrixMath {
             return;
         }
 
-        for (double[] row :
+        for (int[] row :
                 matrix) {
             if (row.length == 0) {
                 System.out.println("Пустая строка");
@@ -66,14 +66,14 @@ public class MatrixMath {
             System.out.println(" |");
         }
     }
-	public static ArrayList<double[]> transposeMatrix(ArrayList<double[]> matrix) {
-        ArrayList<double[]> transposedMatrix = new ArrayList<>();
+	public static ArrayList<int[]> transposeMatrix(ArrayList<int[]> matrix) {
+        ArrayList<int[]> transposedMatrix = new ArrayList<>();
 
         int rowCount = matrix.size();
         int columnCount = matrix.get(0).length;
 
         for (int i = 0; i < columnCount; i++) {
-            transposedMatrix.add(new double[rowCount]);
+            transposedMatrix.add(new int[rowCount]);
         }
 
         for (int i = 0; i < rowCount; i++)
@@ -83,7 +83,7 @@ public class MatrixMath {
         return transposedMatrix;
     }
 
-    public static double matrixDeterminant (ArrayList<double[]> matrix) throws IllegalArgumentException {
+    public static int matrixDeterminant (ArrayList<int[]> matrix) throws IllegalArgumentException {
         if(matrix.size() != matrix.get(0).length)
             throw new IllegalArgumentException("Passed matrix is not a square matrix");
 
@@ -99,7 +99,7 @@ public class MatrixMath {
 
         int determinantValue = 0;
         for (int i = 0; i < matrixSize; i++) {
-            ArrayList<double[]> additionalMinor = additionalMinor(matrix, i, 0);
+            ArrayList<int[]> additionalMinor = additionalMinor(matrix, i, 0);
             double additionalMinorDeterminant = matrixDeterminant(additionalMinor);
             int sign = (int) Math.pow((-1), (i));
 
@@ -109,7 +109,7 @@ public class MatrixMath {
         return determinantValue;
     }
 
-    public static ArrayList<double[]> additionalMinor(ArrayList<double[]> matrix, int rowToErase, int columnToErase) throws IllegalArgumentException {
+    public static ArrayList<int[]> additionalMinor(ArrayList<int[]> matrix, int rowToErase, int columnToErase) throws IllegalArgumentException {
         int rowCount = matrix.size();
         int columnCount = matrix.get(0).length;
 
@@ -117,13 +117,13 @@ public class MatrixMath {
             (columnToErase < 0 || columnToErase >= columnCount))
             throw new IllegalArgumentException("Invalid row and column indexes");
 
-        ArrayList<double[]> additionalMinor = new ArrayList<>();
+        ArrayList<int[]> additionalMinor = new ArrayList<>();
         int minorRowCount = rowCount - 1;
         int minorRowIndex = -1;
         for (int i = 0; i < rowCount; i++) {
             if (i == rowToErase)
                 continue;
-            additionalMinor.add(new double[minorRowCount]);
+            additionalMinor.add(new int[minorRowCount]);
             minorRowIndex++;
 
             int minorColumnIndex = 0;
@@ -137,7 +137,7 @@ public class MatrixMath {
         return additionalMinor;
     }
 
-    public static ArrayList<double[]> inverseMatrix (ArrayList<double[]> matrix) throws IllegalArgumentException, ArithmeticException {
+    public static ArrayList<int[]> attachedMatrix(ArrayList<int[]> matrix) throws IllegalArgumentException, ArithmeticException {
         int rowCount = matrix.size();
         int columnCount = matrix.get(0).length;
 
@@ -151,31 +151,32 @@ public class MatrixMath {
             throw new ArithmeticException("Inverse matrix cannot be found for matrix with determinant equal to 0");
 
         // Нахождение присоединенной матрицы
-        ArrayList<double[]> attachedMatrix = new ArrayList<>();
+        ArrayList<int[]> attachedMatrix = new ArrayList<>();
         for (int i = 0; i < rowCount; i++) {
-            attachedMatrix.add(new double[columnCount]);
+            attachedMatrix.add(new int[columnCount]);
             for (int j = 0; j < columnCount; j++) {
-                ArrayList<double[]> additionalMinor = additionalMinor(matrix, i, j);
-                double additionalMinorDeterminant = matrixDeterminant(additionalMinor);
+                ArrayList<int[]> additionalMinor = additionalMinor(matrix, i, j);
+                int additionalMinorDeterminant = matrixDeterminant(additionalMinor);
                 int sign = (int) Math.pow((-1), (i + j));
 
                 attachedMatrix.get(i)[j] = sign * additionalMinorDeterminant;
             }
         }
 
-        // Получение обратной матрицы из присоединенной
-        ArrayList<double[]> transposedAttachedMatrix = transposeMatrix(attachedMatrix);
-        ArrayList<double[]> inverseMatrix = (ArrayList<double[]>) transposedAttachedMatrix.clone(); // типы всегда одинаковы и преобразование в ArrayList<double[]> из Object возможен
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < columnCount; j++) {
-                inverseMatrix.get(i)[j] = inverseMatrix.get(i)[j] / matrixDeterminant; // деление на ноль предусмотрено исключением в начале метода
+        return attachedMatrix;
+    }
+    public static ArrayList<int[]> divideAllMatrixElements(ArrayList<int[]> matrix, int number) { // int Так как деление с double неточно для зашифровки
+        ArrayList<int[]> quotient = (ArrayList<int[]>) matrix.clone();
+        for (int[] row :
+                quotient) {
+            for (int i = 0; i < row.length; i++) {
+                row[i] /= number;
             }
         }
-
-        return inverseMatrix;
+        return quotient;
     }
 
-    public static ArrayList<double[]> multiplyMatrices (ArrayList<double[]> multiplicand, ArrayList<double[]> multiplier) {
+    public static ArrayList<int[]> multiplyMatrices (ArrayList<int[]> multiplicand, ArrayList<int[]> multiplier) {
         int multiplicandRowCount = multiplicand.size();
         int multiplicandColumnCount = multiplicand.get(0).length;
         int multiplierRowCount = multiplier.size();
@@ -184,9 +185,9 @@ public class MatrixMath {
         if (multiplicandColumnCount != multiplierRowCount)
             throw new IllegalArgumentException("Provided matrices cannot be multiplied: column size is not equal to row size");
 
-        ArrayList<double[]> product = new ArrayList<>();
+        ArrayList<int[]> product = new ArrayList<>();
         for (int i = 0; i < multiplicandRowCount; i++) {
-            product.add(new double[multiplierColumnCount]);
+            product.add(new int[multiplierColumnCount]);
             for (int j = 0; j < multiplierColumnCount; j++) {
                 int sum = 0;
                 for (int k = 0; k < multiplicandColumnCount; k++) {
