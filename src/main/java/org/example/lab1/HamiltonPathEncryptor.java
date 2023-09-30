@@ -45,9 +45,15 @@ public class HamiltonPathEncryptor implements Encryptor {
 	public String encrypt(String message) {
 		StringBuilder encryptedMessage = new StringBuilder();
 
+		if (message.length() % this.hamiltonPath.size() != 0) {
+			int spacesToAdd = this.hamiltonPath.size() - message.length() % this.hamiltonPath.size();
+			StringBuilder messageBuilder = new StringBuilder(message);
+			messageBuilder.append("_".repeat(Math.max(0, spacesToAdd)));
+			message = messageBuilder.toString();
+		}
+
 		int substringLength = this.hamiltonPath.size();
 		int substringCount = message.length() / substringLength;
-		int leftoverCount = message.length() % substringLength;
 
 		for (int i = 0; i < substringCount; i++) {
 			StringBuilder substring = new StringBuilder();
@@ -56,27 +62,18 @@ public class HamiltonPathEncryptor implements Encryptor {
 				substring.append(message.charAt(offset + substringIndex));
 			encryptedMessage.append(substring);
 		}
-		// Остаток сообщения, не полностью вмещающийся в размерность ключа
-		int offset = substringLength * substringCount;
-		StringBuilder leftover = new StringBuilder();
-		for (int i = 0; i < leftoverCount; i++) {
-			try {
-				leftover.append(message.charAt(offset + this.hamiltonPath.get(i)));
-			} catch (Exception skip) {
-				leftoverCount++;
-			}
-		}
-		encryptedMessage.append(leftover);
 
 		return encryptedMessage.toString();
 	}
 	@Override
-	public String decrypt(String message) {
+	public String decrypt(String message) throws IllegalArgumentException {
 		StringBuilder decryptedMessage = new StringBuilder();
+
+		if (message.length() % this.hamiltonPath.size() != 0)
+			throw new IllegalArgumentException("Decrypted message must be consistent with the key path");
 
 		int substringLength = this.hamiltonPath.size();
 		int substringCount = message.length() / substringLength;
-		int leftoverCount = message.length() % substringLength;
 
 		// Шаблон, используется для определения подстрок и их непоследовательного заполнения
 		StringBuilder substringTemplate = new StringBuilder(new String());
@@ -90,15 +87,6 @@ public class HamiltonPathEncryptor implements Encryptor {
 			}
 			decryptedMessage.append(substring);
 		}
-
-		// Остаток сообщения, не полностью вмещающийся в размерность ключа
-		int offset = substringLength * substringCount;
-		StringBuilder leftover = new StringBuilder();
-		leftover.append("-".repeat(leftoverCount));
-		for (int i = 0; i < leftoverCount; i++) {
-			leftover.setCharAt(this.hamiltonPath.get(i), message.charAt(offset + i));
-		}
-		decryptedMessage.append(leftover);
 
 		return decryptedMessage.toString();
 	}
