@@ -5,9 +5,9 @@ import javafx.scene.control.TextArea;
 
 public class RearrangementDetailsController {
 	@FXML
-	TextArea encryptionTableOutput;
+	TextArea encryptionTableOutput; // Текстовая область вывода таблицы зашифровки пользователю
 	@FXML
-	TextArea decryptionTableOutput;
+	TextArea decryptionTableOutput; // Текстовая область вывода таблицы расшифровки пользователю
 	public void displayEncryptionTable(String table) {
 		encryptionTableOutput.setText(table);
 	}

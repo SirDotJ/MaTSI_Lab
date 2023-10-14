@@ -1,67 +1,67 @@
 package org.example.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import org.example.lab1.CaesarEncryptor;
-
-import org.example.common.GlobalVariables;
+import org.example.common.Alerts;
+import org.example.common.Alphabet;
 
 public class CaesarDetailsController {
 	@FXML
-	TextArea alphabetOutput;
+	TextField keyValueInputField; // Текстовая область заполнения значения ключа шифровки пользователем
 	@FXML
-	TextField keyValueInputField;
+	TextArea alphabetOutput; // Поле вывода алфавитов для шифровки пользователю
+
+	private static final Alphabet USED_ALPHABET = CaesarController.USED_ALPHABET;
+	private static final boolean DEFAULT_IN_LOWER_CASE = false;
+	private static final String ALPHABET_SEPARATOR = "\n";
+
 	private int getKey() throws NumberFormatException {
 		return Integer.parseInt(this.keyValueInputField.getText());
 	}
-	public void encrypt() {
+
+	public void encrypt() { // Вызывается при нажатии на кнопку "Зашифровать" пользователем
 		int key;
 		try {
 			key = this.getKey();
 		} catch (NumberFormatException exception) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Неправильный ключ");
-			errorPopup.setHeaderText("Ошибка: неправильный ключ шифра");
-			errorPopup.setContentText("Пожалуйста введите только одну цифру в качестве ключа");
-			errorPopup.showAndWait();
+			Alerts.showError(
+					"Неправильный ключ",
+					"Ошибка: неправильный ключ шифра",
+					"Пожалуйста введите только одну цифру в качестве ключа");
 			return;
 		}
 		this.alphabetOutput.clear();
-		for (int i = 0; i < GlobalVariables.CYRILLIC_ALPHABET_SIZE; i++) {
-			this.alphabetOutput.appendText(String.valueOf(CaesarEncryptor.CYRILLIC_ALPHABET_UPPERCASE.get(i)));
-		}
-		this.alphabetOutput.appendText("\n");
-		for (int i = 0; i < GlobalVariables.CYRILLIC_ALPHABET_SIZE; i++) {
+		this.alphabetOutput.appendText(USED_ALPHABET.toString(DEFAULT_IN_LOWER_CASE));
+		this.alphabetOutput.appendText(ALPHABET_SEPARATOR);
+		for (int i = 0; i < USED_ALPHABET.size(); i++) {
 			int newLetterIndex = i + key;
-			if (newLetterIndex > GlobalVariables.CYRILLIC_ALPHABET_SIZE - 1)
-				newLetterIndex -= GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-			this.alphabetOutput.appendText(String.valueOf(CaesarEncryptor.CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex)));
+			if (newLetterIndex > USED_ALPHABET.size() - 1)
+				newLetterIndex -= USED_ALPHABET.size();
+			char encryptedLetter = USED_ALPHABET.get(newLetterIndex, DEFAULT_IN_LOWER_CASE);
+			this.alphabetOutput.appendText(String.valueOf(encryptedLetter));
 		}
 	}
-	public void decrypt() {
+	public void decrypt() { // Вызывается при нажатии на кнопку "Расшифровать" пользователем
 		int key;
 		try {
 			key = this.getKey();
 		} catch (NumberFormatException exception) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Неправильный ключ");
-			errorPopup.setHeaderText("Ошибка: неправильный ключ шифра");
-			errorPopup.setContentText("Пожалуйста введите только одну цифру в качестве ключа");
-			errorPopup.showAndWait();
+			Alerts.showError(
+					"Неправильный ключ",
+					"Ошибка: неправильный ключ шифра",
+					"Пожалуйста введите только одну цифру в качестве ключа");
 			return;
 		}
 		this.alphabetOutput.clear();
-		for (int i = 0; i < GlobalVariables.CYRILLIC_ALPHABET_SIZE; i++) {
-			this.alphabetOutput.appendText(String.valueOf(CaesarEncryptor.CYRILLIC_ALPHABET_UPPERCASE.get(i)));
-		}
-		this.alphabetOutput.appendText("\n");
-		for (int i = 0; i < GlobalVariables.CYRILLIC_ALPHABET_SIZE; i++) {
+		this.alphabetOutput.appendText(USED_ALPHABET.toString(DEFAULT_IN_LOWER_CASE));
+		this.alphabetOutput.appendText(ALPHABET_SEPARATOR);
+		for (int i = 0; i < USED_ALPHABET.size(); i++) {
 			int newLetterIndex = i - key;
 			if (newLetterIndex < 0)
-				newLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(newLetterIndex);
-			this.alphabetOutput.appendText(String.valueOf(CaesarEncryptor.CYRILLIC_ALPHABET_UPPERCASE.get(newLetterIndex)));
+				newLetterIndex = USED_ALPHABET.size() - Math.abs(newLetterIndex);
+			char decryptedLetter = USED_ALPHABET.get(newLetterIndex, DEFAULT_IN_LOWER_CASE);
+			this.alphabetOutput.appendText(String.valueOf(decryptedLetter));
 		}
 	}
 }

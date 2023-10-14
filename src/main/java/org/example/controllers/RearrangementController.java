@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import org.example.common.Alerts;
+import org.example.common.DecryptorForm;
+import org.example.common.EncryptorForm;
 import org.example.lab1.RearrangementEncryptor;
 
 import javafx.scene.control.TextField;
@@ -14,17 +16,17 @@ import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RearrangementController {
+public class RearrangementController implements EncryptorForm, DecryptorForm {
 	@FXML
-	TextField key1TextField;
+	TextField key1TextField; // Поле заполнения ключа шифровки №1 пользователем
 	@FXML
-	TextField key2TextField;
+	TextField key2TextField; // Поле заполнения ключа шифровки №2 пользователя
 	@FXML
-	TextArea messageTextArea;
+	TextArea messageTextArea; // Текстовая область заполнения сообщения для шифровки пользователем
 	@FXML
-	TextArea encryptedMessageTextArea;
+	TextArea encryptedMessageTextArea; // Текстовая область вывода результата шифровки пользователю
 
-	RearrangementEncryptor encryptor;
+	RearrangementEncryptor encryptor = new RearrangementEncryptor();
 
 	private ArrayList<Integer> getKey1() throws InvalidAlgorithmParameterException {
 		ArrayList<Integer> output;
@@ -52,7 +54,7 @@ public class RearrangementController {
 		data = data.replace("[", "");
 		data = data.replace("]", "");
 
-		ArrayList<String> dataList = new ArrayList<String>(Arrays.asList(data.split(" ")));
+		ArrayList<String> dataList = new ArrayList<>(Arrays.asList(data.split(" ")));
 		for (String input :
 				dataList) {
 			int number = Integer.parseInt(input);
@@ -65,84 +67,84 @@ public class RearrangementController {
 		return output;
 	}
 
-	public void encrypt() {
+	private void setupEncryptor() throws IllegalStateException {
 		ArrayList<Integer> key1;
 		ArrayList<Integer> key2;
 		try {
 			key1 = this.getKey1();
 			key2 = this.getKey2();
 		} catch (Exception e) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Неправильные ключи");
-			errorPopup.setHeaderText("Ошибка: неправильный ключ шифра");
-			errorPopup.setContentText("Пожалуйста введите только одну цифру в качестве ключа");
-			errorPopup.showAndWait();
-			return;
-		}
-
-		String message = this.messageTextArea.getText();
-		if (message.length() > key1.size() * key2.size()) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Неправильное сообщение");
-			errorPopup.setHeaderText("Ошибка: неправильный размер сообщения для ключей");
-			errorPopup.setContentText("Пожалуйста измените ключи для возможности шифровки или введите сообщение меньшего объема");
-			errorPopup.showAndWait();
-			return;
-		}
-
-		this.encryptor = new RearrangementEncryptor(key1, key2);
-		String encryptedMessage = encryptor.encrypt(message);
-		this.encryptedMessageTextArea.setText(encryptedMessage);
-
-	}
-	public void decrypt() {
-		ArrayList<Integer> key1;
-		ArrayList<Integer> key2;
-		try {
-			key1 = this.getKey1();
-			key2 = this.getKey2();
-		} catch (Exception e) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Неправильные ключи");
-			errorPopup.setHeaderText("Ошибка: неправильный ключ шифра");
-			errorPopup.setContentText("Пожалуйста введите только одну цифру в качестве ключа");
-			errorPopup.showAndWait();
-			return;
+			Alerts.showError(
+					"Неправильные ключи",
+					"Ошибка: неправильный ключ шифра",
+					"Пожалуйста введите набор чисел от 0 до n без повторений, где n - размер ключа"
+			);
+			throw new IllegalStateException("Invalid keys");
 		}
 
 		String encryptedMessage = this.messageTextArea.getText();
 		if (encryptedMessage.length() > key1.size() * key2.size()) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Неправильное сообщение");
-			errorPopup.setHeaderText("Ошибка: неправильный размер сообщения для ключей");
-			errorPopup.setContentText("Пожалуйста измените ключи для возможности шифровки или введите сообщение меньшего объема");
-			errorPopup.showAndWait();
-			return;
+			Alerts.showError(
+					"Неправильное сообщение",
+					"Ошибка: неправильный размер сообщения для ключей",
+					"Пожалуйста измените ключи для возможности шифровки или введите сообщение меньшего объема");
+			throw new IllegalStateException("Invalid message");
 		}
-
-		this.encryptor = new RearrangementEncryptor(key1, key2);
-		String decryptedMessage = encryptor.decrypt(encryptedMessage);
-		this.encryptedMessageTextArea.setText(decryptedMessage);
+		this.encryptor.setKey1(key1);
+		this.encryptor.setKey2(key2);
 	}
-	public void openDetails() {
+	public void openDetails() { // Вызывается при нажатии на кнопку "Детали" пользователем
 		try {
 			FXMLLoader loader = new FXMLLoader(this.getClass().getClassLoader().getResource("MaTDP_RearrangementDetails.fxml"));
 			Parent detailsRoot = loader.load();
 			RearrangementDetailsController controller = loader.getController();
-			controller.displayEncryptionTable(this.encryptor.getEncryptionTable());
-			controller.displayDecryptionTable(this.encryptor.getDecryptionTable());
+			try {
+				controller.displayEncryptionTable(this.encryptor.getEncryptionTable());
+				controller.displayDecryptionTable(this.encryptor.getDecryptionTable());
+			} catch (IllegalStateException e) {
+				Alerts.showError(
+						"Ошибка таблиц шифровки/расшифровки",
+						"Нет установленной таблицы шифровки/расшифровки",
+						"Пожалуйста введите используемые ключи и попробуйте снова");
+				return;
+			}
 
 			Stage detailsStage = new Stage();
 			detailsStage.setTitle("Алгоритм Перестановки");
 			detailsStage.setScene(new Scene(detailsRoot));
 			detailsStage.show();
 		} catch (Exception e) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Неизвестная ошибка");
-			errorPopup.setHeaderText("Произошла неизвестная ошибка");
-			errorPopup.setContentText("Окно с деталями не смогло запуститься");
-			e.printStackTrace();
-			errorPopup.showAndWait();
+			Alerts.showError(
+					"Неизвестная ошибка",
+					"Произошла неизвестная ошибка",
+					"При попытке запуска окна с деталями произошла ошибка: " + e
+			);
 		}
+	}
+
+	@Override
+	public void encrypt() { // Вызывается при нажатии на кнопку "Зашифровать" пользователем
+		String openMessage = this.messageTextArea.getText();
+		try {
+			this.setupEncryptor();
+		} catch (Exception e) {
+			return;
+		}
+
+		String encryptedMessage = encryptor.encrypt(openMessage);
+		this.encryptedMessageTextArea.setText(encryptedMessage);
+
+	}
+	@Override
+	public void decrypt() { // Вызывается при нажатии на кнопку "Расшифровать" пользователем
+		String encryptedMessage = this.messageTextArea.getText();
+		try {
+			this.setupEncryptor();
+		} catch (Exception e) {
+			return;
+		}
+
+		String decryptedMessage = encryptor.decrypt(encryptedMessage);
+		this.encryptedMessageTextArea.setText(decryptedMessage);
 	}
 }

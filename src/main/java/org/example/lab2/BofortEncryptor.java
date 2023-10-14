@@ -1,59 +1,76 @@
 package org.example.lab2;
 
+import org.example.common.Alphabet;
+import org.example.common.Decryptor;
 import org.example.common.Encryptor;
-import org.example.common.GlobalVariables;
+import org.example.common.AlphabetConstants;
 
 // Для реализации была взята первая формула mod N(k_i - X_i)
-public class BofortEncryptor implements Encryptor {
+public class BofortEncryptor implements Encryptor, Decryptor {
 	public enum VARIANT {
 		ONE, // Y_i = (k_i - X_i)mod N
 		TWO // Y_i = (X_i - k_i)mod N
 	}
-	public static void main(String[] args) { // Тестирование работы класса
-		String message = "ПЕРЕНОС";
-		String key = "КРАН";
-		System.out.println("Сообщение: " + message);
-		System.out.println("Ключ: " + key);
-		// Проверка формы №1
-		BofortEncryptor encryptorOne = new BofortEncryptor(key, VARIANT.ONE);
-		String encryptedMessageOne = encryptorOne.encrypt(message);
-		String decryptedMessageOne = encryptorOne.decrypt(encryptedMessageOne);
-		System.out.println("Вариант №1:");
-		System.out.println("Сообщение: " + message);
-		System.out.println("Зашифрованное сообщение: " + encryptedMessageOne);
-		System.out.println("Расшифрованное сообщение: " + decryptedMessageOne);
 
-		// Проверка формы №2
-		BofortEncryptor encryptorTwo = new BofortEncryptor(key, VARIANT.TWO);
-		String encryptedMessageTwo = encryptorTwo.encrypt(message);
-		String decryptedMessageTwo = encryptorTwo.decrypt(encryptedMessageTwo);
-		System.out.println("Вариант №1:");
-		System.out.println("Сообщение: " + message);
-		System.out.println("Зашифрованное сообщение: " + encryptedMessageTwo);
-		System.out.println("Расшифрованное сообщение: " + decryptedMessageTwo);
-	}
+	private static final Alphabet DEFAULT_ALPHABET = AlphabetConstants.FULL_WITH_SPACE;
+	private static final String DEFAULT_KEY = "ТЕСТ";
+	private static final VARIANT DEFAULT_VARIANT = VARIANT.ONE;
+
+	private final Alphabet alphabet;
 	private String key;
 	private VARIANT variant;
-	public BofortEncryptor(String key) {
-		this(key, VARIANT.ONE);
-	}
-	public BofortEncryptor(String key, VARIANT variant) {
+
+	public BofortEncryptor(Alphabet alphabet, String key, VARIANT variant) {
+		this.alphabet = alphabet;
 		this.key = key;
 		this.variant = variant;
 	}
+	public BofortEncryptor() {
+		this(DEFAULT_ALPHABET, DEFAULT_KEY, DEFAULT_VARIANT);
+	}
+	public BofortEncryptor(String key, VARIANT variant) {
+		this(DEFAULT_ALPHABET, key, variant);
+	}
+	public BofortEncryptor(Alphabet alphabet, VARIANT variant) {
+		this(alphabet, DEFAULT_KEY, variant);
+	}
+	public BofortEncryptor(Alphabet alphabet, String key) {
+		this(alphabet, key, DEFAULT_VARIANT);
+	}
+	public BofortEncryptor(Alphabet alphabet) {
+		this(alphabet, DEFAULT_KEY, DEFAULT_VARIANT);
+	}
+	public BofortEncryptor(String key) {
+		this(DEFAULT_ALPHABET, key, DEFAULT_VARIANT);
+	}
+	public BofortEncryptor(VARIANT variant) {
+		this(DEFAULT_ALPHABET, DEFAULT_KEY, variant);
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+	public void setVariant(VARIANT variant) {
+		this.variant = variant;
+	}
+
 	// Расширяет ключ для применения шифра над переданным сообщением добавляя себя на конец пока размер не совпадёт с сообщением
 	private String fitKeyToMessage(String message) {
 		StringBuilder keyBuilder = new StringBuilder(this.key);
-		if (message.length() > keyBuilder.length()) {
-			int currentSymbolIndex = 0;
-			for (int i = 0; i < (message.length() - this.key.length()); i++) {
-				keyBuilder.append(this.key.charAt(currentSymbolIndex++));
-				if (currentSymbolIndex >= this.key.length())
-					currentSymbolIndex = 0;
-			}
+		if (message.length() <= keyBuilder.length())
+			return keyBuilder.toString();
+
+		int messageToKeyDifference = message.length() - this.key.length();
+		int currentKeySymbolIndex = 0;
+		for (int i = 0; i < messageToKeyDifference; i++) {
+			keyBuilder.append(this.key.charAt(currentKeySymbolIndex++));
+			if (currentKeySymbolIndex >= this.key.length())
+				currentKeySymbolIndex = 0;
 		}
+
 		return keyBuilder.toString();
 	}
+
 	@Override
 	public String encrypt(String message) {
 		// Расширение ключа шифра
@@ -63,19 +80,20 @@ public class BofortEncryptor implements Encryptor {
 		StringBuilder encryptedMessage = new StringBuilder();
 		for (int i = 0; i < message.length(); i++) {
 			char messageLetter = message.charAt(i);
-			boolean isUpper = Character.isUpperCase(messageLetter);
+			char keyLetter = appliedKey.charAt(i);
 
-			int openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(messageLetter));
-			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
+			int openMessageLetterIndex = this.alphabet.indexOf(messageLetter);
+			int keyLetterIndex = this.alphabet.indexOf(keyLetter);
 			int encryptedLetterIndex;
 			switch (this.variant) {
-				case TWO -> encryptedLetterIndex = (openMessageLetterIndex - keyLetterIndex - 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-				default -> encryptedLetterIndex = (keyLetterIndex - openMessageLetterIndex - 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				case TWO -> encryptedLetterIndex = (openMessageLetterIndex - keyLetterIndex - 1) % this.alphabet.size();
+				default -> encryptedLetterIndex = (keyLetterIndex - openMessageLetterIndex - 1) % this.alphabet.size();
 			}
 			if (encryptedLetterIndex < 0)
-				encryptedLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(encryptedLetterIndex);
-			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(encryptedLetterIndex) :
-									   GlobalVariables.CYRILLIC_ALPHABET_LOWERCASE.get(encryptedLetterIndex);
+				encryptedLetterIndex = this.alphabet.size() - Math.abs(encryptedLetterIndex);
+
+			boolean messageLetterIsLower = Character.isLowerCase(messageLetter);
+			char newLetter = this.alphabet.get(encryptedLetterIndex, messageLetterIsLower);
 			encryptedMessage.append(newLetter);
 		}
 		return encryptedMessage.toString();
@@ -90,19 +108,20 @@ public class BofortEncryptor implements Encryptor {
 		StringBuilder encryptedMessage = new StringBuilder();
 		for (int i = 0; i < message.length(); i++) {
 			char messageLetter = message.charAt(i);
-			boolean isUpper = Character.isUpperCase(messageLetter);
+			char keyLetter = appliedKey.charAt(i);
 
-			int encryptedMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(messageLetter));
-			int keyLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.indexOf(Character.toUpperCase(appliedKey.charAt(i)));
+			int encryptedMessageLetterIndex = this.alphabet.indexOf(messageLetter);
+			int keyLetterIndex = this.alphabet.indexOf(keyLetter);
 			int openMessageLetterIndex;
 			switch (this.variant) {
-				case TWO -> openMessageLetterIndex = (encryptedMessageLetterIndex + keyLetterIndex + 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
-				default -> openMessageLetterIndex = (keyLetterIndex - encryptedMessageLetterIndex - 1) % GlobalVariables.CYRILLIC_ALPHABET_SIZE;
+				case TWO -> openMessageLetterIndex = (encryptedMessageLetterIndex + keyLetterIndex + 1) % this.alphabet.size();
+				default -> openMessageLetterIndex = (keyLetterIndex - encryptedMessageLetterIndex - 1) % this.alphabet.size();
 			}
 			if (openMessageLetterIndex < 0)
-				openMessageLetterIndex = GlobalVariables.CYRILLIC_ALPHABET_SIZE - Math.abs(openMessageLetterIndex);
-			char newLetter = isUpper ? GlobalVariables.CYRILLIC_ALPHABET_UPPERCASE.get(openMessageLetterIndex) :
-									   GlobalVariables.CYRILLIC_ALPHABET_LOWERCASE.get(openMessageLetterIndex);
+				openMessageLetterIndex = this.alphabet.size() - Math.abs(openMessageLetterIndex);
+
+			boolean messageLetterIsLower = Character.isLowerCase(messageLetter);
+			char newLetter = this.alphabet.get(openMessageLetterIndex, messageLetterIsLower);
 			encryptedMessage.append(newLetter);
 		}
 		return encryptedMessage.toString();

@@ -1,37 +1,57 @@
 package org.example.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.example.common.*;
 import org.example.lab3.KnapsackEncryptor;
 
-public class KnapsackController {
+public class KnapsackController implements EncryptorForm, DecryptorForm {
 	@FXML
-	TextField keyText;
+	TextField keyText; // Поле заполнения ключа шифровки пользователем
 	@FXML
-	TextArea inputMessage;
+	TextArea inputMessage; // Текстовая область заполнения сообщения для шифровки пользователем
 	@FXML
-	TextArea outputEncryptedMessage;
-	private KnapsackEncryptor encryptor;
-	public void encrypt() {
+	TextArea outputEncryptedMessage; // Текстовая область вывода результата шифровки пользователю
+
+	// По требованию лабораторной работы: используется кириллица
+	public static final Alphabet USED_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
+
+	private final KnapsackEncryptor encryptor = new KnapsackEncryptor(USED_ALPHABET);
+	private void setupEncryptor() throws IllegalStateException {
 		String key = this.keyText.getText();
 		if (key.split(" ").length != KnapsackEncryptor.BINARY_REPRESENTATION_LENGTH) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Ошибка ключа");
-			errorPopup.setHeaderText("Неправильный ключ");
-			errorPopup.setContentText("Пожалуйста введите ключ из " + KnapsackEncryptor.BINARY_REPRESENTATION_LENGTH + " чисел");
-			errorPopup.showAndWait();
+			Alerts.showError(
+					"Ошибка ключа",
+					"Неправильный ключ",
+					"Пожалуйста введите ключ из " + KnapsackEncryptor.BINARY_REPRESENTATION_LENGTH + " чисел"
+			);
+			throw new IllegalStateException("User entered invalid key");
+		}
+
+		this.encryptor.setKey(key);
+	}
+
+	@Override
+	public void encrypt() { // Вызывается при нажатии на кнопку "Зашифровать" пользователем
+		try {
+			this.setupEncryptor();
+		} catch (IllegalStateException e) {
 			return;
 		}
-		this.encryptor = new KnapsackEncryptor(key);
+
 		String message = this.inputMessage.getText();
 		String encryptedMessage = this.encryptor.encrypt(message);
 		this.outputEncryptedMessage.setText(encryptedMessage);
 	}
-	public void decrypt() {
-		String key = this.keyText.getText();
-		this.encryptor = new KnapsackEncryptor(key);
+	@Override
+	public void decrypt() { // Вызывается при нажатии на кнопку "Расшифровать" пользователем
+		try {
+			this.setupEncryptor();
+		} catch (IllegalStateException e) {
+			return;
+		}
+
 		String message = this.inputMessage.getText();
 		String decryptedMessage = this.encryptor.decrypt(message);
 		this.outputEncryptedMessage.setText(decryptedMessage);

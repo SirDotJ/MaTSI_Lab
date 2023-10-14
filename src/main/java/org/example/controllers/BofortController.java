@@ -2,57 +2,65 @@ package org.example.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import org.example.common.GlobalVariables;
+import org.example.common.*;
 import org.example.lab2.BofortEncryptor;
 
-public class BofortController {
+public class BofortController implements EncryptorForm, DecryptorForm {
 	@FXML
-	TextField keyText;
+	TextField keyText; // Поле заполнения ключа шифровки пользователем
 	@FXML
-	TextArea inputMessage;
+	TextArea inputMessage; // Текстовая область заполнения сообщения для шифровки пользователем
 	@FXML
-	TextArea outputEncryptedMessage;
+	TextArea outputEncryptedMessage; // Текстовая область вывода результата шифровки пользователю
 
-	private BofortEncryptor encryptor;
+	// По требованию лабораторной работы: используется кириллица
+	public static final Alphabet USED_ALPHABET = AlphabetConstants.CYRILLIC_NO_SPACE;
+
+	private final BofortEncryptor encryptor = new BofortEncryptor(USED_ALPHABET);
 	private BofortEncryptor.VARIANT variant = null;
 
-	public void encrypt() {
+	public void chooseVariant1(ActionEvent event) { // Вызывается при выборе радиокнопки первой формы
+		this.variant = BofortEncryptor.VARIANT.ONE;
+		this.encryptor.setVariant(this.variant);
+	}
+	public void chooseVariant2(ActionEvent event) { // Вызывается при выборе радиокнопки второй формы
+		this.variant = BofortEncryptor.VARIANT.TWO;
+		this.encryptor.setVariant(this.variant);
+	}
+	private void setupEncryptor() throws IllegalStateException {
 		if (variant == null) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Нет выбранного варианта");
-			errorPopup.setHeaderText("Ошибка: не был выбран вариант шифра");
-			errorPopup.setContentText("Пожалуйста выберите один из двух предложенных формул шифра");
-			errorPopup.showAndWait();
+			Alerts.showError(
+					"Нет выбранного варианта",
+					"Ошибка: не был выбран вариант шифра",
+					"Пожалуйста выберите один из двух предложенных формул шифра"
+			);
+			throw new IllegalStateException("Variant was not chosen by the user");
+		}
+		this.encryptor.setKey(this.keyText.getText());
+	}
+
+	@Override
+	public void encrypt() { // Вызывается при нажатии на кнопку "Зашифровать" пользователем
+		try {
+			this.setupEncryptor();
+		} catch (IllegalStateException e) {
 			return;
 		}
-		String key = this.keyText.getText();
-		this.encryptor = new BofortEncryptor(key, this.variant);
 		String message = this.inputMessage.getText();
 		String encryptedText = this.encryptor.encrypt(message);
 		this.outputEncryptedMessage.setText(encryptedText);
 	}
-	public void decrypt() {
-		if (variant == null) {
-			Alert errorPopup = new Alert(Alert.AlertType.ERROR);
-			errorPopup.setTitle("Нет выбранного варианта");
-			errorPopup.setHeaderText("Ошибка: не был выбран вариант шифра");
-			errorPopup.setContentText("Пожалуйста выберите один из двух предложенных формул шифра");
-			errorPopup.showAndWait();
+	@Override
+	public void decrypt() { // Вызывается при нажатии на кнопку "Расшифровать" пользователем
+		try {
+			this.setupEncryptor();
+		} catch (IllegalStateException e) {
 			return;
 		}
-		String key = this.keyText.getText();
-		this.encryptor = new BofortEncryptor(key, this.variant);
 		String message = this.inputMessage.getText();
 		String decryptedText = this.encryptor.decrypt(message);
 		this.outputEncryptedMessage.setText(decryptedText);
-	}
-	public void chooseVariant1(ActionEvent event) {
-		this.variant = BofortEncryptor.VARIANT.ONE;
-	}
-	public void chooseVariant2(ActionEvent event) {
-		this.variant = BofortEncryptor.VARIANT.TWO;
 	}
 }

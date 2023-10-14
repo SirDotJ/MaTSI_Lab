@@ -4,18 +4,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.util.Pair;
 
 
 import java.util.*;
 
 public class HamiltonPathDetailsController {
 	@FXML
-	TextField displayedPathOutput;
+	TextField displayedPathOutput; // Поле вывода текущего гамильтонового пути пользователю
 	@FXML
-	Line line01, line06, line07, line12, line13, line23, line24, line34, line35, line36, line37, line45, line56, line67;
+	Line line01, line06, line07, line12, line13, line23, line24, line34, line35, line36, line37, line45, line56, line67; // Элементы Canvas, обозначающие ребра графа
 
-	// Я знаю, что это ужас, но на сейчас хватит чтобы автоматически при паре чисел обратится к соответствующей линии
 	private Map<String, Line> edgeToLine;
 
 	ArrayList<Integer> getKey() throws IllegalArgumentException {
@@ -34,6 +32,7 @@ public class HamiltonPathDetailsController {
 
 		return output;
 	}
+	// Я знаю, что это ужас, но матрица никогда не будет другой по требованиям лабораторной работы
 	public void initializeConnections() {
 		if (this.edgeToLine == null)
 			this.edgeToLine = new HashMap<>();
@@ -57,7 +56,7 @@ public class HamiltonPathDetailsController {
 		this.updatePath();
 	}
 	private void clearHIghlights() {
-		edgeToLine.forEach((edge, line) -> {
+		this.edgeToLine.forEach((edge, line) -> {
 			line.setFill(Color.BLACK);
 			line.setStroke(Color.BLACK);
 		});
@@ -68,8 +67,11 @@ public class HamiltonPathDetailsController {
 		for (int i = 0; i < path.size() - 1; i++) {
 			int vertex1 = path.get(i);
 			int vertex2 = path.get(i+1);
-			String edgeCode = String.valueOf(Math.min(vertex1, vertex2)) + String.valueOf(Math.max(vertex1, vertex2));
-			Line lineToColor = edgeToLine.get(edgeCode);
+			int startVertex = Math.min(vertex1, vertex2);
+			int endVertex = Math.max(vertex1, vertex2);
+			String edgeCode = String.valueOf(startVertex) + String.valueOf(endVertex);
+
+			Line lineToColor = this.edgeToLine.get(edgeCode);
 			lineToColor.setFill(Color.RED);
 			lineToColor.setStroke(Color.RED);
 		}
