@@ -1,12 +1,18 @@
 package org.example.common;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 // Класс хранит в себе предложенный алфавит в нижнем индексе с методами по поиску в нём
 public class Alphabet {
+    public enum TYPE {
+		CYRILLIC,
+		LATIN
+	}
     private final static boolean DEFAULT_LOWER_CASE = true;
     private final List<Character> alphabet;
-    public Alphabet(List<Character> alphabet) throws IllegalArgumentException {
+    private final TYPE type;
+    public Alphabet(List<Character> alphabet, TYPE type) throws IllegalArgumentException {
         Set<Character> usedSymbols = new HashSet<>(alphabet);
         if (usedSymbols.size() != alphabet.size())
             throw new IllegalArgumentException("Passed alphabet is invalid: symbols are used more than once");
@@ -17,6 +23,19 @@ public class Alphabet {
             lowerCaseFormAlphabet.add(lowerCaseLetter);
         }
         this.alphabet = Collections.unmodifiableList(lowerCaseFormAlphabet);
+        this.type = type;
+    }
+    public Alphabet(Character[] alphabet, TYPE type) {
+        this(Arrays.asList(alphabet), type);
+    }
+    public Alphabet(char[] alphabet, TYPE type) {
+        this(new String(alphabet), type);
+    }
+    public Alphabet(String alphabet, TYPE type) {
+        this(alphabet.chars().mapToObj(c -> (char) c).toArray(Character[]::new), type);
+    }
+    public Alphabet(List<Character> alphabet) {
+        this(alphabet, determineType(alphabet));
     }
     public Alphabet(Character[] alphabet) {
         this(Arrays.asList(alphabet));
@@ -35,6 +54,10 @@ public class Alphabet {
             connectedAlphabet.append(outputLetter);
         }
         return connectedAlphabet.toString();
+    }
+
+    public TYPE type() {
+        return this.type;
     }
 
     @Override
@@ -69,5 +92,9 @@ public class Alphabet {
     }
     public boolean textInAlphabet(String text) {
         return this.textInAlphabet(text.toCharArray());
+    }
+
+    private static TYPE determineType(List<Character> alphabet) {
+        return Character.UnicodeBlock.of(alphabet.get(0)).equals(Character.UnicodeBlock.BASIC_LATIN) ? TYPE.LATIN : TYPE.CYRILLIC;
     }
 }
