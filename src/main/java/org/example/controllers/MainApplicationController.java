@@ -26,6 +26,8 @@ public class MainApplicationController {
 	private RadioButton matrixMultiplicationMethodButton; // Кнопка выбора загрузки шифра "умножением матриц" пользователем
 	@FXML
 	private RadioButton knapsackMethodButton; // Кнопка выбора загрузки шифра "укладки ранца" пользователем
+	@FXML
+	private RadioButton playfairMethodButton; // Кнопка выбора загрузки шифра "Плейфера" пользователем
 
 	private void setDisplayScene(String fxmlFileName) {
 		this.methodDisplay.getChildren().clear();
@@ -77,6 +79,12 @@ public class MainApplicationController {
 	public void loadKnapsackMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр укладки ранца" пользователем
 		if(knapsackMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_KnapsackMain.fxml");
+		}
+	}
+	@FXML
+	public void loadPlayfairMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр Плейфера" пользователем
+		if(playfairMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_PlayfairMain.fxml");
 		}
 	}
 }

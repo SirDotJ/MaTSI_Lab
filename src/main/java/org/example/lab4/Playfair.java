@@ -31,6 +31,9 @@ public class Playfair implements Encryptor, Decryptor {
 	public void setKey(String newKey) {
 		this.matrix.initializeMatrix(newKey);
 	}
+	public void setKey(String newKey, Alphabet newAlphabet) {
+		this.matrix.initializeMatrix(newKey, newAlphabet);
+	}
 
 	public void printKeyMatrix() {
 		for (int i = 0; i < this.matrix.getRowCount(); i++) {
@@ -39,29 +42,6 @@ public class Playfair implements Encryptor, Decryptor {
 			}
 			System.out.println();
 		}
-	}
-
-	public static void main(String[] args) {
-		String key = "madgazel";
-		Playfair encryptor = new Playfair(key, AlphabetConstants.LATIN_NO_SPACE);
-		String message1 = "albino";
-		String encryptedMessage1 = encryptor.encrypt(message1);
-		String variantToDecrypt1 = encryptedMessage1.split("\n")[0];
-		String decryptedMessage1 = encryptor.decrypt(variantToDecrypt1);
-		String message2 = "coolcat";
-		String encryptedMessage2 = encryptor.encrypt(message2);
-		String variantToDecrypt2 = encryptedMessage2.split("\n")[0];
-		String decryptedMessage2 = encryptor.decrypt(variantToDecrypt2);
-		System.out.println("Key: " + key);
-		encryptor.printKeyMatrix();
-		System.out.println("Message1: " + message1);
-		System.out.println("Encrypted variants of message1:\n" + encryptedMessage1);
-		System.out.println("Variant to decrypt for message1: " + variantToDecrypt1);
-		System.out.println("Decrypted message1: " + decryptedMessage1);
-		System.out.println("Message2: " + message2);
-		System.out.println("Encrypted variants of message2:\n" + encryptedMessage2);
-		System.out.println("Variant to decrypt for message1: " + variantToDecrypt2);
-		System.out.println("Decrypted message2: " + decryptedMessage2);
 	}
 
 	private List<Bigramm> splitToBigramms(String input) {
@@ -109,6 +89,7 @@ public class Playfair implements Encryptor, Decryptor {
 
 	@Override
 	public String encrypt(String message) {
+		message = message.trim();
 		List<Bigramm> bigramms = splitToBigramms(message);
 		List<List<Bigramm>> encryptedMessageVariantsInBigramms = parseBigramms(bigramms, true);
 
@@ -125,6 +106,7 @@ public class Playfair implements Encryptor, Decryptor {
 
 	@Override
 	public String decrypt(String message) {
+		message = message.trim();
 		List<Bigramm> bigramms = splitToBigramms(message);
 		List<List<Bigramm>> decryptedMessageVariantsInBigramms = parseBigramms(bigramms, false);
 

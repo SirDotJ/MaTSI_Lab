@@ -7,11 +7,17 @@ import java.util.*;
 
 public class AlphabetMatrix {
 	private List<List<AlphabetMatrixEntry>> matrix;
-	private final Alphabet alphabet;
-	private final int rowCount;
-	private final int columnCount;
+	private Alphabet alphabet;
+	private int rowCount;
+	private int columnCount;
 
 	AlphabetMatrix(String key, Alphabet alphabet) {
+		this.alphabet = alphabet;
+		this.rowCount = this.alphabet.type() == Alphabet.TYPE.LATIN ? 5 : 4;
+		this.columnCount = this.alphabet.type() == Alphabet.TYPE.LATIN ? 5 : 8;
+		this.initializeMatrix(key);
+	}
+	public void initializeMatrix(String key, Alphabet alphabet) {
 		this.alphabet = alphabet;
 		this.rowCount = this.alphabet.type() == Alphabet.TYPE.LATIN ? 5 : 4;
 		this.columnCount = this.alphabet.type() == Alphabet.TYPE.LATIN ? 5 : 8;
@@ -107,7 +113,7 @@ public class AlphabetMatrix {
 		if (j >= this.columnCount)
 			j = Math.abs(j % this.columnCount);
 		else if (j < 0)
-			j = this.rowCount - Math.abs(j);
+			j = this.columnCount - Math.abs(j);
 
 		return this.matrix.get(i).get(j).getCharacters();
 	}

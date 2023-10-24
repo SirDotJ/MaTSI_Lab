@@ -136,6 +136,14 @@
                               <Font size="16.0" />
                            </font>
                         </RadioButton>
+                        <RadioButton id="radioButtonHamiltonPath" fx:id="playfairMethodButton" mnemonicParsing="false" onAction="#loadPlayfairMethod" text="Шифр Плейфера">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="currentMethod1" />
+                           </toggleGroup>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </RadioButton>
                      </children>
                   </VBox>
           </children>
