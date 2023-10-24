@@ -1,7 +1,7 @@
 package org.example.lab4;
 
+import javafx.util.Pair;
 import org.example.common.Alphabet;
-import org.example.common.AlphabetConstants;
 
 import java.util.*;
 
@@ -11,17 +11,13 @@ public class AlphabetMatrix {
 	private final int rowCount;
 	private final int columnCount;
 
-	public static void main(String[] args) {
-		AlphabetMatrix matrix1 = new AlphabetMatrix("MADGAZELLE", AlphabetConstants.LATIN_NO_SPACE);
-		System.out.print(matrix1);
-	}
 	AlphabetMatrix(String key, Alphabet alphabet) {
 		this.alphabet = alphabet;
 		this.rowCount = this.alphabet.type() == Alphabet.TYPE.LATIN ? 5 : 4;
 		this.columnCount = this.alphabet.type() == Alphabet.TYPE.LATIN ? 5 : 8;
 		this.initializeMatrix(key);
 	}
-	private void initializeMatrix(String key) {
+	public void initializeMatrix(String key) {
 		key = key.toLowerCase();
 		// Make an empty matrix
 		this.matrix = new ArrayList<>();
@@ -90,7 +86,29 @@ public class AlphabetMatrix {
 		}
 	}
 
-	private List<Character> get(int i, int j) {
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public int getColumnCount() {
+		return columnCount;
+	}
+
+	public Alphabet.TYPE getType() {
+		return this.alphabet.type();
+	}
+
+	public List<Character> get(int i, int j) {
+		if (i >= this.rowCount)
+			i = Math.abs(i % this.rowCount);
+		else if (i < 0)
+			i = this.rowCount - Math.abs(i);
+
+		if (j >= this.columnCount)
+			j = Math.abs(j % this.columnCount);
+		else if (j < 0)
+			j = this.rowCount - Math.abs(j);
+
 		return this.matrix.get(i).get(j).getCharacters();
 	}
 
@@ -101,5 +119,16 @@ public class AlphabetMatrix {
 	}
 	private void addCharTo(int i, int j, char letter) {
 		this.matrix.get(i).get(j).add(letter);
+	}
+
+	public Pair<Integer, Integer> findSymbolPosition(char symbol) {
+		for (int i = 0; i < this.rowCount; i++) {
+			for (int j = 0; j < this.columnCount; j++) {
+				List<Character> letter = this.matrix.get(i).get(j).getCharacters();
+				if (letter.contains(symbol))
+					return new Pair<>(i, j);
+			}
+		}
+		return null;
 	}
 }
