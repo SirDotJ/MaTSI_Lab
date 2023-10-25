@@ -8,17 +8,38 @@ public class RLE implements Encoder, Decoder {
         String message = "ZZZZZECDAAAIIWWWWW";
         RLE encoder = new RLE();
         String encodedMesssage = encoder.encode(message);
+        System.out.println(message);
         System.out.println(encodedMesssage);
+        System.out.println(cleanMessage(encodedMesssage));
     }
 
-    @Override
-    public String encode(String plainMessage) {
+    /* Determines how many instances of letter in a row are present in message starting from first character */
+    private static int countSameLettersInARow(String message, char letter) {
+        int counter = 0;
+        for (int i = 0; i < message.length(); i++) {
+            char currentLetter = message.charAt(i);
+            if (letter != currentLetter)
+                break;
+            counter++;
+        }
+        return counter;
+    }
+
+    private static String insertNumber(String originalMessage, int position, int number) {
+        StringBuilder newMessage = new StringBuilder(originalMessage);
+        newMessage.insert(position, number);
+        return newMessage.toString();
+    }
+
+    /* Inserts numbers in front of a row of same/different characters according to RLE rules (positive: same letters in a row, negative: different letters in a row) */
+    private static String markMessage(String plainMessage) {
         StringBuilder encodedMessage = new StringBuilder(plainMessage);
 
         int size = encodedMessage.length();
         int sameLetterCounter = 0;
         int firstSameLetterIndex = -1;
         for (int i = 0; i < size; i++) {
+            StringBuilder encodedMessage =
             char letter = encodedMessage.charAt(i);
             String fullMessage = encodedMessage.toString();
             String runningMessage = encodedMessage.substring(i, size);
@@ -52,26 +73,40 @@ public class RLE implements Encoder, Decoder {
         return encodedMessage.toString();
     }
 
-    @Override
-    public String decode(String encodedMessage) {
-        StringBuilder decodedMessage = new StringBuilder(encodedMessage);
+    // Returns copy of message with
+    private static String markLetters(String message, int position) {
 
-        return decodedMessage.toString();
     }
 
-    private String insertNumber(String originalMessage, int position, int number) {
-        StringBuilder newMessage = new StringBuilder(originalMessage);
-        newMessage.insert(position, number);
-        return newMessage.toString();
+    /* Turns a marked message (see String markMessage(String)) into it's compressed form according to RLE rules */
+    private static String compressMarkedMessage(String markedMessage) {
+        return null;
     }
-    private int countSameLettersInARow(String message, char letter) {
-        int counter = 0;
-        for (int i = 0; i < message.length(); i++) {
-            char currentLetter = message.charAt(i);
-            if (letter != currentLetter)
-                break;
-            counter++;
+
+    /* Turns a compressed message (see String compressMarkedMessage(String)) into it's uncompressed form according to RLE rules */
+    private static String decompressMessage(String compressedMessage) {
+        return null;
+    }
+
+    /* Deletes RLE markings from provided marked message (see String markMessage(String)) */
+    public static String cleanMessage(String markedMessage) {
+        StringBuilder cleanMessage = new StringBuilder(markedMessage);
+        for (int i = 0; i < cleanMessage.length(); i++) {
+            char symbol = cleanMessage.charAt(i);
+            if (Character.isDigit(symbol) || symbol == '-')
+                cleanMessage.deleteCharAt(i--);
         }
-        return counter;
+        return cleanMessage.toString();
+    }
+
+    @Override
+    public String encode(String plainMessage) {
+        String markedMessage = markMessage(plainMessage);
+        return compressMarkedMessage(markedMessage);
+    }
+    @Override
+    public String decode(String compressedMessage) {
+        String decompressedMessage = decompressMessage(compressedMessage);
+        return cleanMessage(decompressedMessage);
     }
 }
