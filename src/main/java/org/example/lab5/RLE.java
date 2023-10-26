@@ -8,9 +8,10 @@ public class RLE implements Encoder, Decoder {
         String message = "ZZZZZECDAAAIIWWWWW";
         RLE encoder = new RLE();
         String encodedMesssage = encoder.encode(message);
+        String decodedMessage = encoder.decode(encodedMesssage);
         System.out.println(message);
         System.out.println(encodedMesssage);
-        System.out.println(cleanMessage(encodedMesssage));
+        System.out.println(decodedMessage);
     }
 
     /* Determines how many instances of letter in a row are present in message starting from first character */
@@ -33,59 +34,90 @@ public class RLE implements Encoder, Decoder {
 
     /* Inserts numbers in front of a row of same/different characters according to RLE rules (positive: same letters in a row, negative: different letters in a row) */
     private static String markMessage(String plainMessage) {
-        StringBuilder encodedMessage = new StringBuilder(plainMessage);
+        String fullMessage = String.copyValueOf(plainMessage.toCharArray());
 
-        int size = encodedMessage.length();
-        int sameLetterCounter = 0;
-        int firstSameLetterIndex = -1;
-        for (int i = 0; i < size; i++) {
-            StringBuilder encodedMessage =
-            char letter = encodedMessage.charAt(i);
-            String fullMessage = encodedMessage.toString();
-            String runningMessage = encodedMessage.substring(i, size);
+        int differentLetterCounter = 0;
+        int firstDifferentLetterIndex = -1;
+        for (int i = 0; i < fullMessage.length(); i++) {
+            char letter = fullMessage.charAt(i);
 
-            int number = countSameLettersInARow(runningMessage, letter);
-            if (number == 1) {
-                sameLetterCounter++;
-                if (firstSameLetterIndex == -1)
-                    firstSameLetterIndex = i;
+            String runningMessage = fullMessage.substring(i);
+            int numberOfSameLetter = countSameLettersInARow(runningMessage, letter);
+            if (numberOfSameLetter == 1) {
+                differentLetterCounter++;
+                if (firstDifferentLetterIndex == -1)
+                    firstDifferentLetterIndex = i;
                 continue;
             }
 
-            if (sameLetterCounter > 1) {
-                fullMessage = insertNumber(fullMessage, firstSameLetterIndex, -sameLetterCounter);
-                size += Integer.toString(-sameLetterCounter).length();
-                i++;
-            }
-            else {
-                fullMessage = insertNumber(fullMessage, i, number);
-                size += Integer.toString(sameLetterCounter).length();
-                i += number;
+            if (differentLetterCounter >= 1) {
+                int insertValue = differentLetterCounter == 1 ? 1 : -differentLetterCounter;
+                fullMessage = insertNumber(fullMessage, firstDifferentLetterIndex, insertValue);
+                i += Integer.toString(insertValue).length() - 1;
+            } else {
+                fullMessage = insertNumber(fullMessage, i, numberOfSameLetter);
+                i += numberOfSameLetter;
             }
 
-
-            sameLetterCounter = 0;
-            firstSameLetterIndex = -1;
-
-            encodedMessage = new StringBuilder(fullMessage);
+            differentLetterCounter = 0;
+            firstDifferentLetterIndex = -1;
         }
 
-        return encodedMessage.toString();
-    }
-
-    // Returns copy of message with
-    private static String markLetters(String message, int position) {
-
+        return fullMessage;
     }
 
     /* Turns a marked message (see String markMessage(String)) into it's compressed form according to RLE rules */
     private static String compressMarkedMessage(String markedMessage) {
-        return null;
+        StringBuilder compressedMessage = new StringBuilder(markedMessage);
+
+        StringBuilder numberBuffer = new StringBuilder();
+        for (int i = 0; i < compressedMessage.length(); i++) {
+            char letter = compressedMessage.charAt(i);
+
+            if (letter == '-' || Character.isDigit(letter)) {
+                numberBuffer.append(letter);
+                continue;
+            }
+
+            int number = Integer.parseInt(numberBuffer.toString());
+
+            if (number < -1) {
+                i += Math.abs(number) - 1;
+            } else {
+                compressedMessage.delete(i, i + number - 1);
+            }
+
+            numberBuffer = new StringBuilder();
+        }
+
+        return compressedMessage.toString();
     }
 
     /* Turns a compressed message (see String compressMarkedMessage(String)) into it's uncompressed form according to RLE rules */
     private static String decompressMessage(String compressedMessage) {
-        return null;
+        StringBuilder decompressedMessage = new StringBuilder(compressedMessage);
+
+        StringBuilder numberBuffer = new StringBuilder();
+        for (int i = 0; i < decompressedMessage.length(); i++) {
+            char letter = decompressedMessage.charAt(i);
+
+            if (letter == '-' || Character.isDigit(letter)) {
+                numberBuffer.append(letter);
+                continue;
+            }
+
+            int number = Integer.parseInt(numberBuffer.toString());
+            if (number < -1) {
+                i += Math.abs(number) - 1;
+            } else {
+                decompressedMessage.insert(i, Character.toString(letter).repeat(number - 1));
+                i += number - 1;
+            }
+
+            numberBuffer = new StringBuilder();
+        }
+
+        return decompressedMessage.toString();
     }
 
     /* Deletes RLE markings from provided marked message (see String markMessage(String)) */
