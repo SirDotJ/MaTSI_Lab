@@ -7,11 +7,15 @@ import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.AnchorPane;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class MainApplicationController {
 	@FXML
 	private AnchorPane methodDisplay; // Область отображения загруженной формы метода шифровки пользователю
+
+	/* Методы шифровки */
+
 	@FXML
 	private RadioButton caesarMethodButton; // Кнопка выбора загрузки шифра "Цезаря" пользователем
 	@FXML
@@ -29,6 +33,11 @@ public class MainApplicationController {
 	@FXML
 	private RadioButton playfairMethodButton; // Кнопка выбора загрузки шифра "Плейфера" пользователем
 
+	/* Методы сжатия */
+
+	@FXML
+	private RadioButton RLEMethodButton; // Кнопка выбора загрузки сжатия "RLE" пользователем
+
 	private void setDisplayScene(String fxmlFileName) {
 		this.methodDisplay.getChildren().clear();
 		Node leafNode;
@@ -39,6 +48,8 @@ public class MainApplicationController {
 		}
 		this.methodDisplay.getChildren().addAll(leafNode);
 	}
+	/* Методы шифровки */
+
 	@FXML
 	public void loadCaesarMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Алгоритм Цезаря" пользователем
 		if (caesarMethodButton.isSelected()) {
@@ -85,6 +96,15 @@ public class MainApplicationController {
 	public void loadPlayfairMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр Плейфера" пользователем
 		if(playfairMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_PlayfairMain.fxml");
+		}
+	}
+
+	/* Методы сжатия */
+
+	@FXML
+	public void loadRLEMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод RLE" пользователем
+		if (RLEMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_RLEMain.fxml");
 		}
 	}
 }

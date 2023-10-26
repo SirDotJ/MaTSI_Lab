@@ -38,6 +38,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -91,60 +92,82 @@
          <children>
         <AnchorPane style="-fx-border-color: black;">
           <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Алгоритмы шифровки" textAlignment="CENTER" wrapText="false">
-              <font>
-                <Font size="18.0" fx:id="x1" />
-              </font>
-            </Label>
-                  <VBox layoutX="6.0" layoutY="41.0" prefHeight="599.0" prefWidth="246.0">
+                  <VBox minWidth="-Infinity" prefHeight="638.0" prefWidth="246.0">
                      <children>
-                        <RadioButton id="radioButtonCaesar" fx:id="caesarMethodButton" mnemonicParsing="false" onAction="#loadCaesarMethod" text="Алгоритм Цезаря">
+                  <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Алгоритмы шифровки" textAlignment="CENTER" wrapText="false">
+                    <font>
+                      <Font size="18.0" fx:id="x1" />
+                    </font>
+                  </Label>
+                        <VBox prefWidth="246.0">
+                           <children>
+                              <RadioButton id="radioButtonCaesar" fx:id="caesarMethodButton" mnemonicParsing="false" onAction="#loadCaesarMethod" text="Алгоритм Цезаря">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="currentMethod" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton id="radioButtonRearrangement" fx:id="rearrangementMethodButton" mnemonicParsing="false" onAction="#loadRearrangementMethod" text="Перестановка" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="hamiltonMethodButton" mnemonicParsing="false" onAction="#loadHamiltonMethod" text="Гамильтоновый путь" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="vigenereMethodButton" mnemonicParsing="false" onAction="#loadVigenereMethod" text="Шифр Виженера" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="bofortMethodButton" mnemonicParsing="false" onAction="#loadBofortMethod" text="Шифр Бофорта" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="matrixMultiplicationMethodButton" mnemonicParsing="false" onAction="#loadMatrixMultiplicationMethod" text="Шифр умножением матриц" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="knapsackMethodButton" mnemonicParsing="false" onAction="#loadKnapsackMethod" text="Шифр укладки ранца" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="playfairMethodButton" mnemonicParsing="false" onAction="#loadPlayfairMethod" text="Шифр Плейфера">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="currentMethod1" />
+                                 </toggleGroup>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="35.0" prefWidth="5.0" />
+                        <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Алгоритмы сжатия" textAlignment="CENTER" wrapText="false">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="18.0" fx:id="x11" />
                            </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="currentMethod" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton id="radioButtonRearrangement" fx:id="rearrangementMethodButton" mnemonicParsing="false" onAction="#loadRearrangementMethod" text="Перестановка" toggleGroup="$currentMethod">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton id="radioButtonHamiltonPath" fx:id="hamiltonMethodButton" mnemonicParsing="false" onAction="#loadHamiltonMethod" text="Гамильтоновый путь" toggleGroup="$currentMethod">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton id="radioButtonHamiltonPath" fx:id="vigenereMethodButton" mnemonicParsing="false" onAction="#loadVigenereMethod" text="Шифр Виженера" toggleGroup="$currentMethod">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton id="radioButtonHamiltonPath" fx:id="bofortMethodButton" mnemonicParsing="false" onAction="#loadBofortMethod" text="Шифр Бофорта" toggleGroup="$currentMethod">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton id="radioButtonHamiltonPath" fx:id="matrixMultiplicationMethodButton" mnemonicParsing="false" onAction="#loadMatrixMultiplicationMethod" text="Шифр умножением матриц" toggleGroup="$currentMethod">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton id="radioButtonHamiltonPath" fx:id="knapsackMethodButton" mnemonicParsing="false" onAction="#loadKnapsackMethod" text="Шифр укладки ранца" toggleGroup="$currentMethod">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton id="radioButtonHamiltonPath" fx:id="playfairMethodButton" mnemonicParsing="false" onAction="#loadPlayfairMethod" text="Шифр Плейфера">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="currentMethod1" />
-                           </toggleGroup>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </RadioButton>
+                        </Label>
+                        <VBox prefWidth="246.0">
+                           <children>
+                              <RadioButton id="radioButtonCaesar" fx:id="RLEMethodButton" mnemonicParsing="false" onAction="#loadRLEMethod" text="Метод RLE" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </VBox>
                      </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
                   </VBox>
           </children>
         </AnchorPane>
