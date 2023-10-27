@@ -62,6 +62,10 @@ public class RLE implements Encoder, Decoder {
             differentLetterCounter = 0;
             firstDifferentLetterIndex = -1;
         }
+        if (differentLetterCounter >= 1) { // На случай, если текст заканчивается на разных символах
+            int insertValue = differentLetterCounter == 1 ? 1 : -differentLetterCounter;
+            fullMessage = insertNumber(fullMessage, firstDifferentLetterIndex, insertValue);
+        }
 
         return fullMessage;
     }
@@ -81,7 +85,7 @@ public class RLE implements Encoder, Decoder {
 
             int number = Integer.parseInt(numberBuffer.toString());
 
-            if (number < -1) {
+            if (number < -1 || number == 1) {
                 i += Math.abs(number) - 1;
             } else {
                 compressedMessage.delete(i, i + number - 1);
