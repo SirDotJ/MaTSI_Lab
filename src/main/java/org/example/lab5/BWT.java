@@ -8,9 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class BWT implements Encoder, Decoder {
+    /* Данный символ используется для обозначения окончания слова для его корректного нахождения при раскодировании */
+    private static final char SPECIAL_END_CHARACTER = '|';
 
     public static void main(String[] args) {
-        String message = "AJJAJAJIIIAKKAKAKKAJJIIAJJKAJJKABKAIBBBBL";
+        String message = "ANAJANAJNFANJANANNJANAN";
         BWT encoder = new BWT();
         RLE compressor = new RLE();
         String encodedMessage = encoder.encode(message);
@@ -69,6 +71,15 @@ public class BWT implements Encoder, Decoder {
         Collections.sort(stringList);
     }
 
+    private static String getPlainTextColumn(List<String> symbolMatrix) throws IllegalArgumentException {
+        for (String row :
+                symbolMatrix) {
+            if (row.charAt(row.length() - 1) == SPECIAL_END_CHARACTER)
+                return row;
+        }
+        throw new IllegalArgumentException("Provided matrix does not have a row string with special character: " + SPECIAL_END_CHARACTER + " at the end");
+    }
+
     private static String getColumn(List<String> symbolMatrix, int columnIndex) {
         StringBuilder column = new StringBuilder();
         for (String row : symbolMatrix) {
@@ -107,15 +118,36 @@ public class BWT implements Encoder, Decoder {
         }
         return rotatedText.toString();
     }
+
+    private static String cleanMessage(String message, char letterToDelete) {
+        StringBuilder cleanedMessage = new StringBuilder();
+        for (int i = 0; i < message.length(); i++) {
+            char letter = message.charAt(i);
+            if (letter == letterToDelete)
+                continue;
+            cleanedMessage.append(letter);
+        }
+        return cleanedMessage.toString();
+    }
+
     @Override
     public String encode(String plainMessage) {
-        List<String> rotations = getSortedRotations(plainMessage);
+        String messageCopy = plainMessage;
+        if (messageCopy.charAt(messageCopy.length() - 1) != SPECIAL_END_CHARACTER)
+            messageCopy = messageCopy + SPECIAL_END_CHARACTER;
+
+        List<String> rotations = getSortedRotations(messageCopy);
         return getColumn(rotations, rotations.size() - 1);
     }
 
     @Override
     public String decode(String encodedMessage) {
-        List<String> reconstructedRotations = reconstructRotations(encodedMessage);
-        return getRow(reconstructedRotations, 0);
+        String messageCopy = encodedMessage;
+        if (messageCopy.charAt(messageCopy.length() - 1) != SPECIAL_END_CHARACTER)
+            messageCopy = messageCopy + SPECIAL_END_CHARACTER;
+
+        List<String> reconstructedRotations = reconstructRotations(messageCopy);
+        String decodedColumn = getPlainTextColumn(reconstructedRotations);
+        return cleanMessage(decodedColumn, SPECIAL_END_CHARACTER);
     }
 }

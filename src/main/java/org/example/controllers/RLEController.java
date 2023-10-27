@@ -2,6 +2,7 @@ package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.example.common.DecoderForm;
 import org.example.common.EncoderForm;
@@ -9,11 +10,11 @@ import org.example.lab5.RLE;
 
 public class RLEController implements EncoderForm, DecoderForm {
 	@FXML
-	TextArea inputMessage;
+	TextArea inputMessage; // Текстовая область заполнения сообщения для шифровки пользователем
 	@FXML
-	TextArea outputMessage;
+	TextArea outputMessage; // Текстовая область вывода результата шифровки пользователю
 	@FXML
-	Text differenceDisplay;
+	Text differenceDisplay; // Текст вывода результата проведения сжатия
 
 	RLE encoder = new RLE();
 
