@@ -40,6 +40,8 @@ public class MainApplicationController {
 	private RadioButton BWTMethodButton; // Кнопка выбора загрузки сжатия "BWT" пользователем
 	@FXML
 	private RadioButton BWTAndRLEMethodButton; // Кнопка выбора загрузки сжатия "BWT + RLE" пользователем
+	@FXML
+	private RadioButton HuffmanMethodButton; // Кнопка выбора загрузки сжатия "Хаффмана" пользователем
 
 	/* Методы сохранения целостности данных */
 	@FXML
@@ -124,6 +126,12 @@ public class MainApplicationController {
 	public void loadBWTAndRLEMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод BWT + RLE" пользователем
 		if (BWTAndRLEMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_BWTAndRLEMain.fxml");
+		}
+	}
+	@FXML
+	public void loadHuffmanMethod() {
+		if (HuffmanMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_HuffmanMain.fxml");
 		}
 	}
 
