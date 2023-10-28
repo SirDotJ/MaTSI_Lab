@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="484.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.HemmingController">
+   <children>
+      <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
+      <Label text="Код Хэмминга">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Separator prefHeight="7.0" prefWidth="40.0" visible="false" />
+            <Label prefHeight="28.0" prefWidth="207.0" text="Текущее сообщение">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="12.0" prefWidth="50.0" visible="false" />
+            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="94.0" prefWidth="292.0" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextArea>
+            <Separator prefHeight="2.0" prefWidth="68.0" />
+            <Label prefHeight="22.0" prefWidth="197.0" text="Кол-во символов в проверке" />
+            <TextField fx:id="subdivisionCountMessage" prefHeight="23.0" prefWidth="71.0" />
+            <Separator prefHeight="8.0" prefWidth="0.0" />
+            <Separator prefHeight="11.0" prefWidth="2.0" visible="false" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Separator prefHeight="4.0" prefWidth="30.0" visible="false" />
+            <Button id="encryptButton" mnemonicParsing="false" onAction="#corrupt" prefHeight="22.0" prefWidth="185.0" text="Испортить сообщение" />
+            <Separator prefHeight="8.0" prefWidth="119.0" visible="false" />
+            <Button id="encryptButton" mnemonicParsing="false" onAction="#secure" prefHeight="22.0" prefWidth="142.0" text="Преобразовать" />
+            <Separator prefHeight="10.0" prefWidth="111.0" visible="false" />
+            <Button id="decryptButton" mnemonicParsing="false" onAction="#fix" prefHeight="22.0" prefWidth="180.0" text="Исправить сообщение" />
+            <Separator prefHeight="13.0" prefWidth="15.0" visible="false" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="184.0" prefWidth="753.0">
+         <children>
+            <Separator prefHeight="13.0" prefWidth="35.0" />
+            <Label prefHeight="27.0" prefWidth="72.0" text="Лог">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="8.0" prefWidth="15.0" />
+            <TextArea id="encryptedTextOutputTextField" fx:id="outputMessage" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="523.0" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextArea>
+         </children>
+      </HBox>
+      <Separator orientation="VERTICAL" prefHeight="49.0" prefWidth="9.0" visible="false" />
+   </children>
+</VBox>

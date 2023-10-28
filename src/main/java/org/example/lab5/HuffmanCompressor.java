@@ -18,7 +18,7 @@ public class HuffmanCompressor implements Encoder, Decoder {
 	HuffmanCompressor(String message) {
 		this.letterTree = new BinaryLetterTree(message);
 	}
-	HuffmanCompressor() {
+	public HuffmanCompressor() {
 		this(DEFAULT_MESSAGE);
 	}
 
