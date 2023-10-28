@@ -5,57 +5,75 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HemmingCode {
+	private static final int DEFAULT_SUBDIVISION_COUNT = 2;
+	private HemmingSecuredMessage securedMessage;
+
 	public static void main(String[] args) {
-		boolean makeAnError = true;
-		int errorPosition = 20;
-
-		String message = "bl";
-		System.out.println("Введено сообщение: " + message);
-
-		HemmingCode hemmingCode = new HemmingCode();
-		BinaryWord messageToTranser = hemmingCode.secure(message);
-		System.out.println("Защищенное представление сообщения:\n" + messageToTranser);
-
-		// Вставим ошибку
-		if (makeAnError) {
-			messageToTranser.set(errorPosition, !messageToTranser.get(errorPosition));
-		}
-
-		System.out.println("Получено сообщение: ");
-		System.out.println(messageToTranser);
-		if (makeAnError)
-			System.out.println("Была совершена ошибка на позиции: " + errorPosition);
-
-		int checkResults = hemmingCode.check(messageToTranser);
-		System.out.println("Результат проверки на ошибку: " + checkResults);
-		if (checkResults == -1) {
-			System.out.println("Сообщение не было изменено");
-			if (makeAnError) {
-				System.out.println("!!!Некорректный результат");
-			} else {
-				System.out.println("Результат корректный");
-			}
-		} else if (checkResults == errorPosition) {
-			System.out.println("Правильно определена ошибка на позиции " + checkResults);
-		} else {
-			System.out.println("!!!Ошибка некорректно определена на позиции " + checkResults);
-		}
+		String message = "block";
+		int subdivisionCount = 1;
+		System.out.println("Message to transfer: " + message);
+		System.out.println("Subdivision count: " + subdivisionCount);
+		HemmingCode messageToTransfer = new HemmingCode(message, subdivisionCount);
+		System.out.println("Generated message:\n" + messageToTransfer);
+		int[] changedIndexes = messageToTransfer.corruptMessage();
+		System.out.println("Corrupted message:\n" + messageToTransfer);
+		System.out.println("Corrupted indexes:\n" + Arrays.toString(changedIndexes));
+		messageToTransfer.fix();
+		System.out.println("Fixed message:\n" + messageToTransfer);
 	}
-	private static void printBooleanArrayAsBinary(boolean[] values) {
-		for (boolean value :
-				values) {
-			System.out.print(value ? '1' : '0');
-		}
+
+	HemmingCode(String message, int subdivisionCount) {
+		this.securedMessage = new HemmingSecuredMessage(message, subdivisionCount);
 	}
-	private static void printHemmingWords(List<BinaryWord> words) {
-		for (BinaryWord word :
-				words) {
-			BinaryWord.printBinaryWord(word);
-			System.out.println();
-		}
+	HemmingCode(String message) {
+		this(message, DEFAULT_SUBDIVISION_COUNT);
 	}
+	public void secure(String message) {
+		this.secure(message, DEFAULT_SUBDIVISION_COUNT);
+	}
+	public void secure(String message, int subdivisionCount) {
+		this.securedMessage = new HemmingSecuredMessage(message, subdivisionCount);
+	}
+	public boolean check() {
+		int[] errorCheckResults = this.securedMessage.check();
+		for (int index:
+			 errorCheckResults) {
+			if (index != -1)
+				return false;
+		}
+		return true;
+	}
+
+	public int[] corruptMessage() {
+		int[] changedIndexes = new int[this.securedMessage.size()];
+		for (int i = 0; i < this.securedMessage.size(); i++) {
+			BinaryWord word = this.securedMessage.get(i);
+			int max = word.size();
+			int min = 0;
+			changedIndexes[i] = (int) ((Math.random() * (max - min)) + min);
+			word.flip(changedIndexes[i]);
+		}
+		return changedIndexes;
+	}
+
+	public int[] getErrors() {
+		return this.securedMessage.check();
+	}
+	public void fix() {
+		if (this.check())
+			return;
+
+		int[] errorIndexes = this.getErrors();
+		int index = 0;
+		for (int errorIndex : errorIndexes)
+			this.securedMessage.get(index++).flip(errorIndex);
+	}
+	public String getMessage() {
+		return this.securedMessage.toString();
+	}
+
 	public static void insertHemmingBits(BinaryWord target) {
-		int size = target.getSize();
+		int size = target.size();
 		int highestPowerTwo = findNearestHigherPowerOfTwo(size);
 		for (int power = 1; power < (1 << highestPowerTwo); power <<= 1) {
 			target.insert(power-1, false);
@@ -65,7 +83,7 @@ public class HemmingCode {
 	public static BinaryWord getMessageWithNoSum(BinaryWord word) {
 		BinaryWord cleanWord = new BinaryWord(word.getValues());
 
-		int size = cleanWord.getSize();
+		int size = cleanWord.size();
 		int highestPowerTwo = findNearestHigherPowerOfTwo(size);
 		for (int hemmingIndex = 1; hemmingIndex < (1 << highestPowerTwo); hemmingIndex <<= 1) {
 			cleanWord.set(hemmingIndex - 1, false);
@@ -84,7 +102,7 @@ public class HemmingCode {
 		return power;
 	}
 	public static List<BinaryWord> getHemmingWords(BinaryWord word) {
-		int size = word.getSize();
+		int size = word.size();
 		int highestPowerTwo = findNearestHigherPowerOfTwo(size);
 		List<BinaryWord> hammingWords = new ArrayList<>();
 		for (int power = 1; power < (1 << highestPowerTwo); power <<= 1) {
@@ -94,7 +112,7 @@ public class HemmingCode {
 	}
 
 	public static BinaryWord getWordForHemmingNumber(BinaryWord word, int number) {
-		boolean[] values = new boolean[word.getSize()];
+		boolean[] values = new boolean[word.size()];
 		Arrays.fill(values, false);
 
 		for (int i = number - 1; i < values.length; i += number * 2) {
@@ -106,7 +124,7 @@ public class HemmingCode {
 		return new BinaryWord(values);
 	}
 
-    public BinaryWord secure(String message) {
+	static BinaryWord secureWord(String message) {
 		BinaryWord word = new BinaryWord(message);
 		insertHemmingBits(word);
 		List<BinaryWord> hemmingMasks = getHemmingWords(word);
@@ -120,9 +138,8 @@ public class HemmingCode {
 		return word;
     }
 
-	/* Возвращает индекс найденной ошибки, -1 если ошибок нет */
-    public int check(BinaryWord receivedMessage) {
-		BinaryWord checkCopy = getMessageWithNoSum(receivedMessage);
+	static int checkWord(BinaryWord word) {
+		BinaryWord checkCopy = getMessageWithNoSum(word);
 
 		List<BinaryWord> hemmingMasks = getHemmingWords(checkCopy);
 		int hemmingCodeIndex = 1;
@@ -130,7 +147,7 @@ public class HemmingCode {
 		for (BinaryWord mask : hemmingMasks) {
 			int foundSum = checkCopy.andSum(mask);
 			boolean sign = foundSum % 2 != 0;
-			if (sign != receivedMessage.get(hemmingCodeIndex - 1))
+			if (sign != word.get(hemmingCodeIndex - 1))
 				errorSum += hemmingCodeIndex;
 			hemmingCodeIndex <<= 1;
 		}
@@ -140,4 +157,9 @@ public class HemmingCode {
 		else
 			return errorSum - 1;
     }
+
+	@Override
+	public String toString() {
+		return this.securedMessage.toString();
+	}
 }
