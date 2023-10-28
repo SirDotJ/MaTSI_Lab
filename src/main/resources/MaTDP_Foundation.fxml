@@ -162,6 +162,16 @@
                                     <Font size="16.0" />
                                  </font>
                               </RadioButton>
+                              <RadioButton id="radioButtonCaesar" fx:id="BWTMethodButton" mnemonicParsing="false" onAction="#loadBWTMethod" text="Метод BWT" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonCaesar" fx:id="BWTAndRLEMethodButton" mnemonicParsing="false" onAction="#loadBWTAndRLEMethod" text="Метод BWT + RLE" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
                            </children>
                         </VBox>
                      </children>
