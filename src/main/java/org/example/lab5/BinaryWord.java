@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryWord {
-	private static final int LETTER_BINARY_LENGTH = 8;
+	public static final int LETTER_BINARY_LENGTH = 8;
 	List<Boolean> bitRow;
 
 	BinaryWord(String text) {
@@ -25,6 +25,16 @@ public class BinaryWord {
 	public boolean get(int index) {
 		return this.bitRow.get(index);
 	}
+	public boolean[] getValues() {
+		boolean[] values = new boolean[this.getSize()];
+		for (int i = 0; i < this.getSize(); i++) {
+			values[i] = this.get(i);
+		}
+		return values;
+	}
+	public void set(int index, boolean value) {
+		this.bitRow.set(index, value);
+	}
 	public void append(boolean[] values) {
 		for (boolean value : values)
 			this.append(value);
@@ -43,6 +53,15 @@ public class BinaryWord {
 			sum += this.get(i) && word.get(i) ? 1 : 0;
 		}
 		return sum;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder representation = new StringBuilder();
+		for (int i = 0; i < this.getSize(); i++) {
+			representation.append(this.get(i) ? '1' : '0');
+		}
+		return representation.toString();
 	}
 
 	public static void printBinaryWord(BinaryWord word) {
