@@ -2,7 +2,6 @@ package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.example.common.DecoderForm;
 import org.example.common.EncoderForm;
