@@ -37,6 +37,10 @@ public class MainApplicationController {
 
 	@FXML
 	private RadioButton RLEMethodButton; // Кнопка выбора загрузки сжатия "RLE" пользователем
+	@FXML
+	private RadioButton BWTMethodButton; // Кнопка выбора загрузки сжатия "BWT" пользователем
+	@FXML
+	private RadioButton BWTAndRLEMethodButton; // Кнопка выбора загрузки сжатия "BWT + RLE" пользователем
 
 	private void setDisplayScene(String fxmlFileName) {
 		this.methodDisplay.getChildren().clear();
@@ -105,6 +109,18 @@ public class MainApplicationController {
 	public void loadRLEMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод RLE" пользователем
 		if (RLEMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_RLEMain.fxml");
+		}
+	}
+	@FXML
+	public void loadBWTMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод BWT" пользователем
+		if (BWTMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_BWTMain.fxml");
+		}
+	}
+	@FXML
+	public void loadBWTAndRLEMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод BWT + RLE" пользователем
+		if (BWTAndRLEMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_BWTAndRLEMain.fxml");
 		}
 	}
 }
