@@ -7,7 +7,7 @@ public class BinaryWord {
 	public static final int LETTER_BINARY_LENGTH = 8;
 	List<Boolean> bitRow;
 
-	BinaryWord(String text) {
+	public BinaryWord(String text) {
 		this.bitRow = new ArrayList<>();
 		char[] letters = text.toCharArray();
 		for (char letter : letters) {
@@ -15,25 +15,32 @@ public class BinaryWord {
 			this.append(binaryLetter);
 		}
 	}
-	BinaryWord(boolean[] values) {
+	public BinaryWord(boolean[] values) {
 		this.bitRow = new ArrayList<>();
 		this.append(values);
 	}
-	public int getSize() {
+	public BinaryWord(char[] letters) {
+		this(String.copyValueOf(letters));
+	}
+	public int size() {
 		return this.bitRow.size();
 	}
 	public boolean get(int index) {
 		return this.bitRow.get(index);
 	}
 	public boolean[] getValues() {
-		boolean[] values = new boolean[this.getSize()];
-		for (int i = 0; i < this.getSize(); i++) {
+		boolean[] values = new boolean[this.size()];
+		for (int i = 0; i < this.size(); i++) {
 			values[i] = this.get(i);
 		}
 		return values;
 	}
 	public void set(int index, boolean value) {
 		this.bitRow.set(index, value);
+	}
+	public void flip(int index) {
+		boolean value = this.get(index);
+		this.set(index, !value);
 	}
 	public void append(boolean[] values) {
 		for (boolean value : values)
@@ -48,7 +55,7 @@ public class BinaryWord {
 
 	public int andSum(BinaryWord word) {
 		int sum = 0;
-		int maxSize = Math.max(this.getSize(), word.getSize());
+		int maxSize = Math.max(this.size(), word.size());
 		for (int i = 0; i < maxSize; i++) {
 			sum += this.get(i) && word.get(i) ? 1 : 0;
 		}
@@ -58,14 +65,14 @@ public class BinaryWord {
 	@Override
 	public String toString() {
 		StringBuilder representation = new StringBuilder();
-		for (int i = 0; i < this.getSize(); i++) {
+		for (int i = 0; i < this.size(); i++) {
 			representation.append(this.get(i) ? '1' : '0');
 		}
 		return representation.toString();
 	}
 
 	public static void printBinaryWord(BinaryWord word) {
-		int size = word.getSize();
+		int size = word.size();
 		for (int i = 0; i < size; i++) {
 			boolean value = word.get(i);
 			System.out.print(value ? 1 : 0);
