@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.AnchorPane;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class MainApplicationController {
@@ -41,6 +40,10 @@ public class MainApplicationController {
 	private RadioButton BWTMethodButton; // Кнопка выбора загрузки сжатия "BWT" пользователем
 	@FXML
 	private RadioButton BWTAndRLEMethodButton; // Кнопка выбора загрузки сжатия "BWT + RLE" пользователем
+
+	/* Методы сохранения целостности данных */
+	@FXML
+	private RadioButton HemmingMethodButton; // Кнопка выбора загрузки метода сохранения целостности "Код Хэмминга" пользователем
 
 	private void setDisplayScene(String fxmlFileName) {
 		this.methodDisplay.getChildren().clear();
@@ -121,6 +124,14 @@ public class MainApplicationController {
 	public void loadBWTAndRLEMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод BWT + RLE" пользователем
 		if (BWTAndRLEMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_BWTAndRLEMain.fxml");
+		}
+	}
+
+	/* Методы сохранения целостности */
+	@FXML
+	public void loadHemmingMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Код Хэмминга" пользователем
+		if (HemmingMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_HemmingMain.fxml");
 		}
 	}
 }

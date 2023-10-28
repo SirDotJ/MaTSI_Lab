@@ -6,27 +6,16 @@ import java.util.List;
 
 public class HemmingCode {
 	private static final int DEFAULT_SUBDIVISION_COUNT = 2;
+	private static final String DEFAULT_MESSAGE = "test";
 	private HemmingSecuredMessage securedMessage;
-
-	public static void main(String[] args) {
-		String message = "block";
-		int subdivisionCount = 1;
-		System.out.println("Message to transfer: " + message);
-		System.out.println("Subdivision count: " + subdivisionCount);
-		HemmingCode messageToTransfer = new HemmingCode(message, subdivisionCount);
-		System.out.println("Generated message:\n" + messageToTransfer);
-		int[] changedIndexes = messageToTransfer.corruptMessage();
-		System.out.println("Corrupted message:\n" + messageToTransfer);
-		System.out.println("Corrupted indexes:\n" + Arrays.toString(changedIndexes));
-		messageToTransfer.fix();
-		System.out.println("Fixed message:\n" + messageToTransfer);
-	}
-
 	HemmingCode(String message, int subdivisionCount) {
 		this.securedMessage = new HemmingSecuredMessage(message, subdivisionCount);
 	}
-	HemmingCode(String message) {
+	public HemmingCode(String message) {
 		this(message, DEFAULT_SUBDIVISION_COUNT);
+	}
+	public HemmingCode() {
+		this(DEFAULT_MESSAGE, DEFAULT_SUBDIVISION_COUNT);
 	}
 	public void secure(String message) {
 		this.secure(message, DEFAULT_SUBDIVISION_COUNT);
