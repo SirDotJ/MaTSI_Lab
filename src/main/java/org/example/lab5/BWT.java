@@ -9,10 +9,10 @@ import java.util.List;
 
 public class BWT implements Encoder, Decoder {
     /* Данный символ используется для обозначения окончания слова для его корректного нахождения при раскодировании */
-    private static final char SPECIAL_END_CHARACTER = '|';
+    private static final char SPECIAL_END_CHARACTER = 'ѐ'; // Данный символ выбран так как он по своему коду находится далеко от букв кириллицы и латинского алфавита
 
     public static void main(String[] args) {
-        String message = "ANAJANAJNFANJANANNJANAN";
+        String message = "BANANAS";
         BWT encoder = new BWT();
         RLE compressor = new RLE();
         String encodedMessage = encoder.encode(message);
