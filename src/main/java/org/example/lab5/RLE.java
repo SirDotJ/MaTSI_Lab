@@ -5,7 +5,7 @@ import org.example.common.Encoder;
 
 public class RLE implements Encoder, Decoder {
     public static void main(String[] args) {
-        String message = "ZZZZZECDAAAIIWWWWW";
+        String message = "ПРОПРОПРОББББББАААААВВВВВ";
         RLE encoder = new RLE();
         String encodedMesssage = encoder.encode(message);
         String decodedMessage = encoder.decode(encodedMesssage);
@@ -56,7 +56,7 @@ public class RLE implements Encoder, Decoder {
                 i += Integer.toString(insertValue).length() - 1;
             } else {
                 fullMessage = insertNumber(fullMessage, i, numberOfSameLetter);
-                i += numberOfSameLetter;
+                i += numberOfSameLetter + String.valueOf(numberOfSameLetter).length() - 1;
             }
 
             differentLetterCounter = 0;
@@ -89,6 +89,7 @@ public class RLE implements Encoder, Decoder {
                 i += Math.abs(number) - 1;
             } else {
                 compressedMessage.delete(i, i + number - 1);
+//                i -= String.valueOf(number).length();
             }
 
             numberBuffer = new StringBuilder();
