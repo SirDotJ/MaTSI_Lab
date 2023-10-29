@@ -35,6 +35,28 @@ public class BinaryWord {
 		}
 		return values;
 	}
+	public String getCleanWord() {
+		StringBuilder cleanWord = new StringBuilder();
+		int currentLetterIndex = 7;
+		int currentLetterValue = 0;
+		int indexToIgnore = 1;
+		for (int i = 0; i < this.size(); i++) {
+			if (i == indexToIgnore - 1) {
+				indexToIgnore = indexToIgnore << 1;
+				continue;
+			}
+			boolean value = this.get(i);
+			int currentValue = (int) Math.pow(2, currentLetterIndex--) * (value ? 1 : 0);
+			currentLetterValue += currentValue;
+			if (currentLetterIndex <= -1) {
+				cleanWord.append(Character.toString(currentLetterValue));
+				currentLetterValue = 0;
+				currentLetterIndex = 7;
+			}
+		}
+		return cleanWord.toString();
+	}
+
 	public void set(int index, boolean value) {
 		this.bitRow.set(index, value);
 	}

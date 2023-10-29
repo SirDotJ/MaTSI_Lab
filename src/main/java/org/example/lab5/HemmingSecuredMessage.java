@@ -5,11 +5,13 @@ import java.util.List;
 
 public class HemmingSecuredMessage {
 	private List<BinaryWord> message;
+	private int subdivisionCount;
 	HemmingSecuredMessage(String plainMessage, int subdivisionCount) {
 		this.initializeMessage(plainMessage, subdivisionCount);
 	}
 
 	void initializeMessage(String plainMessage, int subdivisionCount) {
+		this.subdivisionCount = subdivisionCount;
 		this.message = new ArrayList<>();
 		List<Character> word = new ArrayList<>();
 
@@ -17,7 +19,7 @@ public class HemmingSecuredMessage {
 		for (int i = 0; i < size; i++) {
 			char letter = plainMessage.charAt(i);
 			word.add(letter);
-			if (word.size() >= subdivisionCount) {
+			if (word.size() >= this.subdivisionCount) {
 				StringBuilder part = new StringBuilder();
 				for (Character character : word)
 					part.append(character);
@@ -32,6 +34,15 @@ public class HemmingSecuredMessage {
 				lastPart.append(character);
 			this.message.add(HemmingCode.secureWord(lastPart.toString()));
 		}
+	}
+
+	public String getCleanMessage() {
+		StringBuilder cleanMessage = new StringBuilder();
+		for (BinaryWord word :
+				this.message) {
+			cleanMessage.append(word.getCleanWord());
+		}
+		return cleanMessage.toString();
 	}
 
 	public BinaryWord get(int index) {

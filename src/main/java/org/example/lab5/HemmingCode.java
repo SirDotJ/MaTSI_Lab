@@ -8,6 +8,17 @@ public class HemmingCode {
 	private static final int DEFAULT_SUBDIVISION_COUNT = 2;
 	private static final String DEFAULT_MESSAGE = "test";
 	private HemmingSecuredMessage securedMessage;
+
+	public static void main(String[] args) {
+		String message = "bloc";
+		HemmingCode code = new HemmingCode(message);
+		System.out.println("Message: " + message);
+		System.out.println("Hemming code: " + code.getMessage());
+		code.corruptMessage();
+		System.out.println("Corrupted code: " + code.getMessage());
+		System.out.println("Decoded message: " + code.getCleanMessage());
+	}
+
 	HemmingCode(String message, int subdivisionCount) {
 		this.securedMessage = new HemmingSecuredMessage(message, subdivisionCount);
 	}
@@ -17,6 +28,12 @@ public class HemmingCode {
 	public HemmingCode() {
 		this(DEFAULT_MESSAGE, DEFAULT_SUBDIVISION_COUNT);
 	}
+
+	public String getCleanMessage() {
+		this.fix();
+		return this.securedMessage.getCleanMessage();
+	}
+
 	public void secure(String message) {
 		this.secure(message, DEFAULT_SUBDIVISION_COUNT);
 	}
