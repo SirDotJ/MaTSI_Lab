@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import org.example.common.DecoderForm;
 import org.example.common.EncoderForm;
-import org.example.lab5.HuffmanCompressor;
+import org.example.lab5.HuffmanAlgorithm;
 
 public class HuffmanController implements EncoderForm, DecoderForm {
 	@FXML
@@ -12,7 +12,7 @@ public class HuffmanController implements EncoderForm, DecoderForm {
 	@FXML
 	TextArea outputMessage; // Текстовая область вывода результата шифровки пользователю
 
-	HuffmanCompressor encoder = new HuffmanCompressor();
+	HuffmanAlgorithm encoder = new HuffmanAlgorithm();
 
 	@Override
 	public void encode() {

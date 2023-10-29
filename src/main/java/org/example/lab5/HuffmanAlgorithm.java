@@ -3,10 +3,10 @@ package org.example.lab5;
 import org.example.common.Decoder;
 import org.example.common.Encoder;
 
-public class HuffmanCompressor implements Encoder, Decoder {
+public class HuffmanAlgorithm implements Encoder, Decoder {
 	public static void main(String[] args) {
 		String message = "BANANA";
-		HuffmanCompressor compressor = new HuffmanCompressor(message);
+		HuffmanAlgorithm compressor = new HuffmanAlgorithm(message);
 		String encodedMessage = compressor.encode(message);
 		String decodedMessage = compressor.decode(encodedMessage);
 		System.out.println("Message: " + message);
@@ -15,10 +15,10 @@ public class HuffmanCompressor implements Encoder, Decoder {
 	}
 	private static final String DEFAULT_MESSAGE = "test";
 	private final BinaryLetterTree letterTree;
-	HuffmanCompressor(String message) {
+	HuffmanAlgorithm(String message) {
 		this.letterTree = new BinaryLetterTree(message);
 	}
-	public HuffmanCompressor() {
+	public HuffmanAlgorithm() {
 		this(DEFAULT_MESSAGE);
 	}
 
