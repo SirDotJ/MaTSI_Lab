@@ -16,7 +16,12 @@ public class HemmingController {
 
 	HemmingCode code = new HemmingCode();
 
-	public void secure() {
+	public static void main(String[] args) {
+		String message = "bloc";
+
+	}
+
+	public void encode() {
 		String plainMessage = inputMessage.getText();
 
 		if (plainMessage.isEmpty()) {
@@ -62,7 +67,7 @@ public class HemmingController {
 		this.outputMessage.appendText("\nСообщение теперь имеет вид: " + this.code.getMessage() + "\n");
 	}
 
-	public void fix() {
+	public void decode() {
 		if (this.code == null) {
 			Alerts.showError(
 					"Ошибка исправления данных",
@@ -71,8 +76,9 @@ public class HemmingController {
 			);
 			return;
 		}
-		this.code.fix();
-		this.inputMessage.setText(this.code.getMessage());
-		this.outputMessage.appendText("Сообщение было исправлено и теперь имеет вид:\n" + this.code.getMessage());
+		String decodedText = this.code.getCleanMessage();
+		this.inputMessage.setText(decodedText);
+		this.outputMessage.appendText("Было декодировано следующее сообщение: " + decodedText);
+		this.outputMessage.appendText("Сообщение после исправления ошибок теперь имеет вид:\n" + this.code.getMessage());
 	}
 }

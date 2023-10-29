@@ -44,9 +44,9 @@
             <Separator prefHeight="4.0" prefWidth="30.0" visible="false" />
             <Button id="encryptButton" mnemonicParsing="false" onAction="#corrupt" prefHeight="22.0" prefWidth="185.0" text="Испортить сообщение" />
             <Separator prefHeight="8.0" prefWidth="119.0" visible="false" />
-            <Button id="encryptButton" mnemonicParsing="false" onAction="#secure" prefHeight="22.0" prefWidth="142.0" text="Преобразовать" />
+            <Button id="encryptButton" mnemonicParsing="false" onAction="#encode" prefHeight="22.0" prefWidth="166.0" text="Кодировать сообщение" />
             <Separator prefHeight="10.0" prefWidth="111.0" visible="false" />
-            <Button id="decryptButton" mnemonicParsing="false" onAction="#fix" prefHeight="22.0" prefWidth="180.0" text="Исправить сообщение" />
+            <Button id="decryptButton" mnemonicParsing="false" onAction="#decode" prefHeight="22.0" prefWidth="180.0" text="Декодировать сообщение" />
             <Separator prefHeight="13.0" prefWidth="15.0" visible="false" />
          </children>
       </HBox>
