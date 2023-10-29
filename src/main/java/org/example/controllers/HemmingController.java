@@ -78,7 +78,7 @@ public class HemmingController {
 		}
 		String decodedText = this.code.getCleanMessage();
 		this.inputMessage.setText(decodedText);
-		this.outputMessage.appendText("Было декодировано следующее сообщение: " + decodedText);
+		this.outputMessage.appendText("Было декодировано следующее сообщение: " + decodedText + "\n");
 		this.outputMessage.appendText("Сообщение после исправления ошибок теперь имеет вид:\n" + this.code.getMessage());
 	}
 }
