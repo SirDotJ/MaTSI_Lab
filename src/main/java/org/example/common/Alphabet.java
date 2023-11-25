@@ -12,6 +12,12 @@ public class Alphabet {
     private final static boolean DEFAULT_LOWER_CASE = true;
     private final List<Character> alphabet;
     private final TYPE type;
+
+//    public static void main(String[] args) {
+//        Alphabet alphabet1 = AlphabetConstants.CYRILLIC_NO_SPACE;
+//
+//    }
+
     public Alphabet(List<Character> alphabet, TYPE type) throws IllegalArgumentException {
         Set<Character> usedSymbols = new HashSet<>(alphabet);
         if (usedSymbols.size() != alphabet.size())

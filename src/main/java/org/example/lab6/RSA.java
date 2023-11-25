@@ -49,6 +49,8 @@ class RSA {
         int q = 71; // Prime number
         int n = p * q;
         int m = (p - 1) * (q - 1);
+        int e = 3167;
+        int d = 5983;
 
 
         /* Создание числа e */
@@ -69,26 +71,30 @@ class RSA {
 //        } catch (TimeoutException exception) {
 //            exception.printStackTrace();
 //        }
+        System.out.println("p = " + p);
+        System.out.println("q = " + q);
+        System.out.println("n = " + n);
+        System.out.println("m = " + m);
+        System.out.println("e = " + e);
+        System.out.println("d = " + d);
 
         /* Зашифровка */
-//        int e = 3167;
-//        int n = 6319;
-//        List<Integer> message = new ArrayList<>(Arrays.asList(13, 16, 4));
-//        List<Integer> encryptedMessage = new ArrayList<>();
-//        for (int i = 0; i < message.size(); i++) {
-//            encryptedMessage.add(calcC(message.get(i), e, n));
-//            System.out.println(encryptedMessage.get(i));
-//        }
+        List<Integer> message = new ArrayList<>(Arrays.asList(13, 16, 4));
+        System.out.println("Сообщение:\n13\t16\t4");
+        List<Integer> encryptedMessage = new ArrayList<>();
+        System.out.println("Зашифрованное сообщение");
+        for (int i = 0; i < message.size(); i++) {
+            encryptedMessage.add(calcC(message.get(i), e, n));
+            System.out.print(encryptedMessage.get(i) + "\t");
+        }
 
         /* Расшифровка */
-//        int d = 5983;
-//        int n = 6319;
-//        List<Integer> encryptedMessage = new ArrayList<>(Arrays.asList(4231, 5201, 1669));
-//        List<Integer> decryptedMessage = new ArrayList<>();
-//        for (int i = 0; i < encryptedMessage.size(); i++) {
-//            decryptedMessage.add(calcC(encryptedMessage.get(i), d, n));
-//            System.out.println(decryptedMessage.get(i));
-//        }
+        List<Integer> decryptedMessage = new ArrayList<>();
+        System.out.println("\nРасшифрованное сообщение");
+        for (int i = 0; i < encryptedMessage.size(); i++) {
+            decryptedMessage.add(calcC(encryptedMessage.get(i), d, n));
+            System.out.print(decryptedMessage.get(i) + "\t");
+        }
     }
 
     public static int calcC (int M, int e, int n) {
