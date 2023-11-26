@@ -7,7 +7,7 @@ import java.util.concurrent.TimeoutException;
 public class RSAPublicKey {
 	private final int publicExponent; // e
 	private final int modulus; // n
-	public RSAPublicKey(int prime1, int prime2) throws IllegalArgumentException {
+	RSAPublicKey(int prime1, int prime2) throws IllegalArgumentException {
 		int modulus = prime1 * prime2;
 		int eulerFunctionValue = (prime1 - 1) * (prime2 - 1);
 		this.modulus = modulus;

@@ -20,16 +20,6 @@ class RSA implements Encryptor, Decryptor {
     private final RSAPublicKey publicKey;
     private final RSAPrivateKey privateKey;
 
-    public static void main(String[] args) {
-        RSA encryptor = new RSA();
-        String message = "привет_как_ты_был_как_жизнь_дети_и_так_далее";
-        String encryptedMessage = encryptor.encrypt(message);
-        String decryptedMessage = encryptor.decrypt(encryptedMessage);
-        System.out.println("Message: " + message);
-        System.out.println("Encrypted: " + encryptedMessage);
-        System.out.println("Decrypted: " + decryptedMessage);
-    }
-
     public RSA(Alphabet alphabet, int prime1, int prime2) {
         this.alphabet = alphabet;
         try {
@@ -73,13 +63,13 @@ class RSA implements Encryptor, Decryptor {
         return this.alphabet.convert(decryptedMessage);
     }
 
-    public static int encryptBlock(int block, int publicExponentOrMultiplicativeInverse, int modulus) {
+    private static int encryptBlock(int block, int publicExponentOrMultiplicativeInverse, int modulus) {
         BigInteger bigBlock = new BigInteger(String.valueOf(block + 2)); // + 2 Для избегания обнуления и отсутствия изменений при первом (0) и втором (1) символах
         BigInteger bigPower = bigBlock.pow(publicExponentOrMultiplicativeInverse);
         BigInteger bigModulus = new BigInteger(String.valueOf(modulus));
         return Integer.parseInt(bigPower.mod(bigModulus).toString());
     }
-    public static int decryptBlock(int encryptedBlock, int publicExponentOrMultiplicativeInverse, int modulus) {
+    private static int decryptBlock(int encryptedBlock, int publicExponentOrMultiplicativeInverse, int modulus) {
         BigInteger bigBlock = new BigInteger(String.valueOf(encryptedBlock));
         BigInteger bigPower = bigBlock.pow(publicExponentOrMultiplicativeInverse);
         BigInteger bigModulus = new BigInteger(String.valueOf(modulus));
