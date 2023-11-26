@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ElGamal {
+    /* Из примера */
     private final static int DEFAULT_USER_COUNT = 5;
     private final static int DEFAULT_NETWORK_KEY_1 = 8147;
     private final static int DEFAULT_NETWORK_KEY_2 = 3853;
