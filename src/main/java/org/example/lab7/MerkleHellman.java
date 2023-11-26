@@ -59,6 +59,17 @@ public class MerkleHellman {
 		List<Integer> decryptedMessage = decrypt(encryptedMessage);
 		System.out.println("Decrypted message: ");
 		decryptedMessage.forEach(System.out::println);
+
+		message.forEach((number) -> {
+			System.out.println(new BinaryNumber(number, n));
+		});
+
+		List<Integer> cApostrophe = new ArrayList<>(Arrays.asList(
+				130, 20, 103
+		));
+		cApostrophe.forEach((value) -> {
+			System.out.println(backpackPackingSolver(W, value));
+		});
 	}
 	public static List<Integer> encrypt(List<Integer> openMessage) {
 		List<BinaryNumber> binaryMessage = new ArrayList<>();
