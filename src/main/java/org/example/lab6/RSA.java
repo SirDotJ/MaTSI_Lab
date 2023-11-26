@@ -1,261 +1,115 @@
 package org.example.lab6;
 
-import java.io.PrintWriter;
+import org.example.common.Alphabet;
+import org.example.common.AlphabetConstants;
+import org.example.common.Decryptor;
+import org.example.common.Encryptor;
+
 import java.math.BigInteger;
 import java.util.*;
-import java.util.concurrent.TimeoutException;
 
-import static java.lang.Math.pow;
+/* Реализация алгоритма шифровки RSA */
+class RSA implements Encryptor, Decryptor {
+    final static private String DELIMITER = "="; // Используется при соответствии интерфейсу передачи при помощи String
+    final static private Alphabet DEFAULT_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
+    /* Из примера */
+    final static private int DEFAULT_PRIME_1 = 89;
+    final static private int DEFAULT_PRIME_2 = 71;
 
-class RSA {
-    private static List<Integer> primes = new ArrayList<>(Arrays.asList(
-            2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
-            1847,
-            8663,
-            4967,
-            8087,
-            52583,
-            62927,
-            19319,
-            54983,
-            90647,
-            73079,
-            31799,
-            178559,
-            48023,
-            269663,
-            367559,
-            210263,
-            598439,
-            1367159,
-            2356919,
-            6707879,
-            8915639,
-            21784199
-    ));
+    private final Alphabet alphabet;
+    private final RSAPublicKey publicKey;
+    private final RSAPrivateKey privateKey;
 
     public static void main(String[] args) {
-//        List<Integer> primes = new ArrayList<>(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89));
-//        generatePrimes(primes, new PrintWriter(System.out));
-//        System.out.println();
-//        primes.forEach(System.out::println);
-//        Map<Integer, Integer> keys = findValidKeys(primes);
-//        keys.forEach((key, value) -> {
-//            System.out.println(key + "; " + value + ": " + (primesToEachOther(key, value) ? "Primes to each other" : "Not primes to each other"));
-//        });
+        RSA encryptor = new RSA();
+        String message = "привет_как_ты_был_как_жизнь_дети_и_так_далее";
+        String encryptedMessage = encryptor.encrypt(message);
+        String decryptedMessage = encryptor.decrypt(encryptedMessage);
+        System.out.println("Message: " + message);
+        System.out.println("Encrypted: " + encryptedMessage);
+        System.out.println("Decrypted: " + decryptedMessage);
+    }
 
-        /* Выбранные ключи и чила n, m */
-        int p = 89; // Prime number
-        int q = 71; // Prime number
-        int n = p * q;
-        int m = (p - 1) * (q - 1);
-        int e = 3167;
-        int d = 5983;
+    public RSA(Alphabet alphabet, int prime1, int prime2) {
+        this.alphabet = alphabet;
+        try {
+            this.publicKey = new RSAPublicKey(prime1, prime2);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Provided values do not allow for RSAPublicKey to be made!");
+        }
+        this.privateKey = new RSAPrivateKey(this.publicKey, prime1, prime2);
+    }
+    public RSA() {
+        this(
+                DEFAULT_ALPHABET,
+                DEFAULT_PRIME_1,
+                DEFAULT_PRIME_2
+        );
+    }
+    @Override
+    public String encrypt(String message) {
+        List<Integer> numericalMessage = this.alphabet.convert(message);
 
+        int publicExponent = this.publicKey.getPublicExponent();
+        int modulus = this.publicKey.getModulus();
 
-        /* Создание числа e */
-//        int m = 6160;
-//        try {
-//            int e = randomPrimeToNumber(m);
-//            System.out.println(e);
-//        } catch (TimeoutException e) {
-//            System.out.println(e);
-//        }
-
-        /* Создание числа d */
-//        int m = 6160;
-//        int e = 3167;
-//        try {
-//            int d = multiplicativeOpposite(e, m);
-//            System.out.println(d);
-//        } catch (TimeoutException exception) {
-//            exception.printStackTrace();
-//        }
-        System.out.println("p = " + p);
-        System.out.println("q = " + q);
-        System.out.println("n = " + n);
-        System.out.println("m = " + m);
-        System.out.println("e = " + e);
-        System.out.println("d = " + d);
-
-        /* Зашифровка */
-        List<Integer> message = new ArrayList<>(Arrays.asList(13, 16, 4));
-        System.out.println("Сообщение:\n13\t16\t4");
         List<Integer> encryptedMessage = new ArrayList<>();
-        System.out.println("Зашифрованное сообщение");
-        for (int i = 0; i < message.size(); i++) {
-            encryptedMessage.add(calcC(message.get(i), e, n));
-            System.out.print(encryptedMessage.get(i) + "\t");
-        }
+        for (int block : numericalMessage)
+            encryptedMessage.add(encryptBlock(block, publicExponent, modulus));
 
-        /* Расшифровка */
+        return packToString(encryptedMessage);
+    }
+    @Override
+    public String decrypt(String message) {
+        List<Integer> encryptedMessage = unpackString(message);
+
+        int multiplicativeInverse = this.privateKey.getMultiplicativeInverse();
+        int modulus = this.privateKey.getModulus();
+
         List<Integer> decryptedMessage = new ArrayList<>();
-        System.out.println("\nРасшифрованное сообщение");
-        for (int i = 0; i < encryptedMessage.size(); i++) {
-            decryptedMessage.add(calcC(encryptedMessage.get(i), d, n));
-            System.out.print(decryptedMessage.get(i) + "\t");
+        for (int encryptedBlock : encryptedMessage)
+            decryptedMessage.add(decryptBlock(encryptedBlock, multiplicativeInverse, modulus));
+
+        return this.alphabet.convert(decryptedMessage);
+    }
+
+    public static int encryptBlock(int block, int publicExponentOrMultiplicativeInverse, int modulus) {
+        BigInteger bigBlock = new BigInteger(String.valueOf(block + 2)); // + 2 Для избегания обнуления и отсутствия изменений при первом (0) и втором (1) символах
+        BigInteger bigPower = bigBlock.pow(publicExponentOrMultiplicativeInverse);
+        BigInteger bigModulus = new BigInteger(String.valueOf(modulus));
+        return Integer.parseInt(bigPower.mod(bigModulus).toString());
+    }
+    public static int decryptBlock(int encryptedBlock, int publicExponentOrMultiplicativeInverse, int modulus) {
+        BigInteger bigBlock = new BigInteger(String.valueOf(encryptedBlock));
+        BigInteger bigPower = bigBlock.pow(publicExponentOrMultiplicativeInverse);
+        BigInteger bigModulus = new BigInteger(String.valueOf(modulus));
+        return Integer.parseInt(bigPower.mod(bigModulus).toString()) - 2;// - 2 Для учета соответствующей операции в encryptBlock
+    }
+
+    /* Используются для соответствия схеме шифровки в сообщения String формата */
+    private String packToString(List<Integer> message) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(message.get(0));
+        for (int i = 1; i < message.size(); i++)
+            builder.append(DELIMITER).append(message.get(i));
+        return builder.toString();
+    }
+    private List<Integer> unpackString(String message) {
+        String[] blocks = message.split(DELIMITER);
+        List<Integer> parsed = new ArrayList<>();
+        for (String block : blocks) {
+            parsed.add(Integer.parseInt(block));
         }
+        return parsed;
     }
 
-    public static int calcC (int M, int e, int n) {
-        BigInteger power = new BigInteger(String.valueOf(M));
-        BigInteger bigPower = power.pow(e);
-        BigInteger bigN = new BigInteger(String.valueOf(n));
-        return Integer.parseInt(bigPower.mod(bigN).toString());
+    /* WARNING: FOR DEMONSTRATION PURPOSES ONLY */
+    public RSAPublicKey getPublicKey() {
+        return publicKey;
     }
 
-    public static int calcD (int C, int d, int n) {
-        return calcC(C, d, n); // та же самая формула
-    }
-
-    public static int multiplicativeOpposite(int number, int module) throws TimeoutException {
-        for (int foundNumber = 0; foundNumber != Integer.MAX_VALUE; foundNumber++) {
-            if (foundNumber * number % module == 1)
-                return foundNumber;
-        }
-        throw new TimeoutException("No number found");
-    }
-
-    public static int randomPrimeToNumber(int number) throws TimeoutException {
-        int counter = 0;
-        do {
-            int randomNumber = (int) (Math.random() * number + 1);
-            if (primesToEachOther(randomNumber, number))
-                return randomNumber;
-        } while (++counter != Integer.MAX_VALUE);
-        throw new TimeoutException("No random number found");
-    }
-
-    public static boolean primesToEachOther(int first, int second) {
-        return lowestCommonDenominator(first, second) == 1;
-    }
-
-    public static int lowestCommonDenominator(int first, int second) {
-        int lowestCommonDenominator = -1;
-        while (true) {
-            int higher = Math.max(first, second);
-            int lower = Math.min(first, second);
-            int remainder = higher % lower;
-            if (remainder <= 0)
-                break;
-            lowestCommonDenominator = remainder;
-            first = remainder;
-            second = lower;
-        }
-        return lowestCommonDenominator;
-    }
-
-    public static Map<Integer, Integer> findValidKeys(List<Integer> primes) {
-        Map<Integer, Integer> foundKeys = new HashMap<>();
-        for (int i = 0; i < primes.size(); i++) {
-            for (int j = 0; j < primes.subList(i, primes.size() - 1).size(); j++) {
-                if (pow(primes.get(i), primes.get(j)) % primes.get(j) == primes.get(i))
-                        foundKeys.put(primes.get(i), primes.get(j));
-            }
-        }
-        return foundKeys;
-    }
-
-    /** Генерация простых чисел путём многократного перемножения входного набора заведомо простых.
-     * На каждой итерации одно входное простое перемножается с другим, затем результат умножается на 2,
-     * после чего к результату прибавляется единица:
-     * probablyPrime=prime1*prime2*2+1
-     * Каждое потенциально простое далее проверяется на псевдопростоту в функции addIfPrime.
-     * Если псевдопростота исключена, то потенциально простое проверяется на простоту при помощи аналога
-     * теста Ферма, являющегося детерминированным для любых чисел, не являющихся псевдопростыми по основанию 2. */
-    public static void generatePrimes(List<Integer> primes, PrintWriter pw)
-    {
-        // Список простых чисел с остатком при деление по модулю 3 = 1.
-        List<BigInteger> mod3_1 = new ArrayList<>();
-        // Список чисел признанных простыми функцией addIfPrime()
-        List<BigInteger> l = new ArrayList<BigInteger>();
-        // Экземпляры больших чисел со значением 3 и 2.
-        BigInteger three = BigInteger.valueOf(3), two = BigInteger.valueOf(2);
-        // Цикл обработки простых чисел, данных в виде входящего параметра в процедуру.
-        // В цикле для каждого входного простого вычисляется его произведение со всеми остальными простыми.
-        // Если результат перемножения не равен единице по модулю 3, то такие числа игнорируются из-за
-        // порождения при последующих пермножениях чисел, кратных трём.
-        for (int k = 0; k < primes.size() - 1; k++)
-        {
-            // Рассматриваемое простое число (а)
-            BigInteger seed = BigInteger.valueOf(primes.get(k));
-            // Удвоенное простое число (2а)
-            BigInteger s2 = seed.shiftLeft(1);
-            // Остаток при делении `a` на 3
-            BigInteger r0 = seed.remainder(three);
-            // Проверка на остаток = 1
-            if (r0.intValue() == 1) mod3_1.add(seed);
-            // Цикл по тем простым числам, с которыми данное число пока что не перемножалось
-            for (int i = k + 1; i < primes.size(); i++)
-            {
-                BigInteger p = BigInteger.valueOf(primes.get(i)); // Перевод типа int в тип BigInteger
-                BigInteger r = p.remainder(three); // Остаток от деления p на 3
-                // Если остатки от деления очередного простого числа на три и ранее выбранного так же простого
-                // равны друг другу, то такую пару игнорируем из-за обязательной делимости результата на 3
-                if (r.intValue() == r0.intValue()) continue; // divisible by 3
-                else addIfPrime(p, seed, s2, two, l); // Если делимости на 3 нет, то проверяем на простоту
-            }
-        }
-        // Фиксируем ссылку на полученные выше результаты перемножений и проверок простоты в перменной ps
-        // (ps - сокращение от primes)
-        List<BigInteger> ps = l;
-        // В этом цикле каждое ранее найденное простое перемножается с ранее отобранными простыми,
-        // дающими по модулю 3 единицу. Результат перемножения проверяется на простоту функцией addIfPrime.
-        //
-        do
-        {
-            System.out.println("found " + l.size() + ", bits=" + l.get(0).bitLength());
-            l = new ArrayList<BigInteger>();
-            for (int k = 0; k < ps.size(); k++)
-            {
-                BigInteger seed = ps.get(k);
-                BigInteger s2 = seed.shiftLeft(1);
-                // Проходим по списку равных единице по модулю тройки чисел и перемножаем их на
-                // ранее полученные простые результаты аналогичных перемножений
-                for (int i = 0; i < mod3_1.size(); i++)
-                    addIfPrime(mod3_1.get(i), seed, s2, two, l);
-                // Здесь проверяем разрядность полученных простых чисел. Если разрядность превышает порог в
-                // 700, 800, 900, то меняем максимально допустимое значение размера списка получаемых простых
-                // с целью ограничения мощности генерации. Если генерацию не ограничивать, то количество промежуточных
-                // простых, меньших чем требуемые нам числа криптографических порядков, будет очень большим.
-                int n = 100000; // change following to adjust for required bit count
-                if (l.size() > 0)
-                    if (l.get(0).bitLength() < 700) n = 10;
-                    else if (l.get(0).bitLength() < 800) n = 20;
-                    else if (l.get(0).bitLength() < 900) n = 40;
-                if (l.size() > n) break; // Если количество полученных простых больше максимально допустимого, то выходим из данного цикла
-            }
-            ps = l; // Фиксируем ссылку на полученные выше результаты перемножений и проверок простоты в перменной ps
-            // Записываем все полученные простые в поток, полученный на входе процедуры
-            for (int i = 0; i < l.size(); i++)
-                pw.println(l.get(i));
-            pw.flush(); // дописываем буфер потока, что бы зафиксировать все полученные результаты
-        }
-        while (l.size() > 0);
-        System.out.println("Done");
-    }
-    /** Вычисляем новое простое, перемножая два известных простых, затем удваивая произведение и прибавляя единицу.
-     * Полученое потенциально простое число проверяется на потенциальную псевдопростоту согласно критериям из статьи.
-     * Если число не является псевдопростым, то далее проводится стандартный вероятностный тест простоты,
-     * который в данном случае является детерминированным в следствии устранения возможности появления
-     * псевдопростых чисел предыдущей фильтрацией. */
-    private static void addIfPrime(BigInteger a, BigInteger b, BigInteger b2, BigInteger two, List<BigInteger> l)
-    {
-        // a2=2*a; fp=a*b*2; n=a*b*2+1;
-        BigInteger a2=a.shiftLeft(1), fp=b.multiply(a2), n=fp.add(BigInteger.ONE);
-        BigInteger r=null;
-        if (a2.compareTo(b)<0) r=two.modPow(a2,n); // 2a<b
-        else if (a.compareTo(b2)<0) r=two.modPow(a,n); // a<2b
-        if (r!=null && r.compareTo(BigInteger.ONE)==0) return;
-        r=null;
-        if (b2.compareTo(a)<0) r=two.modPow(b2,n); // 2b<a
-        else if (b.compareTo(a2)<0) r=two.modPow(b,n); // b<2a
-        if (r!=null && r.compareTo(BigInteger.ONE)==0) return;
-        // Детерминированная проверка простоты (для случая, исключающего наличие псевдопростых числе)
-        // при помощи вычисления остатка по формуле:
-        // r=2^(fp/2) mod n
-        r=two.modPow(fp.shiftRight(1),n);
-        if (r.compareTo(BigInteger.ONE)!=0) return;
-        l.add(n);
+    /* WARNING: FOR DEMONSTRATION PURPOSES ONLY */
+    public RSAPrivateKey getPrivateKey() {
+        return privateKey;
     }
 }

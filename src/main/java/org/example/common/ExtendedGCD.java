@@ -4,16 +4,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/* Реализация расширенного алгоритма Евклида */
+/* Реализация расширенного алгоритма Евклида:
+* - gcd - НОД;
+* - extended_gcd - расширенный НОД;
+* - inverse - мультипликативно обратное к числу по модулю
+*  */
 public class ExtendedGCD {
-	public static void main(String[] args) {
-		int a1 = 240;
-		int b = 46;
-		System.out.println(extended_gcd(a1, b));
-
-		int a = 588;
-		int n = 881;
-		System.out.println(inverse(a, n));
+	public static int gcd(int first, int second) {
+		int gcd = -1;
+        while (true) {
+            int higher = Math.max(first, second);
+            int lower = Math.min(first, second);
+            int remainder = higher % lower;
+            if (remainder <= 0)
+                break;
+            gcd = remainder;
+            first = remainder;
+            second = lower;
+        }
+        return gcd;
 	}
 
 	public static List<Integer> extended_gcd(int a, int b) {

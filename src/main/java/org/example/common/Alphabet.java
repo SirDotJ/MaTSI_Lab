@@ -1,6 +1,5 @@
 package org.example.common;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 // Класс хранит в себе предложенный алфавит в нижнем индексе с методами по поиску в нём
@@ -12,11 +11,6 @@ public class Alphabet {
     private final static boolean DEFAULT_LOWER_CASE = true;
     private final List<Character> alphabet;
     private final TYPE type;
-
-//    public static void main(String[] args) {
-//        Alphabet alphabet1 = AlphabetConstants.CYRILLIC_NO_SPACE;
-//
-//    }
 
     public Alphabet(List<Character> alphabet, TYPE type) throws IllegalArgumentException {
         Set<Character> usedSymbols = new HashSet<>(alphabet);
@@ -75,12 +69,25 @@ public class Alphabet {
         return this.alphabet.size();
     }
     public char get(int index, boolean lowerCase) {
-        char letter = lowerCase ? Character.toLowerCase(this.alphabet.get(index))
-                                : Character.toUpperCase(this.alphabet.get(index));
-        return letter;
+        return lowerCase ? Character.toLowerCase(this.alphabet.get(index))
+                         : Character.toUpperCase(this.alphabet.get(index));
     }
     public char get(int index) {
         return this.get(index, DEFAULT_LOWER_CASE);
+    }
+    public String convert(List<Integer> indexes) {
+        StringBuilder builder = new StringBuilder();
+        for (int index : indexes)
+            builder.append(this.get(index));
+        return builder.toString();
+    }
+    public List<Integer> convert(String text) {
+        List<Integer> indexes = new ArrayList<>();
+        for (int i = 0; i < text.length(); i++) {
+            char letter = text.charAt(i);
+            indexes.add(this.indexOf(letter));
+        }
+        return indexes;
     }
     public int indexOf(char letter) {
         char lowerCaseLetter = Character.toLowerCase(letter);
