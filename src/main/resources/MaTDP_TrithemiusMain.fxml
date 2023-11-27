@@ -12,37 +12,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.RabinController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.TrithemiusController">
    <children>
       <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
       <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
-      <Label prefHeight="35.0" prefWidth="260.0" text="Криптосистема Рабина">
+      <Label text="Шифр Тритемиуса">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
          <children>
-            <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
-            <Label prefHeight="27.0" prefWidth="214.0" text="Ключи (простые числа):">
+            <Separator prefHeight="3.0" prefWidth="23.0" visible="false" />
+            <Label prefHeight="27.0" prefWidth="220.0" text="Функция (Ap^2 + Bp + C)">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator prefHeight="8.0" prefWidth="41.0" visible="false" />
-            <TextField id="prime1InputTextField" fx:id="prime1InputTextField" alignment="CENTER" prefHeight="40.0" prefWidth="108.0" promptText="Введите p" text="5923">
+            <Separator prefHeight="2.0" prefWidth="53.0" visible="false" />
+            <TextField id="keyInputTextField" fx:id="coefficientA" alignment="CENTER" prefHeight="35.0" prefWidth="88.0" promptText="Введите A" text="-51">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Separator prefHeight="4.0" prefWidth="25.0" visible="false" />
-            <TextField id="prime2InputTextField" fx:id="prime2InputTextField" alignment="CENTER" prefHeight="40.0" prefWidth="103.0" promptText="Введите q" text="5867">
+            <TextField id="keyInputTextField" fx:id="coefficientB" alignment="CENTER" prefHeight="35.0" prefWidth="85.0" promptText="Введите B" text="-93">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Separator prefHeight="4.0" prefWidth="38.0" visible="false" />
-            <Button id="outputToInputButton" depthTest="ENABLE" mnemonicParsing="false" onAction="#generateKeys" prefHeight="27.0" prefWidth="35.0" text="↺">
+            <TextField id="keyInputTextField" fx:id="coefficientC" alignment="CENTER" prefHeight="35.0" prefWidth="85.0" promptText="Введите C" text="-66">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Separator prefHeight="2.0" prefWidth="32.0" visible="false" />
+            <Button id="outputToInputButton" depthTest="ENABLE" mnemonicParsing="false" onAction="#generateFunction" prefHeight="27.0" prefWidth="35.0" text="↺">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -50,41 +54,43 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Separator prefHeight="1.0" prefWidth="91.0" visible="false" />
+            <Separator prefHeight="2.0" prefWidth="26.0" visible="false" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
          <children>
-            <Separator prefHeight="6.0" prefWidth="32.0" visible="false" />
-            <Label prefHeight="27.0" prefWidth="103.0" text="Метка">
+            <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
+            <Label prefHeight="27.0" prefWidth="196.0" text="Функция шифровки">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator prefHeight="8.0" prefWidth="41.0" visible="false" />
-            <TextField id="markerInputTextField" fx:id="markerInputTextField" alignment="CENTER" prefHeight="40.0" prefWidth="210.0" promptText="Введите числовую метку" text="77">
+            <Separator prefHeight="6.0" prefWidth="46.0" visible="false" />
+            <TextField id="keyInputTextField" fx:id="functionOutput" alignment="CENTER" prefHeight="35.0" prefWidth="250.0" promptText="Здесь будет выведена функция шифровки" text="-51p^2 - 93p - 66">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Separator prefHeight="0.0" prefWidth="262.0" visible="false" />
+            <Separator prefHeight="16.0" prefWidth="78.0" visible="false" />
+            <Button mnemonicParsing="false" onAction="#displayFunction" prefHeight="22.0" prefWidth="109.0" text="Вычислить" />
+            <Separator prefHeight="16.0" prefWidth="78.0" visible="false" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Separator prefHeight="7.0" prefWidth="40.0" visible="false" />
-            <Label prefHeight="28.0" prefWidth="134.0" text="Входной текст:">
+            <Label prefHeight="28.0" prefWidth="168.0" text="Входной текст:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
             <Separator prefHeight="12.0" prefWidth="50.0" visible="false" />
-            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="85.0" prefWidth="213.0" promptText="Введите сообщение" wrapText="true">
+            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="84.0" prefWidth="301.0" promptText="Введите сообщение" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
             </TextArea>
-            <VBox alignment="CENTER" prefHeight="85.0" prefWidth="92.0">
+            <VBox alignment="CENTER" prefHeight="84.0" prefWidth="122.0">
                <children>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <RadioButton fx:id="cyrillicRadioButton" mnemonicParsing="false" selected="true" text="Кириллица">
@@ -100,13 +106,14 @@
             <Separator prefHeight="7.0" prefWidth="129.0" visible="false" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0">
          <children>
             <Separator prefHeight="5.0" prefWidth="179.0" visible="false" />
             <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" prefHeight="22.0" prefWidth="105.0" text="Зашифровать">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
+               </cursor>
+            </Button>
             <Separator prefHeight="5.0" prefWidth="44.0" visible="false" />
             <Button id="outputToInputButton" depthTest="ENABLE" mnemonicParsing="false" onAction="#transferOutputToInput" prefHeight="27.0" prefWidth="35.0" text="↑">
                <cursor>
@@ -120,7 +127,8 @@
             <Button id="decryptButton" mnemonicParsing="false" onAction="#decrypt" prefHeight="22.0" prefWidth="109.0" text="Расшифровать">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
+               </cursor>
+            </Button>
             <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
          </children>
       </HBox>

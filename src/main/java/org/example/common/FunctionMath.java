@@ -2,31 +2,47 @@ package org.example.common;
 
 import org.example.lab8.Trithemius;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
 public class FunctionMath {
 	public static Function<Integer, Integer> generateRandomValidTrithemiusFunction(Alphabet alphabet, int power) throws TimeoutException {
-		Function<Integer, Integer> function;
-		boolean success = false;
 		int counter = 0;
 		do {
-			int coefficient1 = (int) (Math.random() * power - power);
-			int coefficient2 = (int) (Math.random() * power - power);
-			int coefficient3 = (int) (Math.random() * power - power);
-			function = cypherFunctionGenerator(coefficient1, coefficient2, coefficient3);
-			try {
-				Trithemius encryptor = new Trithemius(alphabet, function);
-			} catch (IllegalArgumentException e) {
-				continue;
-			}
-			success = true;
-		} while (!success && counter++ != Integer.MAX_VALUE);
-		if (!success)
+			List<Integer> coefficients = randomCoefficients(3, power);
+			if (checkCoefficientValidityForTrithemius(alphabet, coefficients))
+				return cypherFunctionGenerator(coefficients.get(0), coefficients.get(1), coefficients.get(2));
+		} while (counter++ != Integer.MAX_VALUE);
 			throw new TimeoutException("No valid formula could be found in time");
-
-		return function;
 	}
+
+	public static boolean checkCoefficientValidityForTrithemius(Alphabet alphabet, List<Integer> coefficients) {
+		try {
+			Trithemius encryptor = new Trithemius(
+					alphabet,
+					cypherFunctionGenerator(
+							coefficients.get(0),
+							coefficients.get(1),
+							coefficients.get(2)
+					)
+			);
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+		return true;
+	}
+
+	public static List<Integer> randomCoefficients(int number, int power) {
+		List<Integer> coefficients = new ArrayList<>();
+
+		for (int i = 0; i < number; i++)
+			coefficients.add((int) (Math.random() * power - power));
+
+		return coefficients;
+	}
+
 	public static Function<Integer, Integer> cypherFunctionGenerator(int coefficient1, int coefficient2, int coefficient3) {
 		return integer -> coefficient1 * (int) Math.pow(integer, 2) + coefficient2 * integer + coefficient3;
 	}

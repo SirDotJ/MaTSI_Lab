@@ -14,19 +14,8 @@ public class Trithemius implements Encryptor, Decryptor {
 	private final static Alphabet DEFAULT_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
 	private final static Function<Integer, Integer> DEFAULT_SHIFT_FUNCTION = integer -> -51 * (int) Math.pow(integer, 2) - 93 * integer - 66;
 
-	private final Alphabet alphabet;
-	private final Alphabet cypherAlphabet;
-
-	public static void main(String[] args) {
-		Trithemius encryptor = new Trithemius();
-		String message = "когда_сюда_подойдут_варвары";
-		String encryptedMessage = encryptor.encrypt(message);
-		String decryptedMessage = encryptor.decrypt(encryptedMessage);
-
-		System.out.println("Message: " + message);
-		System.out.println("Encrypted message: " + encryptedMessage);
-		System.out.println("Decrypted message: " + decryptedMessage);
-	}
+	private Alphabet alphabet;
+	private Alphabet cypherAlphabet;
 
 	public Trithemius(Alphabet alphabet, Function<Integer, Integer> shiftFunction) throws IllegalArgumentException {
 		this.alphabet = alphabet;
@@ -47,6 +36,22 @@ public class Trithemius implements Encryptor, Decryptor {
 
 	public Trithemius() {
 		this(DEFAULT_ALPHABET, DEFAULT_SHIFT_FUNCTION);
+	}
+
+	public void setNewKey(Function<Integer, Integer> shiftFunction) throws IllegalArgumentException {
+		try {
+			this.cypherAlphabet = calculateCypherAlphabet(this.alphabet, shiftFunction);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("Provided shiftFunction does not allow for a valid cypher alphabet to be made!");
+		}
+	}
+
+	public void setNewAlphabet(Alphabet alphabet) {
+		this.alphabet = alphabet;
+	}
+
+	public Alphabet getAlphabet() {
+		return alphabet;
 	}
 
 	public static Alphabet calculateCypherAlphabet(Alphabet alphabet, Function<Integer, Integer> function) throws IllegalArgumentException {

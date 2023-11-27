@@ -38,6 +38,8 @@ public class MainApplicationController {
 	private RadioButton RabinMethodButton; // Кнопка выбора загрузки криптосистемы "Рабина" пользователем
 	@FXML
 	private RadioButton MerkleHellmanMethodButton; // Кнопка выбора загрузки криптосистемы "Меркла-Хеллмана" пользователем
+	@FXML
+	private RadioButton TrithemiusMethodButton; // Кнопка выбора загрузки шифра "Тритемиуса" пользователем
 
 	/* Методы сжатия */
 	@FXML
@@ -135,6 +137,12 @@ public class MainApplicationController {
 	public void loadMerkleHellmanMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема Меркла-Хеллмана" пользователем
 		if (MerkleHellmanMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_MerkleHellmanMain.fxml");
+		}
+	}
+	@FXML
+	public void loadTrithemiusMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Алгоритм Тритемиуса" пользователем
+		if (TrithemiusMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_TrithemiusMain.fxml");
 		}
 	}
 
