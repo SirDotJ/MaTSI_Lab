@@ -19,22 +19,10 @@ public class Rabin implements Encryptor, Decryptor {
 	private static final int DEFAULT_PRIME_1 = 5923;
 	private static final int DEFAULT_PRIME_2 = 5867;
 
-	private final Alphabet alphabet;
-	private final RabinPrivateKey privateKey;
-	private final int publicKey;
-	private final int marker;
-
-	public static void main(String[] args) {
-		Rabin encryptor = new Rabin();
-		String message = "мне_тут_одному_холодно_или_не";
-		String encryptedMessage = encryptor.encrypt(message);
-		String decryptedMessage = encryptor.decrypt(encryptedMessage);
-		System.out.println("Message: " + message);
-		System.out.println("Encrypted message: " + encryptedMessage);
-		System.out.println("Decrypted message: " + decryptedMessage);
-	}
-
-
+	private Alphabet alphabet;
+	private RabinPrivateKey privateKey;
+	private int publicKey;
+	private int marker;
 	public Rabin(Alphabet alphabet, int prime1, int prime2, int marker) throws IllegalArgumentException {
 		if (!keysValid(prime1, prime2))
 			throw new IllegalArgumentException("Provided keys are not valid for Rabin crypto-system");
@@ -56,6 +44,17 @@ public class Rabin implements Encryptor, Decryptor {
 	public Rabin() {
 		this(DEFAULT_ALPHABET, DEFAULT_PRIME_1, DEFAULT_PRIME_2, DEFAULT_MARKER);
 	}
+	public void setNewAlphabet(Alphabet alphabet) {
+        this.alphabet = alphabet;
+    }
+    public void setNewKey(int prime1, int prime2, int marker) throws IllegalArgumentException {
+        if (!keysValid(prime1, prime2))
+			throw new IllegalArgumentException("Provided keys are not valid for Rabin crypto-system");
+
+		this.privateKey = new RabinPrivateKey(prime1, prime2);
+		this.publicKey = prime1 * prime2;
+		this.marker = marker;
+    }
 
 	private static boolean keysValid(int prime1, int prime2) {
 		return  (prime1 % 4 == 3) &&
@@ -196,4 +195,12 @@ public class Rabin implements Encryptor, Decryptor {
         }
         return parsed;
     }
+
+	/* WARNING: FOR DEMONSTRATION PURPOSES ONLY */
+	public int getPublicKey() {
+		return publicKey;
+	}
+	public RabinPrivateKey getPrivateKey() {
+		return privateKey;
+	}
 }

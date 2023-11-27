@@ -35,6 +35,8 @@ public class MainApplicationController {
 	private RadioButton RSAMethodButton; // Кнопка выбора загрузки криптосистемы "RSA" пользователем
 	@FXML
 	private RadioButton ElGamalMethodButton; // Кнопка выбора загрузки криптосистемы "Эль-Гамаля" пользователем
+	@FXML
+	private RadioButton RabinMethodButton; // Кнопка выбора загрузки криптосистемы "Рабина" пользователем
 
 	/* Методы сжатия */
 
@@ -121,6 +123,12 @@ public class MainApplicationController {
 	public void loadElGamalMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема Эль-Гамаля" пользователем
 		if (ElGamalMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_ElGamalMain.fxml");
+		}
+	}
+	@FXML
+	public void loadRabinMethod(ActionEvent event) {// Вызывается при выборе радио кнопки "Криптосистема Рабина" пользователем
+		if (RabinMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_RabinMain.fxml");
 		}
 	}
 

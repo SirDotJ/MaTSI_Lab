@@ -29,4 +29,11 @@ public class RabinPrivateKey {
 	int getBezoutCoefficient2() {
 		return bezoutCoefficient2;
 	}
+
+	/* WARNING: FOR DEMONSTRATION PURPOSES ONLY */
+
+	@Override
+	public String toString() {
+		return "(p = " + prime1 + ", q = " + prime2 + ", a = " + bezoutCoefficient1 + ", b = " + bezoutCoefficient2 + ")";
+	}
 }

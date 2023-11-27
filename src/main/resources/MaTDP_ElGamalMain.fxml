@@ -139,7 +139,7 @@
                   <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                      <children>
                         <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
-                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="350.0" text="Пользователи и их открытые ключи">
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="350.0" text="Пользователи и их ключи">
                            <font>
                               <Font size="18.0" />
                            </font>
