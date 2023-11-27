@@ -115,4 +115,10 @@ public class User implements Encryptor, Decryptor {
         }
         return parsed;
     }
+
+	/* WARNING: FOR DEMONSTRATION PURPOSES ONLY */
+	@Override
+	public String toString() {
+		return "User №" + this.network.getUserIndex(this) + ": public key: " + this.publicKey + " private key: " + this.privateKey;
+	}
 }

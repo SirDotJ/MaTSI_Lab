@@ -10,46 +10,23 @@ import java.util.List;
 
 public class ElGamal {
     /* Из примера */
+    private static final Alphabet DEFAULT_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
     private final static int DEFAULT_USER_COUNT = 5;
     private final static int DEFAULT_NETWORK_KEY_1 = 8147;
     private final static int DEFAULT_NETWORK_KEY_2 = 3853;
 
-    private final Alphabet alphabet = AlphabetConstants.CYRILLIC_WITH_SPACE;
-    private final int networkKey1;
-    private final int networkKey2;
-    private final List<User> userList;
+    private Alphabet alphabet;
+    private int networkKey1;
+    private int networkKey2;
+    private List<User> userList;
 
-    public static void main(String[] args) {
-        ElGamal network = new ElGamal();
-
-        String message = "здарова_бандиты";
-        int senderIndex = 0;
-        List<String> encryptedMessages = network.massSend(senderIndex, message);
-        List<String> decryptedMessages = network.massReceive(senderIndex, encryptedMessages);
-
-        System.out.println("Message: " + message);
-        System.out.println("Sender: User №" + senderIndex);
-
-        System.out.println("Received encrypted messages: ");
-        int counter = 0;
-        for (int i = 0; i < encryptedMessages.size() + 1; i++) {
-            if (i == senderIndex)
-                continue;
-            System.out.println("\tUser №" + i + ": " + encryptedMessages.get(counter++));
-        }
-
-        counter = 0;
-        System.out.println("Decrypted messages: ");
-        for (int i = 0; i < decryptedMessages.size() + 1; i++) {
-            if (i == senderIndex)
-                continue;
-            System.out.println("\tUser №" + i + ": " + decryptedMessages.get(counter++));
-        }
-    }
-
-    public ElGamal(int prime1, int prime2, int userCount) throws IllegalArgumentException {
+    public ElGamal(Alphabet alphabet, int prime1, int prime2, int userCount) throws IllegalArgumentException {
+        this.alphabet = alphabet;
         if (!publicKeysValid(prime1, prime2))
             throw new IllegalArgumentException("Provided public keys are not valid for ElGamal crypto-system");
+        if (userCount <= 0)
+            throw new IllegalArgumentException("User count must be greater than 0");
+
         this.networkKey1 = prime1;
         this.networkKey2 = prime2;
 
@@ -58,12 +35,33 @@ public class ElGamal {
             userList.add(new User(this));
     }
 
+    public ElGamal(Alphabet alphabet, int prime1, int prime2) throws IllegalArgumentException {
+        this(alphabet, prime1, prime2, DEFAULT_USER_COUNT);
+    }
+
     public ElGamal(int prime1, int prime2) throws IllegalArgumentException {
-        this(prime1, prime2, DEFAULT_USER_COUNT);
+        this(DEFAULT_ALPHABET, prime1, prime2, DEFAULT_USER_COUNT);
     }
 
     public ElGamal() {
-        this(DEFAULT_NETWORK_KEY_1, DEFAULT_NETWORK_KEY_2, DEFAULT_USER_COUNT);
+        this(DEFAULT_ALPHABET, DEFAULT_NETWORK_KEY_1, DEFAULT_NETWORK_KEY_2, DEFAULT_USER_COUNT);
+    }
+
+    public void setNewAlphabet(Alphabet alphabet) {
+        this.alphabet = alphabet;
+    }
+    public void setNewKey(int prime1, int prime2, int userCount) throws IllegalArgumentException {
+        if (!publicKeysValid(prime1, prime2))
+            throw new IllegalArgumentException("Provided public keys are not valid for ElGamal crypto-system");
+        if (userCount <= 0)
+            throw new IllegalArgumentException("User count must be greater than 0");
+
+        this.networkKey1 = prime1;
+        this.networkKey2 = prime2;
+
+        this.userList = new ArrayList<>();
+        for (int i = 0; i < userCount; i++)
+            userList.add(new User(this));
     }
 
     private static boolean publicKeysValid(int key1Candidate, int key2Candidate) {
@@ -125,5 +123,25 @@ public class ElGamal {
         }
 
         return decryptedMessages;
+    }
+
+    public List<User> getAllUsers() {
+        return this.userList;
+    }
+
+    public User getUser(int index) throws IllegalArgumentException {
+        if ((index < 0) || (index >= this.userList.size()))
+            throw new IllegalArgumentException("Provided user index is out of range");
+        return this.userList.get(index);
+    }
+
+    public int getUserIndex(User user) {
+        for (int i = 0; i < this.userList.size(); i++) {
+            User foundUser = this.userList.get(i);
+            if (foundUser == user)
+                return i;
+        }
+
+        return -1;
     }
 }

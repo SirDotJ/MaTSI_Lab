@@ -47,7 +47,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="701.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MainApplicationController">
+<VBox prefHeight="748.0" prefWidth="1284.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MainApplicationController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -88,11 +88,11 @@
         </Menu>
       </menus>
     </MenuBar>
-      <HBox alignment="CENTER" prefHeight="637.0" prefWidth="1138.0">
+      <HBox alignment="CENTER" prefHeight="686.0" prefWidth="1284.0">
          <children>
         <AnchorPane style="-fx-border-color: black;">
           <children>
-                  <VBox minWidth="-Infinity" prefHeight="638.0" prefWidth="246.0">
+                  <VBox minWidth="-Infinity" prefHeight="638.0" prefWidth="260.0">
                      <children>
                   <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Алгоритмы шифровки" textAlignment="CENTER" wrapText="false">
                     <font>
@@ -145,6 +145,11 @@
                                  </font>
                               </RadioButton>
                               <RadioButton id="radioButtonHamiltonPath" fx:id="RSAMethodButton" mnemonicParsing="false" onAction="#loadRSAMethod" text="Криптосистема RSA" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="ElGamalMethodButton" mnemonicParsing="false" onAction="#loadElGamalMethod" text="Криптосистема Эль-Гамаля" toggleGroup="$currentMethod">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -203,7 +208,7 @@
                   </VBox>
           </children>
         </AnchorPane>
-            <AnchorPane fx:id="methodDisplay" prefHeight="579.0" prefWidth="930.0" />
+            <AnchorPane fx:id="methodDisplay" prefHeight="640.0" prefWidth="1026.0" />
          </children>
       </HBox>
     <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="1138.0" spacing="5.0" VBox.vgrow="NEVER">
