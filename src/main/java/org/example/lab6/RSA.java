@@ -9,18 +9,18 @@ import java.math.BigInteger;
 import java.util.*;
 
 /* Реализация алгоритма шифровки RSA */
-class RSA implements Encryptor, Decryptor {
+public class RSA implements Encryptor, Decryptor {
     final static private String DELIMITER = "="; // Используется при соответствии интерфейсу передачи при помощи String
     final static private Alphabet DEFAULT_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
     /* Из примера */
     final static private int DEFAULT_PRIME_1 = 89;
     final static private int DEFAULT_PRIME_2 = 71;
 
-    private final Alphabet alphabet;
-    private final RSAPublicKey publicKey;
-    private final RSAPrivateKey privateKey;
+    private Alphabet alphabet;
+    private RSAPublicKey publicKey;
+    private RSAPrivateKey privateKey;
 
-    public RSA(Alphabet alphabet, int prime1, int prime2) {
+    public RSA(Alphabet alphabet, int prime1, int prime2) throws IllegalArgumentException {
         this.alphabet = alphabet;
         try {
             this.publicKey = new RSAPublicKey(prime1, prime2);
@@ -29,12 +29,24 @@ class RSA implements Encryptor, Decryptor {
         }
         this.privateKey = new RSAPrivateKey(this.publicKey, prime1, prime2);
     }
+    public RSA(int prime1, int prime2) {
+        this(DEFAULT_ALPHABET, prime1, prime2);
+    }
     public RSA() {
-        this(
-                DEFAULT_ALPHABET,
-                DEFAULT_PRIME_1,
-                DEFAULT_PRIME_2
-        );
+        this(DEFAULT_ALPHABET, DEFAULT_PRIME_1, DEFAULT_PRIME_2);
+    }
+    public void setNewAlphabet(Alphabet alphabet) {
+        this.alphabet = alphabet;
+    }
+    public void setNewKey(int prime1, int prime2) throws IllegalArgumentException {
+        RSAPublicKey newPublicKey;
+        try {
+            newPublicKey = new RSAPublicKey(prime1, prime2);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Provided values do not allow for RSAPublicKey to be made!");
+        }
+        this.publicKey = newPublicKey;
+        this.privateKey = new RSAPrivateKey(this.publicKey, prime1, prime2);
     }
     @Override
     public String encrypt(String message) {

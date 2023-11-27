@@ -139,10 +139,12 @@
                                     <Font size="16.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton id="radioButtonHamiltonPath" fx:id="playfairMethodButton" mnemonicParsing="false" onAction="#loadPlayfairMethod" text="Шифр Плейфера">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="currentMethod1" />
-                                 </toggleGroup>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="playfairMethodButton" mnemonicParsing="false" onAction="#loadPlayfairMethod" text="Шифр Плейфера" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="RSAMethodButton" mnemonicParsing="false" onAction="#loadRSAMethod" text="Криптосистема RSA" toggleGroup="$currentMethod">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

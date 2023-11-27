@@ -31,6 +31,8 @@ public class MainApplicationController {
 	private RadioButton knapsackMethodButton; // Кнопка выбора загрузки шифра "укладки ранца" пользователем
 	@FXML
 	private RadioButton playfairMethodButton; // Кнопка выбора загрузки шифра "Плейфера" пользователем
+	@FXML
+	private RadioButton RSAMethodButton; // Кнопка выбора загрузки криптосистемы "RSA" пользователем
 
 	/* Методы сжатия */
 
@@ -105,6 +107,12 @@ public class MainApplicationController {
 	public void loadPlayfairMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр Плейфера" пользователем
 		if(playfairMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_PlayfairMain.fxml");
+		}
+	}
+	@FXML
+	public void loadRSAMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема RSA" пользователем
+		if (RSAMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_RSAMain.fxml");
 		}
 	}
 
