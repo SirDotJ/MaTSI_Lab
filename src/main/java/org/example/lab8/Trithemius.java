@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Trithemius implements Encryptor, Decryptor {
+	/* Из примера */
 	private final static Alphabet DEFAULT_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
 	private final static Function<Integer, Integer> DEFAULT_SHIFT_FUNCTION = integer -> -51 * (int) Math.pow(integer, 2) - 93 * integer - 66;
 

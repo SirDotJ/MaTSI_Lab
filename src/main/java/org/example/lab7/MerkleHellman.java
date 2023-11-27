@@ -8,6 +8,7 @@ import java.util.*;
 /* Криптосистема Меркла-Хеллмана */
 public class MerkleHellman implements Encryptor, Decryptor {
 	private final static String DELIMITER = "="; // Используется при соответствии интерфейсу передачи при помощи String
+	/* Из примера */
 	private final static Alphabet DEFAULT_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
 	private final static int DEFAULT_BIT_LENGTH = 8;
 	private final static List<Integer> DEFAULT_W = List.of(1, 3, 8, 20, 47, 83, 181, 349);
