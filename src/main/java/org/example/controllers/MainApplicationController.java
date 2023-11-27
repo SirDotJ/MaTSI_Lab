@@ -14,7 +14,6 @@ public class MainApplicationController {
 	private AnchorPane methodDisplay; // Область отображения загруженной формы метода шифровки пользователю
 
 	/* Методы шифровки */
-
 	@FXML
 	private RadioButton caesarMethodButton; // Кнопка выбора загрузки шифра "Цезаря" пользователем
 	@FXML
@@ -37,9 +36,10 @@ public class MainApplicationController {
 	private RadioButton ElGamalMethodButton; // Кнопка выбора загрузки криптосистемы "Эль-Гамаля" пользователем
 	@FXML
 	private RadioButton RabinMethodButton; // Кнопка выбора загрузки криптосистемы "Рабина" пользователем
+	@FXML
+	private RadioButton MerkleHellmanMethodButton; // Кнопка выбора загрузки криптосистемы "Меркла-Хеллмана" пользователем
 
 	/* Методы сжатия */
-
 	@FXML
 	private RadioButton RLEMethodButton; // Кнопка выбора загрузки сжатия "RLE" пользователем
 	@FXML
@@ -126,9 +126,15 @@ public class MainApplicationController {
 		}
 	}
 	@FXML
-	public void loadRabinMethod(ActionEvent event) {// Вызывается при выборе радио кнопки "Криптосистема Рабина" пользователем
+	public void loadRabinMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема Рабина" пользователем
 		if (RabinMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_RabinMain.fxml");
+		}
+	}
+	@FXML
+	public void loadMerkleHellmanMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема Меркла-Хеллмана" пользователем
+		if (MerkleHellmanMethodButton.isSelected()) {
+			this.setDisplayScene("MaTDP_MerkleHellmanMain.fxml");
 		}
 	}
 

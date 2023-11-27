@@ -47,7 +47,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="748.0" prefWidth="1284.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MainApplicationController">
+<VBox prefHeight="748.0" prefWidth="1334.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MainApplicationController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -90,9 +90,9 @@
     </MenuBar>
       <HBox alignment="CENTER" prefHeight="686.0" prefWidth="1284.0">
          <children>
-        <AnchorPane style="-fx-border-color: black;">
+        <AnchorPane prefWidth="325.0" style="-fx-border-color: black;">
           <children>
-                  <VBox minWidth="-Infinity" prefHeight="638.0" prefWidth="260.0">
+                  <VBox minWidth="-Infinity" prefHeight="686.0" prefWidth="301.0">
                      <children>
                   <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Алгоритмы шифровки" textAlignment="CENTER" wrapText="false">
                     <font>
@@ -155,6 +155,11 @@
                                  </font>
                               </RadioButton>
                               <RadioButton id="radioButtonHamiltonPath" fx:id="RabinMethodButton" mnemonicParsing="false" onAction="#loadRabinMethod" prefHeight="25.0" prefWidth="202.0" text="Криптосистема Рабина" toggleGroup="$currentMethod">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton id="radioButtonHamiltonPath" fx:id="MerkleHellmanMethodButton" mnemonicParsing="false" onAction="#loadMerkleHellmanMethod" prefHeight="25.0" prefWidth="285.0" text="Криптосистема Меркла-Хеллмана" toggleGroup="$currentMethod">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

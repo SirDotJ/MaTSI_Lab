@@ -55,4 +55,20 @@ public class MerkleHellmanPrivateKey {
 	int getInverseR() {
 		return inverseR;
 	}
+
+	/* WARNING: FOR DEMONSTRATION PURPOSES ONLY */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("(W = {");
+		builder.append(this.W.get(0));
+		for (int i = 1; i < this.W.size(); i++) {
+			builder.append(", ").append(this.W.get(i));
+		}
+		builder.append("}, q = ").append(this.q);
+		builder.append(", r = ").append(this.r);
+		builder.append(", r' = ").append(this.inverseR);
+		builder.append(")");
+		return builder.toString();
+	}
 }

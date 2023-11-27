@@ -12,22 +12,15 @@ public class MerkleHellman implements Encryptor, Decryptor {
 	private final static Alphabet DEFAULT_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
 	private final static int DEFAULT_BIT_LENGTH = 8;
 	private final static List<Integer> DEFAULT_W = List.of(1, 3, 8, 20, 47, 83, 181, 349);
+	private Alphabet alphabet;
+	private int bitLength;
+	private MerkleHellmanPrivateKey privateKey;
+	private List<Integer> publicKey;
+	public MerkleHellman(Alphabet alphabet, int bitLength, List<Integer> W) throws IllegalArgumentException {
+		if (bitLength < 0)
+			throw new IllegalArgumentException("bitLength must be a positive number");
 
-	public static void main(String[] args) {
-		MerkleHellman encryptor = new MerkleHellman();
-		String message = "у_нас_в_холодильнике_есть_яйца";
-		String encryptedMessage = encryptor.encrypt(message);
-		String decryptedMessage = encryptor.decrypt(encryptedMessage);
 
-		System.out.println("Message: " + message);
-		System.out.println("Encrypted message: " + encryptedMessage);
-		System.out.println("Decrypted message: " + decryptedMessage);
-	}
-	private final Alphabet alphabet;
-	private final int bitLength;
-	private final MerkleHellmanPrivateKey privateKey;
-	private final List<Integer> publicKey;
-	public MerkleHellman(Alphabet alphabet, int bitLength, List<Integer> W) {
 		this.alphabet = alphabet;
 		this.bitLength = bitLength;
 		this.privateKey = new MerkleHellmanPrivateKey(W);
@@ -51,6 +44,15 @@ public class MerkleHellman implements Encryptor, Decryptor {
 	public MerkleHellman() {
 		this(DEFAULT_ALPHABET, DEFAULT_BIT_LENGTH, DEFAULT_W);
 	}
+
+	public void setNewAlphabet(Alphabet alphabet) {
+        this.alphabet = alphabet;
+    }
+    public void setNewKey(int bitLength, List<Integer> W) {
+		this.bitLength = bitLength;
+		this.privateKey = new MerkleHellmanPrivateKey(W);
+		this.publicKey = calculatePublicKey(this.privateKey);
+    }
 
 	private static List<Integer> calculatePublicKey(MerkleHellmanPrivateKey privateKey) {
 		BigInteger bigR = BigInteger.valueOf(privateKey.getR());
@@ -148,4 +150,17 @@ public class MerkleHellman implements Encryptor, Decryptor {
         }
         return parsed;
     }
+
+	/* WARNING: FOR DEMONSTRATION PURPOSES ONLY */
+	public String getPublicKeyString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("B = {").append(this.publicKey.get(0));
+		for (int i = 1; i < this.publicKey.size(); i++) {
+			builder.append(", ").append(this.publicKey.get(i));
+		}
+		return builder.toString();
+	}
+	public MerkleHellmanPrivateKey getPrivateKey() {
+		return this.privateKey;
+	}
 }
