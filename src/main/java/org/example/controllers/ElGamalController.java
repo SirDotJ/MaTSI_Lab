@@ -8,6 +8,7 @@ import org.example.common.*;
 import org.example.lab6.ElGamal;
 import org.example.lab6.User;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class ElGamalController {
@@ -90,10 +91,20 @@ public class ElGamalController {
 		int prime2;
 		do {
 			prime2 = PrimeMath.getRandomPrime();
-		} while (prime1 == prime2 || (!PrimeMath.primesToEachOther(prime1, prime2)));
+		} while (prime1 == prime2 ||
+				(!PrimeMath.primesToEachOther(prime1, prime2)) ||
+				(!modCheck(prime1, prime2))
+		);
 
 		this.prime1InputTextField.setText(String.valueOf(prime1));
 		this.prime2InputTextField.setText(String.valueOf(prime2));
+	}
+
+	private static boolean modCheck(int prime1, int prime2) {
+		BigInteger bigKey1 = BigInteger.valueOf(prime1);
+        BigInteger bigKey2 = BigInteger.valueOf(prime2);
+
+        return (bigKey2.pow(prime1).mod(bigKey1).equals(bigKey2));
 	}
 
 	public void sendToAll() {
@@ -116,7 +127,7 @@ public class ElGamalController {
 
 		List<String> encryptedMessages = this.encryptor.massSend(senderId, message);
 		int counter = 0;
-		for (int i = 0; i < encryptedMessages.size(); i++) {
+		for (int i = 0; i < encryptor.getAllUsers().size(); i++) {
 			if (i == senderId)
 				continue;
 			String encryptedMessage = encryptedMessages.get(counter++);
@@ -125,7 +136,7 @@ public class ElGamalController {
 
 		List<String> decryptedMessages = this.encryptor.massReceive(senderId, encryptedMessages);
 		counter = 0;
-		for (int i = 0; i < decryptedMessages.size(); i++) {
+		for (int i = 0; i < encryptor.getAllUsers().size(); i++) {
 			if (i == senderId)
 				continue;
 			String decryptedMessage = decryptedMessages.get(counter++);
