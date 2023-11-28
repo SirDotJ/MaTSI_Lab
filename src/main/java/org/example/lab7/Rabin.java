@@ -82,9 +82,8 @@ public class Rabin implements Encryptor, Decryptor {
 		List<Integer> markedMessage = new ArrayList<>();
 
 		for (int unmarkedValue : unmarkedMessage) {
-			// + 2 для избежания нулевых и единичных значений
-			int unmarkedValueLength = String.valueOf(unmarkedValue + 2).length();
-			int markedValue = (unmarkedValue + 2) + (int) (marker * Math.pow(10, unmarkedValueLength));
+			int unmarkedValueLength = String.valueOf(unmarkedValue).length();
+			int markedValue = unmarkedValue + (int) (marker * Math.pow(10, unmarkedValueLength));
 			markedMessage.add(markedValue);
 		}
 
@@ -173,7 +172,7 @@ public class Rabin implements Encryptor, Decryptor {
 			int supposedValue = variant % mask;
 			int markerValues = (variant - supposedValue) / mask;
 			if (markerValues == marker)
-				return supposedValue - 2; // - 2 для учета проведенной манипуляции в markMessage
+				return supposedValue;
 		}
 
 		throw new IllegalArgumentException("No valid decryption variant found");
