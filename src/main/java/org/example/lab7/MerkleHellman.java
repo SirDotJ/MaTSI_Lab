@@ -74,7 +74,7 @@ public class MerkleHellman implements Encryptor, Decryptor {
 
 		List<BinaryNumber> binaryMessage = new ArrayList<>();
 		for (int block : numericalMessage)
-			binaryMessage.add(new BinaryNumber(block + 2, this.bitLength)); // + 2 для избежания нулевых и единичных значений
+			binaryMessage.add(new BinaryNumber(block, this.bitLength));
 
 		List<Integer> encryptedMessage = new ArrayList<>();
 		for (BinaryNumber binaryBlock : binaryMessage)
@@ -108,7 +108,7 @@ public class MerkleHellman implements Encryptor, Decryptor {
 		for (Integer x : specialValues) {
 			sum += Math.pow(2, (n - x - 1));
 		}
-		return sum - 2; // - 2 для учета проведенной манипуляции в encrypt
+		return sum;
 	}
 
 	public static List<Integer> backpackPackingSolver(List<Integer> multitude, int targetNumber) {
