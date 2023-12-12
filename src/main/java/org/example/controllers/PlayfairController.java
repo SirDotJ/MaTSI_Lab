@@ -57,4 +57,13 @@ public class PlayfairController implements EncryptorForm, DecryptorForm {
 		String decryptedText = this.encryptor.decrypt(this.inputMessage.getText());
 		this.outputEncryptedMessage.setText(decryptedText);
 	}
+
+	public void transferOutputToInput() {
+		this.inputMessage.setText(this.outputEncryptedMessage.getText());
+		this.outputEncryptedMessage.setText("");
+	}
+
+	public void openHelp() {
+		return;
+	}
 }

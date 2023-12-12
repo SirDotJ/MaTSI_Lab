@@ -12,17 +12,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="689.0" prefWidth="1012.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.ElGamalController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="671.0" prefWidth="1009.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.ElGamalController">
    <children>
-      <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
-      <Label prefHeight="35.0" prefWidth="313.0" text="Криптосистема Эль-Гамаля">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
+      <VBox prefHeight="52.0" prefWidth="600.0" style="-fx-border-color: black;">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Separator prefHeight="8.0" prefWidth="359.0" visible="false" />
+                  <Label prefHeight="35.0" prefWidth="313.0" text="Криптосистема Эль-Гамаля">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator prefHeight="5.0" prefWidth="270.0" visible="false" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#openHelp" text="?">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
+         </children>
+      </VBox>
       <HBox prefHeight="297.0" prefWidth="1012.0">
          <children>
-            <VBox prefHeight="416.0" prefWidth="896.0">
+            <VBox prefHeight="416.0" prefWidth="896.0" style="-fx-border-color: black; -fx-border-width: 1px;">
                <children>
                   <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                      <children>
@@ -56,11 +72,13 @@
                         <Separator prefHeight="1.0" prefWidth="91.0" visible="false" />
                      </children>
                   </HBox>
+                  <Separator orientation="VERTICAL" prefHeight="38.0" prefWidth="9.0" visible="false" />
                   <Label alignment="CENTER" prefHeight="27.0" prefWidth="688.0" text="Параметры сети">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Separator orientation="VERTICAL" prefHeight="38.0" prefWidth="9.0" visible="false" />
                   <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                      <children>
                         <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
@@ -77,15 +95,13 @@
                         </TextField>
                         <VBox alignment="CENTER" prefHeight="62.0" prefWidth="136.0">
                            <children>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
                               <RadioButton fx:id="cyrillicRadioButton" mnemonicParsing="false" selected="true" text="Кириллица">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="selectedAlphabet" />
                                  </toggleGroup>
                               </RadioButton>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
                               <RadioButton fx:id="latinRadioButton" mnemonicParsing="false" text="Латиница" toggleGroup="$selectedAlphabet" />
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
                            </children>
                         </VBox>
                         <Separator prefHeight="8.0" prefWidth="53.0" visible="false" />
@@ -100,6 +116,7 @@
                         <Separator prefHeight="0.0" prefWidth="114.0" visible="false" />
                      </children>
                   </HBox>
+                  <Separator orientation="VERTICAL" prefHeight="72.0" prefWidth="31.0" visible="false" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Separator prefHeight="7.0" prefWidth="40.0" visible="false" />
@@ -120,7 +137,8 @@
                         <Separator prefHeight="8.0" prefWidth="34.0" visible="false" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <Separator orientation="VERTICAL" prefHeight="49.0" prefWidth="9.0" visible="false" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 1px;">
                      <children>
                         <Separator prefHeight="2.0" prefWidth="111.0" visible="false" />
                         <Button id="encryptButton" mnemonicParsing="false" onAction="#sendToAll" prefHeight="22.0" prefWidth="121.0" text="Отправить всем">
@@ -131,10 +149,9 @@
                         <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
                      </children>
                   </HBox>
-                  <Separator orientation="VERTICAL" prefHeight="49.0" prefWidth="9.0" visible="false" />
                </children>
             </VBox>
-            <VBox prefHeight="431.0" prefWidth="538.0">
+            <VBox prefHeight="431.0" prefWidth="538.0" style="-fx-border-color: black; -fx-border-width: 1px;">
                <children>
                   <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                      <children>
@@ -147,7 +164,7 @@
                         <Separator prefHeight="8.0" prefWidth="41.0" visible="false" />
                      </children>
                   </HBox>
-                  <TextArea fx:id="userListOutput" editable="false" prefHeight="222.0" prefWidth="336.0" promptText="Здесь будут выведены индексы пользователей и их открытые ключи">
+                  <TextArea fx:id="userListOutput" editable="false" prefHeight="234.0" prefWidth="324.0" promptText="Здесь будут выведены индексы пользователей и их открытые ключи">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -156,26 +173,30 @@
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT">
+      <VBox style="-fx-border-color: black; -fx-border-width: 1px;">
          <children>
-            <Separator prefHeight="0.0" prefWidth="38.0" />
-            <Label prefHeight="35.0" prefWidth="276.0" text="Лог коммуникаций" textAlignment="CENTER">
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Separator prefHeight="0.0" prefWidth="38.0" visible="false" />
+                  <Label prefHeight="35.0" prefWidth="276.0" text="Лог коммуникаций" textAlignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button id="encryptButton" mnemonicParsing="false" onAction="#clearLog" prefHeight="22.0" prefWidth="121.0" text="Очистить">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Separator prefWidth="200.0" visible="false" />
+               </children>
+            </HBox>
+            <TextArea fx:id="logOutput" editable="false" prefHeight="281.0" prefWidth="1012.0" promptText="Здесь будут выведены передаваемые между пользователями сообщения">
                <font>
-                  <Font size="24.0" />
+                  <Font size="18.0" />
                </font>
-            </Label>
-            <Button id="encryptButton" mnemonicParsing="false" onAction="#clearLog" prefHeight="22.0" prefWidth="121.0" text="Очистить">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Separator prefWidth="200.0" />
+            </TextArea>
          </children>
-      </HBox>
-      <TextArea fx:id="logOutput" editable="false" prefHeight="281.0" prefWidth="1012.0" promptText="Здесь будут выведены передаваемые между пользователями сообщения">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextArea>
+      </VBox>
    </children>
 </VBox>

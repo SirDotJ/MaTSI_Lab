@@ -15,10 +15,10 @@ public class BitMath {
 	public static BitSet generateBitset(int numberOfBits) {
 		return new BitSet(numberOfBits);
 	}
-	public static BitSet convertNumberToBitset(int number, int numberOfBits) {
+	public static BitSet convertNumberToBitset(long number, int numberOfBits) {
 		BitSet bitSet = generateBitset(numberOfBits);
 		int highestPower = findHighestClosestPowerOfTwo(number);
-		int counter = numberOfBits - highestPower - 1;
+		int counter = (int) (numberOfBits - highestPower - 1);
 		for (long i = highestPower; i >= 0; i--) {
 			long mask = (long) Math.pow(2, i);
 			long one = number & mask;
@@ -28,7 +28,7 @@ public class BitMath {
 		}
 		return bitSet;
 	}
-	public static int findHighestClosestPowerOfTwo(int number) {
+	public static int findHighestClosestPowerOfTwo(long number) {
 		int power = 0;
 		do {
 			power++;

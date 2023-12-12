@@ -81,4 +81,8 @@ public class HemmingController {
 		this.outputMessage.appendText("Было декодировано следующее сообщение: " + decodedText + "\n");
 		this.outputMessage.appendText("Сообщение после исправления ошибок теперь имеет вид:\n" + this.code.getMessage());
 	}
+
+	public void openHelp() {
+		return;
+	}
 }

@@ -121,4 +121,13 @@ public class HamiltonPathController implements EncryptorForm, DecryptorForm {
 		String decryptedMessage = this.encryptor.decrypt(encryptedMessage);
 		this.encryptedMessageOutput.setText(decryptedMessage);
 	}
+
+	public void transferOutputToInput() {
+		this.messageInput.setText(this.encryptedMessageOutput.getText());
+		this.encryptedMessageOutput.setText("");
+	}
+
+	public void openHelp() {
+		return;
+	}
 }

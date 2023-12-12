@@ -10,7 +10,7 @@ public class CaesarEncryptor implements Encryptor, Decryptor {
 	private static final Alphabet DEFAULT_ALPHABET = AlphabetConstants.FULL_WITH_SPACE;
 	private static final int DEFAULT_KEY_VALUE = 0;
 
-	private final Alphabet alphabet;
+	private Alphabet alphabet;
 	private int key;
 
 	public CaesarEncryptor(Alphabet alphabet, int key) {
@@ -31,6 +31,10 @@ public class CaesarEncryptor implements Encryptor, Decryptor {
 		if (Math.abs(key) > this.alphabet.size())
 			key = key % this.alphabet.size();
 		this.key = key;
+	}
+
+	public void setNewAlphabet(Alphabet newAlphabet) {
+		this.alphabet = newAlphabet;
 	}
 
 	@Override

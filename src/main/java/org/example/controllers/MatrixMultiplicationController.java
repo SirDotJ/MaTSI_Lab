@@ -42,4 +42,13 @@ public class MatrixMultiplicationController implements EncryptorForm, DecryptorF
 		String decryptedMessage = this.encryptor.decrypt(message);
 		this.outputEncryptedMessage.setText(decryptedMessage);
 	}
+
+	public void transferOutputToInput() {
+		this.inputMessage.setText(this.outputEncryptedMessage.getText());
+		this.outputEncryptedMessage.setText("");
+	}
+
+	public void openHelp() {
+		return;
+	}
 }

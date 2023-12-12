@@ -27,4 +27,13 @@ public class HuffmanController implements EncoderForm, DecoderForm {
 		String plainMessage = encoder.decode(compressedMessage);
 		this.outputMessage.setText(plainMessage);
 	}
+
+	public void transferOutputToInput() {
+		this.inputMessage.setText(this.outputMessage.getText());
+		this.outputMessage.setText("");
+	}
+
+	public void openHelp() {
+		return;
+	}
 }

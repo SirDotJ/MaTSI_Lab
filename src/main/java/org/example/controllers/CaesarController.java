@@ -1,11 +1,14 @@
 package org.example.controllers;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.example.common.*;
 import org.example.lab1.CaesarEncryptor;
@@ -20,10 +23,22 @@ public class CaesarController implements EncryptorForm, DecryptorForm {
 	@FXML
 	TextArea outputEncryptedMessage; // Текстовая область вывода результата шифровки пользователю
 
-	// По требованию лабораторной работы: пробелы игнорируются, работаем с кириллицей
-	public static final Alphabet USED_ALPHABET = AlphabetConstants.CYRILLIC_NO_SPACE;
+	@FXML
+	private RadioButton cyrillicRadioButton;
+	@FXML
+	private RadioButton latinRadioButton;
 
-	private final CaesarEncryptor encryptor = new CaesarEncryptor(USED_ALPHABET);
+	public static final Alphabet USED_CYRILLIC_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
+	public static final Alphabet USED_LATIN_ALPHABET = AlphabetConstants.LATIN_WITH_SPACE;
+
+	private final CaesarEncryptor encryptor = new CaesarEncryptor();
+
+	private Alphabet getSelectedAlphabet() {
+		if (cyrillicRadioButton.isSelected())
+			return USED_CYRILLIC_ALPHABET;
+		else
+			return USED_LATIN_ALPHABET;
+	}
 
 	private int getKey() throws InvalidAlgorithmParameterException {
 		try {
@@ -37,71 +52,67 @@ public class CaesarController implements EncryptorForm, DecryptorForm {
 			throw new InvalidAlgorithmParameterException("Key could not be parsed to number");
 		}
 	}
-	private String getInput() throws InvalidAlgorithmParameterException {
-		String currentText = this.inputMessage.getText();
-
-		// Проверка на пробелы
-		if (currentText.contains(" ")) {
-			Alerts.showError(
-				"Неправильное сообщение",
-				"Был использован символ пробела",
-				"Пожалуйста вместо пробела используйте символ " + AlphabetConstants.SPACE_CHARACTER
-			);
-			throw new InvalidAlgorithmParameterException("Invalid space character used");
-		}
-
-		return currentText;
-	}
-	public void openDetails() { // Вызывается при нажатии на кнопку "Детали" пользователем
-		try {
-			Parent detailsRoot = FXMLLoader.load(this.getClass().getClassLoader().getResource("MaTDP_CaesarDetails.fxml"));
-			Stage detailsStage = new Stage();
-			detailsStage.setTitle("Алгоритм Цезаря");
-			detailsStage.setScene(new Scene(detailsRoot));
-			detailsStage.show();
-		} catch (Exception e) {
-			Alerts.showError(
-					"Ошибка открытия деталей",
-					"Произошла ошибка при открытии деталей",
-					"Ошибка при открытии формы: " + e
-			);
-		}
-	}
-
 	@Override
 	public void encrypt() { // Вызывается при нажатии на кнопку "Зашифровать" пользователем
+		this.encryptor.setNewAlphabet(this.getSelectedAlphabet());
 		try {
 			this.encryptor.setKey(this.getKey());
 		} catch (InvalidAlgorithmParameterException e) {
 			return;
 		}
 
-		String openMessage;
-		try {
-			openMessage = this.getInput();
-		} catch (InvalidAlgorithmParameterException exception) {
-			return;
-		}
-
+		String openMessage = this.inputMessage.getText();
 		String encryptedText = this.encryptor.encrypt(openMessage);
 		this.outputEncryptedMessage.setText(encryptedText);
 	}
 	@Override
 	public void decrypt() { // Вызывается при нажатии на кнопку "Расшифровать" пользователем
+		this.encryptor.setNewAlphabet(this.getSelectedAlphabet());
 		try {
 			this.encryptor.setKey(this.getKey());
 		} catch (InvalidAlgorithmParameterException e) {
 			return;
 		}
 
-		String encryptedText;
-		try {
-			encryptedText = this.getInput();
-		} catch (InvalidAlgorithmParameterException exception) {
-			return;
-		}
-
+		String encryptedText = this.inputMessage.getText();
 		String decryptedText = this.encryptor.decrypt(encryptedText);
 		this.outputEncryptedMessage.setText(decryptedText);
+	}
+
+	public void transferOutputToInput() {
+		this.inputMessage.setText(this.outputEncryptedMessage.getText());
+		this.outputEncryptedMessage.setText("");
+	}
+
+	public void increaseKey() {
+		int value = Integer.parseInt(this.keyText.getText());
+		value++;
+		this.keyText.setText(String.valueOf(value));
+	}
+
+	public void decreaseKey() {
+		int value = Integer.parseInt(this.keyText.getText());
+		value--;
+		if (value < 0)
+			return;
+		this.keyText.setText(String.valueOf(value));
+	}
+
+	public void parseKey(KeyEvent event) {
+		int previousCaret = this.keyText.getCaretPosition();
+		String previous = this.keyText.getText();
+		String current = previous.replaceAll("\\D+", ""); // Get rid of non numbers
+		this.keyText.setText(current);
+		boolean isNumber = false;
+		try {
+			int number = Integer.parseInt(event.getCharacter());
+			isNumber = true;
+		} catch (Exception ignore) {}
+
+		this.keyText.positionCaret(previousCaret + (isNumber ? 0 : -1));
+	}
+
+	public void openHelp() {
+		HelpController.open("Алгоритм Цезаря", "CaesarDescription.md");
 	}
 }

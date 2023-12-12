@@ -56,4 +56,8 @@ public class KnapsackController implements EncryptorForm, DecryptorForm {
 		String decryptedMessage = this.encryptor.decrypt(message);
 		this.outputEncryptedMessage.setText(decryptedMessage);
 	}
+
+	public void openHelp() {
+		return;
+	}
 }

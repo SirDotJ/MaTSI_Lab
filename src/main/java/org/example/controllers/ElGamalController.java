@@ -147,4 +147,8 @@ public class ElGamalController {
 	public void clearLog() {
 		this.logOutput.setText("");
 	}
+
+	public void openHelp() {
+		return;
+	}
 }

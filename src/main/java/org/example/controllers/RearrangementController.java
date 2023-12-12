@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.example.common.Alerts;
 import org.example.common.DecryptorForm;
 import org.example.common.EncryptorForm;
+import org.example.common.HelpController;
 import org.example.lab1.RearrangementEncryptor;
 
 import javafx.scene.control.TextField;
@@ -146,5 +147,14 @@ public class RearrangementController implements EncryptorForm, DecryptorForm {
 
 		String decryptedMessage = encryptor.decrypt(encryptedMessage);
 		this.encryptedMessageTextArea.setText(decryptedMessage);
+	}
+
+	public void transferOutputToInput() {
+		this.messageTextArea.setText(this.encryptedMessageTextArea.getText());
+		this.encryptedMessageTextArea.setText("");
+	}
+
+	public void openHelp() {
+		HelpController.open("Шифрование перестановкой", "RearrangementDescription.md");
 	}
 }

@@ -32,4 +32,13 @@ public class RLEController implements EncoderForm, DecoderForm {
 		this.outputMessage.setText(plainMessage);
 		this.differenceDisplay.setText("Разница: " + (plainMessage.length() - compressedMessage.length()));
 	}
+
+	public void transferOutputToInput() {
+		this.inputMessage.setText(this.outputMessage.getText());
+		this.outputMessage.setText("");
+	}
+
+	public void openHelp() {
+		return;
+	}
 }

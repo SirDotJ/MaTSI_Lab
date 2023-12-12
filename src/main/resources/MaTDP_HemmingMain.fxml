@@ -9,14 +9,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="484.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.HemmingController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="467.0" prefWidth="739.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.HemmingController">
    <children>
-      <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
-      <Label text="Код Хэмминга">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
+      <VBox prefHeight="52.0" prefWidth="600.0" style="-fx-border-color: black;">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Separator prefHeight="6.0" prefWidth="198.0" visible="false" />
+                  <Label text="Код Хэмминга">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator prefHeight="2.0" prefWidth="142.0" visible="false" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#openHelp" text="?">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
+         </children>
+      </VBox>
       <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -32,40 +48,41 @@
                   <Font size="14.0" />
                </font>
             </TextArea>
-            <Separator prefHeight="2.0" prefWidth="68.0" />
+            <Separator prefHeight="2.0" prefWidth="68.0" visible="false" />
             <Label prefHeight="22.0" prefWidth="197.0" text="Кол-во символов в проверке" />
             <TextField fx:id="subdivisionCountMessage" prefHeight="23.0" prefWidth="71.0" />
-            <Separator prefHeight="8.0" prefWidth="0.0" />
+            <Separator prefHeight="8.0" prefWidth="0.0" visible="false" />
             <Separator prefHeight="11.0" prefWidth="2.0" visible="false" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;">
          <children>
-            <Separator prefHeight="4.0" prefWidth="30.0" visible="false" />
+            <Separator prefHeight="5.0" prefWidth="179.0" visible="false" />
             <Button id="encryptButton" mnemonicParsing="false" onAction="#corrupt" prefHeight="22.0" prefWidth="185.0" text="Испортить сообщение" />
-            <Separator prefHeight="8.0" prefWidth="119.0" visible="false" />
-            <Button id="encryptButton" mnemonicParsing="false" onAction="#encode" prefHeight="22.0" prefWidth="166.0" text="Кодировать сообщение" />
-            <Separator prefHeight="10.0" prefWidth="111.0" visible="false" />
-            <Button id="decryptButton" mnemonicParsing="false" onAction="#decode" prefHeight="22.0" prefWidth="180.0" text="Декодировать сообщение" />
-            <Separator prefHeight="13.0" prefWidth="15.0" visible="false" />
+            <Separator prefHeight="5.0" prefWidth="44.0" visible="false" />
+            <Button id="encryptButton" mnemonicParsing="false" onAction="#encode" prefHeight="22.0" prefWidth="184.0" text="Кодировать сообщение" />
+            <Separator prefHeight="7.0" prefWidth="38.0" visible="false" />
+            <Button id="decryptButton" mnemonicParsing="false" onAction="#decode" prefHeight="22.0" prefWidth="198.0" text="Декодировать сообщение" />
+            <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="184.0" prefWidth="753.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="border: 1px; -fx-border-color: black;">
          <children>
-            <Separator prefHeight="13.0" prefWidth="35.0" />
+            <Separator prefHeight="13.0" prefWidth="35.0" visible="false" />
             <Label prefHeight="27.0" prefWidth="72.0" text="Лог">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator prefHeight="8.0" prefWidth="15.0" />
+            <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
             <TextArea id="encryptedTextOutputTextField" fx:id="outputMessage" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="523.0" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
             </TextArea>
+            <Separator prefHeight="3.0" prefWidth="122.0" visible="false" />
          </children>
       </HBox>
-      <Separator orientation="VERTICAL" prefHeight="49.0" prefWidth="9.0" visible="false" />
    </children>
 </VBox>

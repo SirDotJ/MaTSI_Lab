@@ -9,15 +9,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.KnapsackController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.KnapsackController">
    <children>
-      <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
+      <VBox prefHeight="52.0" prefWidth="600.0" style="-fx-border-color: black;">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" visible="false" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Separator prefHeight="4.0" prefWidth="177.0" visible="false" />
+                  <Label text="Шифр Укладкой Ранца">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator prefHeight="4.0" prefWidth="114.0" visible="false" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#openHelp" text="?">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
+         </children>
+      </VBox>
       <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
-      <Label text="Шифр Укладкой Ранца">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
       <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
          <children>
             <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
@@ -53,31 +69,30 @@
             <Separator prefHeight="7.0" prefWidth="129.0" visible="false" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <Separator orientation="VERTICAL" prefHeight="33.0" prefWidth="9.0" visible="false" />
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;">
          <children>
-            <Separator prefHeight="7.0" prefWidth="281.0" visible="false" />
+            <Separator prefHeight="5.0" prefWidth="179.0" visible="false" />
             <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" text="Зашифровать" />
-            <Separator prefHeight="6.0" prefWidth="92.0" visible="false" />
-            <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
+            <Separator prefHeight="8.0" prefWidth="133.0" visible="false" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="border: 1px; -fx-border-color: black;">
          <children>
-            <Separator prefHeight="13.0" prefWidth="35.0" />
+            <Separator prefHeight="13.0" prefWidth="35.0" visible="false" />
             <Label prefHeight="27.0" prefWidth="142.0" text="Выходной текст:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator prefHeight="7.0" prefWidth="36.0" />
+            <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
             <TextArea id="encryptedTextOutputTextField" fx:id="outputEncryptedMessage" editable="false" prefHeight="87.0" prefWidth="298.0" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
             </TextArea>
-            <Separator prefHeight="3.0" prefWidth="122.0" />
+            <Separator prefHeight="3.0" prefWidth="122.0" visible="false" />
          </children>
       </HBox>
-      <Separator orientation="VERTICAL" prefHeight="49.0" prefWidth="9.0" visible="false" />
    </children>
 </VBox>

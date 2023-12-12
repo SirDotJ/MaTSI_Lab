@@ -63,4 +63,13 @@ public class BofortController implements EncryptorForm, DecryptorForm {
 		String decryptedText = this.encryptor.decrypt(message);
 		this.outputEncryptedMessage.setText(decryptedText);
 	}
+
+	public void transferOutputToInput() {
+		this.inputMessage.setText(this.outputEncryptedMessage.getText());
+		this.outputEncryptedMessage.setText("");
+	}
+
+	public void openHelp() {
+		return;
+	}
 }

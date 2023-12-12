@@ -5,6 +5,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.example.common.Alerts;
 import org.example.common.Alphabet;
+import org.example.common.AlphabetConstants;
 
 public class CaesarDetailsController {
 	@FXML
@@ -12,7 +13,7 @@ public class CaesarDetailsController {
 	@FXML
 	TextArea alphabetOutput; // Поле вывода алфавитов для шифровки пользователю
 
-	private static final Alphabet USED_ALPHABET = CaesarController.USED_ALPHABET;
+	private static final Alphabet USED_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
 	private static final boolean DEFAULT_IN_LOWER_CASE = false;
 	private static final String ALPHABET_SEPARATOR = "\n";
 

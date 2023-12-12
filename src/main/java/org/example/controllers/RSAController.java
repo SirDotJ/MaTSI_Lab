@@ -90,4 +90,8 @@ public class RSAController implements EncryptorForm, DecryptorForm {
 		this.inputMessage.setText(this.outputMessage.getText());
 		this.outputMessage.setText("");
 	}
+
+	public void openHelp() {
+		return;
+	}
 }
