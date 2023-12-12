@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="270.0" maxWidth="785.0" minHeight="270.0" minWidth="785.0" prefHeight="270.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.CaesarDetailsController">
+<VBox alignment="CENTER" maxHeight="270.0" maxWidth="785.0" minHeight="270.0" minWidth="785.0" prefHeight="270.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.lab1.CaesarDetailsController">
    <children>
       <Separator orientation="VERTICAL" prefHeight="36.0" prefWidth="8.0" />
       <Label text="Алфавит кириллицы с шифровкой">

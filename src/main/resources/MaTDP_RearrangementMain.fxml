@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.RearrangementController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.lab1.RearrangementController">
    <children>
       <VBox prefHeight="52.0" prefWidth="600.0" style="-fx-border-color: black;">
          <children>
@@ -49,7 +50,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="key1InputTextField" fx:id="key1TextField" prefHeight="32.0" prefWidth="96.0">
+            <TextField id="key1InputTextField" fx:id="key1TextField" prefHeight="32.0" prefWidth="116.0" promptText="Набор чисел 1">
                <font>
                   <Font size="14.0" />
                </font>
@@ -60,13 +61,12 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="key2InputTextField" fx:id="key2TextField" prefHeight="31.0" prefWidth="91.0">
+            <TextField id="key2InputTextField" fx:id="key2TextField" prefHeight="31.0" prefWidth="118.0" promptText="Набор чисел 2">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
             <Separator prefHeight="9.0" prefWidth="0.0" visible="false" />
-            <Button id="detailsButton" mnemonicParsing="false" onAction="#openDetails" prefHeight="22.0" prefWidth="84.0" text="Детали" />
             <Separator prefHeight="25.0" prefWidth="13.0" visible="false" />
          </children>
       </HBox>
@@ -80,10 +80,13 @@
                </font>
             </Label>
             <Separator prefHeight="12.0" prefWidth="50.0" visible="false" />
-            <TextArea id="messageInputTextField" fx:id="messageTextArea" prefHeight="84.0" prefWidth="301.0">
+            <TextArea id="messageInputTextField" fx:id="messageTextArea" prefHeight="84.0" prefWidth="301.0" promptText="Сообщение для шифровки">
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
             </TextArea>
             <Separator prefHeight="7.0" prefWidth="129.0" visible="false" />
          </children>
@@ -92,7 +95,7 @@
       <HBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;">
          <children>
             <Separator prefHeight="5.0" prefWidth="179.0" visible="false" />
-            <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" text="Зашифровать" />
+            <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" prefHeight="22.0" prefWidth="108.0" text="Зашифровать" />
             <Separator prefHeight="5.0" prefWidth="44.0" visible="false" />
             <Button id="outputToInputButton" depthTest="ENABLE" mnemonicParsing="false" onAction="#transferOutputToInput" prefHeight="27.0" prefWidth="35.0" text="↑">
                <cursor>
@@ -103,7 +106,7 @@
                </font>
             </Button>
             <Separator prefHeight="7.0" prefWidth="38.0" visible="false" />
-            <Button id="decryptButton" mnemonicParsing="false" onAction="#decrypt" text="Расшифровать" />
+            <Button id="decryptButton" mnemonicParsing="false" onAction="#decrypt" prefHeight="22.0" prefWidth="112.0" text="Расшифровать" />
             <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
          </children>
       </HBox>
@@ -116,10 +119,13 @@
                </font>
             </Label>
             <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
-            <TextArea id="encryptedTextOutputTextField" fx:id="encryptedMessageTextArea" editable="false" prefHeight="87.0" prefWidth="298.0">
+            <TextArea id="encryptedTextOutputTextField" fx:id="encryptedMessageTextArea" editable="false" prefHeight="87.0" prefWidth="298.0" promptText="Результат шифровки">
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
             </TextArea>
             <Separator prefHeight="3.0" prefWidth="122.0" visible="false" />
          </children>
