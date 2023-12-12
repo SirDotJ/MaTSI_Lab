@@ -1,4 +1,4 @@
-package org.example.controllers;
+package org.example.controllers.lab7;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -102,6 +102,6 @@ public class RabinController implements EncryptorForm, DecryptorForm {
 	}
 
 	public void openHelp() {
-		return;
+		HelpController.open("Криптосистема Рабина", "RabinDescription.md");
 	}
 }

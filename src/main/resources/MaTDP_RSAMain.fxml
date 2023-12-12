@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.RSAController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.lab6.RSAController">
    <children>
       <VBox prefHeight="52.0" prefWidth="600.0" style="-fx-border-color: black;">
          <children>
@@ -46,13 +47,13 @@
                </font>
             </Label>
             <Separator prefHeight="8.0" prefWidth="41.0" visible="false" />
-            <TextField id="prime1InputTextField" fx:id="prime1InputTextField" alignment="CENTER" prefHeight="40.0" prefWidth="108.0" promptText="Введите p" text="89">
+            <TextField id="prime1InputTextField" fx:id="prime1InputTextField" alignment="CENTER" prefHeight="40.0" prefWidth="108.0" promptText="Простое число 1" text="89">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
             <Separator prefHeight="4.0" prefWidth="25.0" visible="false" />
-            <TextField id="prime2InputTextField" fx:id="prime2InputTextField" alignment="CENTER" prefHeight="40.0" prefWidth="103.0" promptText="Введите q" text="71">
+            <TextField id="prime2InputTextField" fx:id="prime2InputTextField" alignment="CENTER" prefHeight="40.0" prefWidth="103.0" promptText="Простое число 2" text="71">
                <font>
                   <Font size="14.0" />
                </font>
@@ -70,7 +71,7 @@
          </children>
       </HBox>
       <Separator orientation="VERTICAL" prefHeight="20.0" prefWidth="9.0" visible="false" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
             <Separator prefHeight="7.0" prefWidth="40.0" visible="false" />
             <Label prefHeight="28.0" prefWidth="134.0" text="Входной текст:">
@@ -78,11 +79,13 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator prefHeight="12.0" prefWidth="50.0" visible="false" />
-            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="85.0" prefWidth="213.0" promptText="Введите открытое сообщение" wrapText="true">
+            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="85.0" prefWidth="213.0" promptText="Сообщение для шифровки" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
             </TextArea>
             <VBox alignment="CENTER" prefHeight="85.0" prefWidth="92.0">
                <children>
@@ -134,10 +137,13 @@
                </font>
             </Label>
             <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
-            <TextArea id="encryptedTextOutputTextField" fx:id="outputMessage" editable="false" prefHeight="87.0" prefWidth="298.0" promptText="Результат шифровки будет здесь" wrapText="true">
+            <TextArea id="encryptedTextOutputTextField" fx:id="outputMessage" editable="false" prefHeight="87.0" prefWidth="298.0" promptText="Результат шифровки" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
             </TextArea>
             <Separator prefHeight="3.0" prefWidth="122.0" visible="false" />
          </children>

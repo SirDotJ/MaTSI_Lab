@@ -1,4 +1,4 @@
-package org.example.controllers;
+package org.example.controllers.lab6;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -149,6 +149,6 @@ public class ElGamalController {
 	}
 
 	public void openHelp() {
-		return;
+		HelpController.open("Криптосистема Эль-Гамаля", "ElGamalDescription.md");
 	}
 }

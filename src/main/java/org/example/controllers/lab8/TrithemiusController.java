@@ -1,4 +1,4 @@
-package org.example.controllers;
+package org.example.controllers.lab8;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -132,6 +132,6 @@ public class TrithemiusController implements EncryptorForm, DecryptorForm {
 	}
 
 	public void openHelp() {
-		return;
+		HelpController.open("Алгоритм Тритемиуса", "TrithemiusDescription.md");
 	}
 }

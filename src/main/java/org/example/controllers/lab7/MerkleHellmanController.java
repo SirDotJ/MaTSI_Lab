@@ -1,4 +1,4 @@
-package org.example.controllers;
+package org.example.controllers.lab7;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -111,6 +111,6 @@ public class MerkleHellmanController implements EncryptorForm, DecryptorForm {
 	}
 
 	public void openHelp() {
-		return;
+		HelpController.open("Криптосистема Меркла-Хеллмана", "MerkleHellmanDescription.md");
 	}
 }

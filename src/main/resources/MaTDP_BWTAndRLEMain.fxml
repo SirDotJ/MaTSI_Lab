@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="381.0" minWidth="600.0" prefHeight="381.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.BWTAndRLEController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="381.0" minWidth="600.0" prefHeight="381.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.lab5.BWTAndRLEController">
    <children>
       <VBox prefHeight="52.0" prefWidth="600.0" style="-fx-border-color: black;">
          <children>
@@ -47,10 +47,13 @@
                </font>
             </Label>
             <Separator prefHeight="12.0" prefWidth="50.0" visible="false" />
-            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="84.0" prefWidth="301.0" wrapText="true">
+            <TextArea id="messageInputTextField" fx:id="inputMessage" prefHeight="84.0" prefWidth="301.0" promptText="Сообщение для архивации" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
             </TextArea>
             <VBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="134.0">
                <children>
@@ -86,8 +89,14 @@
             <Separator prefHeight="7.0" prefWidth="38.0" visible="false" />
             <Button id="decryptButton" mnemonicParsing="false" onAction="#decode" prefHeight="22.0" prefWidth="74.0" text="Расжать" />
             <Separator prefHeight="13.0" prefWidth="50.0" visible="false" />
-            <Text fx:id="differenceDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Разница: " />
-            <Separator prefHeight="5.0" prefWidth="64.0" visible="false" />
+            <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="112.0" style="-fx-border-color: black; -fx-border-width: 1px;">
+               <children>
+                  <Text fx:id="differenceDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Разница: " />
+               </children>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+            </HBox>
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="96.0" prefWidth="599.0" style="border: 1px; -fx-border-color: black;">
@@ -99,10 +108,13 @@
                </font>
             </Label>
             <Separator prefHeight="7.0" prefWidth="36.0" visible="false" />
-            <TextArea id="encryptedTextOutputTextField" fx:id="outputMessage" editable="false" prefHeight="94.0" prefWidth="306.0" wrapText="true">
+            <TextArea id="encryptedTextOutputTextField" fx:id="outputMessage" editable="false" prefHeight="94.0" prefWidth="306.0" promptText="Результат архивации" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
             </TextArea>
             <Separator prefHeight="3.0" prefWidth="122.0" visible="false" />
          </children>
