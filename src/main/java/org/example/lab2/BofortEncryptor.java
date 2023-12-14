@@ -92,8 +92,7 @@ public class BofortEncryptor implements Encryptor, Decryptor {
 			if (encryptedLetterIndex < 0)
 				encryptedLetterIndex = this.alphabet.size() - Math.abs(encryptedLetterIndex);
 
-			boolean messageLetterIsLower = Character.isLowerCase(messageLetter);
-			char newLetter = this.alphabet.get(encryptedLetterIndex, messageLetterIsLower);
+			char newLetter = this.alphabet.get(encryptedLetterIndex);
 			encryptedMessage.append(newLetter);
 		}
 		return encryptedMessage.toString();
@@ -120,8 +119,7 @@ public class BofortEncryptor implements Encryptor, Decryptor {
 			if (openMessageLetterIndex < 0)
 				openMessageLetterIndex = this.alphabet.size() - Math.abs(openMessageLetterIndex);
 
-			boolean messageLetterIsLower = Character.isLowerCase(messageLetter);
-			char newLetter = this.alphabet.get(openMessageLetterIndex, messageLetterIsLower);
+			char newLetter = this.alphabet.get(openMessageLetterIndex);
 			encryptedMessage.append(newLetter);
 		}
 		return encryptedMessage.toString();

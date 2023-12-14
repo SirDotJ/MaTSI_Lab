@@ -53,8 +53,7 @@ public class CaesarEncryptor implements Encryptor, Decryptor {
 			if(newPosition > this.alphabet.size() - 1)
 				newPosition -= this.alphabet.size();
 
-			boolean letterIsLowerCase = Character.isLowerCase(messageLetter);
-			encryptedMessage.append(this.alphabet.get(newPosition, letterIsLowerCase));
+			encryptedMessage.append(this.alphabet.get(newPosition));
 		}
 		return encryptedMessage.toString();
 	}
@@ -73,8 +72,7 @@ public class CaesarEncryptor implements Encryptor, Decryptor {
 			int newPosition = originalPosition - this.key;
 			if (newPosition < 0)
 				newPosition = this.alphabet.size() - Math.abs(newPosition);
-			boolean letterIsLowerCase = Character.isLowerCase(letter);
-			decryptedMessage.append(this.alphabet.get(newPosition, letterIsLowerCase));
+			decryptedMessage.append(this.alphabet.get(newPosition));
 		}
 		return decryptedMessage.toString();
 	}

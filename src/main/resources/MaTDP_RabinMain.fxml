@@ -105,17 +105,15 @@
                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </padding>
             </TextArea>
-            <VBox alignment="CENTER" prefHeight="85.0" prefWidth="92.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="92.0" spacing="10.0">
                <children>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
                   <RadioButton fx:id="cyrillicRadioButton" mnemonicParsing="false" selected="true" text="Кириллица">
                      <toggleGroup>
                         <ToggleGroup fx:id="selectedAlphabet" />
                      </toggleGroup>
                   </RadioButton>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
                   <RadioButton fx:id="latinRadioButton" mnemonicParsing="false" text="Латиница" toggleGroup="$selectedAlphabet" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
+                  <RadioButton fx:id="enRuRadioButton" mnemonicParsing="false" text="RU + EN" toggleGroup="$selectedAlphabet" />
                </children>
             </VBox>
             <Separator prefHeight="7.0" prefWidth="129.0" visible="false" />

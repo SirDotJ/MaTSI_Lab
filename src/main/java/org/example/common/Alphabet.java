@@ -17,12 +17,7 @@ public class Alphabet {
         if (usedSymbols.size() != alphabet.size())
             throw new IllegalArgumentException("Passed alphabet is invalid: symbols are used more than once");
 
-        List<Character> lowerCaseFormAlphabet = new ArrayList<>();
-        for (char originalLetter : alphabet) {
-            char lowerCaseLetter = Character.toLowerCase(originalLetter);
-            lowerCaseFormAlphabet.add(lowerCaseLetter);
-        }
-        this.alphabet = Collections.unmodifiableList(lowerCaseFormAlphabet);
+        this.alphabet = Collections.unmodifiableList(alphabet);
         this.type = type;
     }
     public Alphabet(Character[] alphabet, TYPE type) {
@@ -46,12 +41,11 @@ public class Alphabet {
     public Alphabet(String alphabet) {
         this(alphabet.chars().mapToObj(c -> (char) c).toArray(Character[]::new));
     }
-    public String toString(boolean inLowerCase) {
+    @Override
+    public String toString() {
         StringBuilder connectedAlphabet = new StringBuilder();
         for (Character letter : this.alphabet) {
-            char outputLetter = inLowerCase ? Character.toLowerCase(letter)
-                                            : Character.toUpperCase(letter);
-            connectedAlphabet.append(outputLetter);
+            connectedAlphabet.append(letter);
         }
         return connectedAlphabet.toString();
     }
@@ -60,20 +54,11 @@ public class Alphabet {
         return this.type;
     }
 
-    @Override
-    public String toString() {
-        return this.toString(DEFAULT_LOWER_CASE);
-    }
-
     public int size() {
         return this.alphabet.size();
     }
-    public char get(int index, boolean lowerCase) {
-        return lowerCase ? Character.toLowerCase(this.alphabet.get(index))
-                         : Character.toUpperCase(this.alphabet.get(index));
-    }
     public char get(int index) {
-        return this.get(index, DEFAULT_LOWER_CASE);
+        return this.alphabet.get(index);
     }
     public String convert(List<Integer> indexes) {
         StringBuilder builder = new StringBuilder();
@@ -90,8 +75,7 @@ public class Alphabet {
         return indexes;
     }
     public int indexOf(char letter) {
-        char lowerCaseLetter = Character.toLowerCase(letter);
-        return this.alphabet.indexOf(lowerCaseLetter);
+        return this.alphabet.indexOf(letter);
     }
     public boolean letterInAlphabet(char letter) {
         return this.alphabet.contains(letter);

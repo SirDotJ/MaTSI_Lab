@@ -24,6 +24,7 @@ public class RabinController implements EncryptorForm, DecryptorForm {
 	private RadioButton cyrillicRadioButton;
 	@FXML
 	private RadioButton latinRadioButton;
+	@FXML RadioButton enRuRadioButton;
 
 	private final Rabin encryptor = new Rabin();
 
@@ -41,12 +42,15 @@ public class RabinController implements EncryptorForm, DecryptorForm {
 	private Alphabet getSelectedAlphabet() {
 		if (cyrillicRadioButton.isSelected())
 			return USED_CYRILLIC_ALPHABET;
-		else
+		else if (latinRadioButton.isSelected())
 			return USED_LATIN_ALPHABET;
+		else
+			return USED_ALL_ALPHABET;
 	}
 
 	public static final Alphabet USED_CYRILLIC_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
 	public static final Alphabet USED_LATIN_ALPHABET = AlphabetConstants.LATIN_WITH_SPACE;
+	public static final Alphabet USED_ALL_ALPHABET = AlphabetConstants.FULL_KEYBOARD;
 
 	private boolean initializeCryptosystem() {
 		int prime1 = this.getPrime1();

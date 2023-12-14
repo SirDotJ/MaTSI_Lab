@@ -33,13 +33,13 @@ public class CaesarDetailsController {
 			return;
 		}
 		this.alphabetOutput.clear();
-		this.alphabetOutput.appendText(USED_ALPHABET.toString(DEFAULT_IN_LOWER_CASE));
+		this.alphabetOutput.appendText(USED_ALPHABET.toString());
 		this.alphabetOutput.appendText(ALPHABET_SEPARATOR);
 		for (int i = 0; i < USED_ALPHABET.size(); i++) {
 			int newLetterIndex = i + key;
 			if (newLetterIndex > USED_ALPHABET.size() - 1)
 				newLetterIndex -= USED_ALPHABET.size();
-			char encryptedLetter = USED_ALPHABET.get(newLetterIndex, DEFAULT_IN_LOWER_CASE);
+			char encryptedLetter = USED_ALPHABET.get(newLetterIndex);
 			this.alphabetOutput.appendText(String.valueOf(encryptedLetter));
 		}
 	}
@@ -55,13 +55,13 @@ public class CaesarDetailsController {
 			return;
 		}
 		this.alphabetOutput.clear();
-		this.alphabetOutput.appendText(USED_ALPHABET.toString(DEFAULT_IN_LOWER_CASE));
+		this.alphabetOutput.appendText(USED_ALPHABET.toString());
 		this.alphabetOutput.appendText(ALPHABET_SEPARATOR);
 		for (int i = 0; i < USED_ALPHABET.size(); i++) {
 			int newLetterIndex = i - key;
 			if (newLetterIndex < 0)
 				newLetterIndex = USED_ALPHABET.size() - Math.abs(newLetterIndex);
-			char decryptedLetter = USED_ALPHABET.get(newLetterIndex, DEFAULT_IN_LOWER_CASE);
+			char decryptedLetter = USED_ALPHABET.get(newLetterIndex);
 			this.alphabetOutput.appendText(String.valueOf(decryptedLetter));
 		}
 	}
