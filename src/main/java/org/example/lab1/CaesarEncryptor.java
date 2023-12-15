@@ -5,7 +5,6 @@ import org.example.common.AlphabetConstants;
 import org.example.common.Decryptor;
 import org.example.common.Encryptor;
 
-// Класс определяет алгоритм Цезаря (работает только с кириллицей)
 public class CaesarEncryptor implements Encryptor, Decryptor {
 	private static final Alphabet DEFAULT_ALPHABET = AlphabetConstants.FULL_WITH_SPACE;
 	private static final int DEFAULT_KEY_VALUE = 0;

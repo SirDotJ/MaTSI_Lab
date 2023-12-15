@@ -129,6 +129,6 @@ public class HamiltonPathController implements EncryptorForm, DecryptorForm {
 	}
 
 	public void openHelp() {
-		HelpController.open("Метод Гамильтонового пути", "HamiltonPath.md");
+		HelpController.open("Метод Гамильтонового пути", "HamiltonPathDescription.md");
 	}
 }

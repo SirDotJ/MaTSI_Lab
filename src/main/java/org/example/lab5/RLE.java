@@ -4,15 +4,6 @@ import org.example.common.Decoder;
 import org.example.common.Encoder;
 
 public class RLE implements Encoder, Decoder {
-    public static void main(String[] args) {
-        String message = "ПРОПРОПРОББББББАААААВВВВВ";
-        RLE encoder = new RLE();
-        String encodedMesssage = encoder.encode(message);
-        String decodedMessage = encoder.decode(encodedMesssage);
-        System.out.println(message);
-        System.out.println(encodedMesssage);
-        System.out.println(decodedMessage);
-    }
 
     /* Determines how many instances of letter in a row are present in message starting from first character */
     private static int countSameLettersInARow(String message, char letter) {

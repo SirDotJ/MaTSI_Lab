@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-import org.example.lab1.*;
-
 public class MainApplication extends Application {
 	private static final String APPLICATION_TITLE = "Методы и средства защиты информации";
 	private static final String SCENE_FILE = "/MaTDP_Foundation.fxml";
@@ -18,7 +16,7 @@ public class MainApplication extends Application {
 		launch(args);
 	}
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		try {
 			setupApplication(primaryStage);
 		} catch (IOException ioException) {

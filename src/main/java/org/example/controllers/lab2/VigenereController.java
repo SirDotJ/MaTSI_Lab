@@ -3,10 +3,7 @@ package org.example.controllers.lab2;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import org.example.common.Alphabet;
-import org.example.common.AlphabetConstants;
-import org.example.common.DecryptorForm;
-import org.example.common.EncryptorForm;
+import org.example.common.*;
 import org.example.lab2.VigenereEncryptor;
 
 public class VigenereController implements EncryptorForm, DecryptorForm {
@@ -40,7 +37,7 @@ public class VigenereController implements EncryptorForm, DecryptorForm {
 	}
 
 	public void openHelp() {
-		return;
+		HelpController.open("Шифр Виженера", "VigenereDescription.md");
 	}
 }
 

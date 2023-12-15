@@ -1,11 +1,11 @@
 package org.example.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.AnchorPane;
+import org.example.common.HelpController;
 
 import java.io.IOException;
 
@@ -68,79 +68,79 @@ public class MainApplicationController {
 	/* Методы шифровки */
 
 	@FXML
-	public void loadCaesarMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Алгоритм Цезаря" пользователем
+	public void loadCaesarMethod() { // Вызывается при выборе радио кнопки "Алгоритм Цезаря" пользователем
 		if (caesarMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_CaesarMain.fxml");
 		}
 	}
 	@FXML
-	public void loadRearrangementMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Перестановка" пользователем
+	public void loadRearrangementMethod() { // Вызывается при выборе радио кнопки "Перестановка" пользователем
 		if (rearrangementMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_RearrangementMain.fxml");
 		}
 	}
 	@FXML
-	public void loadHamiltonMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Гамильтоновый путь" пользователем
+	public void loadHamiltonMethod() { // Вызывается при выборе радио кнопки "Гамильтоновый путь" пользователем
 		if (hamiltonMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_HamiltonPathMain.fxml");
 		}
 	}
 	@FXML
-	public void loadVigenereMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр Виженера" пользователем
+	public void loadVigenereMethod() { // Вызывается при выборе радио кнопки "Шифр Виженера" пользователем
 		if (vigenereMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_VigenereMain.fxml");
 		}
 	}
 	@FXML
-	public void loadBofortMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр Бофорта" пользователем
+	public void loadBofortMethod() { // Вызывается при выборе радио кнопки "Шифр Бофорта" пользователем
 		if(bofortMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_BofortMain.fxml");
 		}
 	}
 	@FXML
-	public void loadMatrixMultiplicationMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр умножением матриц" пользователем
+	public void loadMatrixMultiplicationMethod() { // Вызывается при выборе радио кнопки "Шифр умножением матриц" пользователем
 		if(matrixMultiplicationMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_MatrixMultiplicationMain.fxml");
 		}
 	}
 	@FXML
-	public void loadKnapsackMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр укладки ранца" пользователем
+	public void loadKnapsackMethod() { // Вызывается при выборе радио кнопки "Шифр укладки ранца" пользователем
 		if(knapsackMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_KnapsackMain.fxml");
 		}
 	}
 	@FXML
-	public void loadPlayfairMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Шифр Плейфера" пользователем
+	public void loadPlayfairMethod() { // Вызывается при выборе радио кнопки "Шифр Плейфера" пользователем
 		if(playfairMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_PlayfairMain.fxml");
 		}
 	}
 	@FXML
-	public void loadRSAMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема RSA" пользователем
+	public void loadRSAMethod() { // Вызывается при выборе радио кнопки "Криптосистема RSA" пользователем
 		if (RSAMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_RSAMain.fxml");
 		}
 	}
 	@FXML
-	public void loadElGamalMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема Эль-Гамаля" пользователем
+	public void loadElGamalMethod() { // Вызывается при выборе радио кнопки "Криптосистема Эль-Гамаля" пользователем
 		if (ElGamalMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_ElGamalMain.fxml");
 		}
 	}
 	@FXML
-	public void loadRabinMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема Рабина" пользователем
+	public void loadRabinMethod() { // Вызывается при выборе радио кнопки "Криптосистема Рабина" пользователем
 		if (RabinMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_RabinMain.fxml");
 		}
 	}
 	@FXML
-	public void loadMerkleHellmanMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Криптосистема Меркла-Хеллмана" пользователем
+	public void loadMerkleHellmanMethod() { // Вызывается при выборе радио кнопки "Криптосистема Меркла-Хеллмана" пользователем
 		if (MerkleHellmanMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_MerkleHellmanMain.fxml");
 		}
 	}
 	@FXML
-	public void loadTrithemiusMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Алгоритм Тритемиуса" пользователем
+	public void loadTrithemiusMethod() { // Вызывается при выборе радио кнопки "Алгоритм Тритемиуса" пользователем
 		if (TrithemiusMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_TrithemiusMain.fxml");
 		}
@@ -149,19 +149,19 @@ public class MainApplicationController {
 	/* Методы сжатия */
 
 	@FXML
-	public void loadRLEMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод RLE" пользователем
+	public void loadRLEMethod() { // Вызывается при выборе радио кнопки "Метод RLE" пользователем
 		if (RLEMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_RLEMain.fxml");
 		}
 	}
 	@FXML
-	public void loadBWTMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод BWT" пользователем
+	public void loadBWTMethod() { // Вызывается при выборе радио кнопки "Метод BWT" пользователем
 		if (BWTMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_BWTMain.fxml");
 		}
 	}
 	@FXML
-	public void loadBWTAndRLEMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Метод BWT + RLE" пользователем
+	public void loadBWTAndRLEMethod() { // Вызывается при выборе радио кнопки "Метод BWT + RLE" пользователем
 		if (BWTAndRLEMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_BWTAndRLEMain.fxml");
 		}
@@ -175,9 +175,13 @@ public class MainApplicationController {
 
 	/* Методы сохранения целостности */
 	@FXML
-	public void loadHemmingMethod(ActionEvent event) { // Вызывается при выборе радио кнопки "Код Хэмминга" пользователем
+	public void loadHemmingMethod() { // Вызывается при выборе радио кнопки "Код Хэмминга" пользователем
 		if (HemmingMethodButton.isSelected()) {
 			this.setDisplayScene("MaTDP_HemmingMain.fxml");
 		}
+	}
+
+	public void openHelp() {
+		HelpController.open("О программе", "About.md");
 	}
 }

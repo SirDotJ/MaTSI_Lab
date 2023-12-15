@@ -93,13 +93,6 @@ public class BinaryWord {
 		return representation.toString();
 	}
 
-	public static void printBinaryWord(BinaryWord word) {
-		int size = word.size();
-		for (int i = 0; i < size; i++) {
-			boolean value = word.get(i);
-			System.out.print(value ? 1 : 0);
-		}
-	}
 	private static boolean[] charToBinary(char letter, int binaryLength) {
 		boolean[] binaryLetter = new boolean[binaryLength];
 		int index = 0;

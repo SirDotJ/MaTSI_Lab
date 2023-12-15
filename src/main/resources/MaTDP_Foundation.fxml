@@ -39,7 +39,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -51,39 +50,9 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Помощь">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="false" onAction="#openHelp" text="О приложении" />
           </items>
         </Menu>
       </menus>
@@ -94,7 +63,7 @@
           <children>
                   <VBox minWidth="-Infinity" prefHeight="686.0" prefWidth="301.0">
                      <children>
-                  <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Алгоритмы шифровки" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Методы шифровки" textAlignment="CENTER" wrapText="false">
                     <font>
                       <Font size="18.0" fx:id="x1" />
                     </font>
@@ -172,7 +141,7 @@
                            </children>
                         </VBox>
                         <Separator orientation="VERTICAL" prefHeight="35.0" prefWidth="5.0" visible="false" />
-                        <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Алгоритмы сжатия" textAlignment="CENTER" wrapText="false">
+                        <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Методы архивации" textAlignment="CENTER" wrapText="false">
                            <font>
                               <Font size="18.0" fx:id="x11" />
                            </font>
@@ -202,7 +171,7 @@
                            </children>
                         </VBox>
                         <Separator orientation="VERTICAL" prefHeight="35.0" prefWidth="5.0" visible="false" />
-                        <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Сохранение целостности" textAlignment="CENTER" wrapText="false">
+                        <Label alignment="CENTER" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Методы кодировки" textAlignment="CENTER" wrapText="false">
                            <font>
                               <Font size="18.0" fx:id="x111" />
                            </font>

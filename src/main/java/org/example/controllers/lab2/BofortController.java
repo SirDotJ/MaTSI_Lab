@@ -70,6 +70,6 @@ public class BofortController implements EncryptorForm, DecryptorForm {
 	}
 
 	public void openHelp() {
-		return;
+		HelpController.open("Шифр Бофорта", "BofortDescription.md");
 	}
 }

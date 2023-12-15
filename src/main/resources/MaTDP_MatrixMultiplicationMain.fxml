@@ -76,7 +76,7 @@
       <HBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;">
          <children>
             <Separator prefHeight="5.0" prefWidth="179.0" visible="false" />
-            <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" text="Зашифровать" />
+            <Button id="encryptButton" mnemonicParsing="false" onAction="#encrypt" prefHeight="22.0" prefWidth="104.0" text="Зашифровать" />
             <Separator prefHeight="5.0" prefWidth="44.0" visible="false" />
             <Button id="outputToInputButton" depthTest="ENABLE" mnemonicParsing="false" onAction="#transferOutputToInput" prefHeight="27.0" prefWidth="35.0" text="↑">
                <cursor>
@@ -87,7 +87,7 @@
                </font>
             </Button>
             <Separator prefHeight="7.0" prefWidth="38.0" visible="false" />
-            <Button id="decryptButton" mnemonicParsing="false" onAction="#decrypt" text="Расшифровать" />
+            <Button id="decryptButton" mnemonicParsing="false" onAction="#decrypt" prefHeight="22.0" prefWidth="107.0" text="Расшифровать" />
             <Separator prefHeight="13.0" prefWidth="113.0" visible="false" />
          </children>
       </HBox>
