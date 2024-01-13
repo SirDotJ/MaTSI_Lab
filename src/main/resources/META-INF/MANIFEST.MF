@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Main-Class: Launcher
+Class-Path: slf4j-api-2.0.11.jar slf4j-simple-2.0.9.jar json-20231013.ja
+ r log4j-core-2.20.0.jar log4j-api-2.20.0.jar javafx-base-20.jar javafx-
+ base-20-win.jar javafx-fxml-19.0.2.jar javafx-fxml-19.0.2-win.jar javaf
+ x-controls-19.0.2.jar javafx-controls-19.0.2-win.jar javafx-graphics-19
+ .0.2.jar javafx-graphics-19.0.2-win.jar javafx-base-19.0.2.jar javafx-b
+ ase-19.0.2-win.jar javafx-swt.jar javafx.web.jar javafx.base.jar javafx
+ .fxml.jar javafx.media.jar javafx.swing.jar javafx.controls.jar javafx.
+ graphics.jar log4j-api-2.20.0.jar
+

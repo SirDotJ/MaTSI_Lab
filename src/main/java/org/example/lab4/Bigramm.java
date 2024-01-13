@@ -7,15 +7,12 @@ public class Bigramm {
         this.firstLetter = firstLetter;
         this.secondLetter = secondLetter;
     }
-
     public char getFirstLetter() {
         return firstLetter;
     }
-
     public char getSecondLetter() {
         return secondLetter;
     }
-
     @Override
     public String toString() {
         return Character.toString(this.firstLetter) + Character.toString(this.secondLetter);

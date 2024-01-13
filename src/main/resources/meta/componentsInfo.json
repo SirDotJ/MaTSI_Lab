@@ -1,0 +1,5 @@
+{
+  "launcher_agent_name" : "Launcher",
+  "main_agent_name" : "MaTSI_Lab",
+  "updating_agent_name" : "Updater"
+}
