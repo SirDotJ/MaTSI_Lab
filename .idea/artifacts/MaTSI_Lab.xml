@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/MaTSI_Lab</output-path>
     <root id="root">
       <element id="archive" name="MaTSI_Lab.jar">
-        <element id="module-output" name="MaTSI_Lab" />
+        <element id="module-output" name="Cybersecurity Training App" />
       </element>
       <element id="library" level="project" name="openjfx.javafx.base" />
       <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx-swt.jar" />

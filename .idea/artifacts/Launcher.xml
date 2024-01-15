@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Launcher</output-path>
     <root id="root">
       <element id="archive" name="Launcher.jar">
-        <element id="module-output" name="MaTSI_Lab" />
+        <element id="module-output" name="Cybersecurity Training App" />
       </element>
       <element id="library" level="project" name="slf4j.api" />
       <element id="file-copy" path="$USER_HOME$/Downloads/slf4j-simple-2.0.9.jar" />
