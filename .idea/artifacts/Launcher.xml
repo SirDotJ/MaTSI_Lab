@@ -1,31 +1,10 @@
 <component name="ArtifactManager">
-  <artifact name="Launcher">
+  <artifact type="jar" name="Launcher">
     <output-path>$PROJECT_DIR$/out/artifacts/Launcher</output-path>
-    <root id="root">
-      <element id="archive" name="Launcher.jar">
-        <element id="module-output" name="Cybersecurity Training App" />
-      </element>
-      <element id="library" level="project" name="slf4j.api" />
-      <element id="file-copy" path="$USER_HOME$/Downloads/slf4j-simple-2.0.9.jar" />
-      <element id="library" level="project" name="json" />
-      <element id="library" level="project" name="apache.logging.log4j.core" />
-      <element id="library" level="project" name="openjfx.javafx.base" />
-      <element id="library" level="project" name="openjfx.javafx.fxml" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx-swt.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx.web.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx.base.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx.fxml.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx.media.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx.swing.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx.controls.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/../../../../../Program Files/Java/javafx-sdk-20.0.2/lib/javafx.graphics.jar" />
-      <element id="library" level="project" name="apache.logging.log4j.api" />
-      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/launch.bat" />
-      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/launch.sh" />
-      <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources/jdk-17" />
-      <element id="directory" name="meta">
-        <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources/meta" />
-      </element>
+    <root id="archive" name="Launcher.jar">
+      <element id="module-output" name="Launcher" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-simple-2.0.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/2.0.3/slf4j-api-2.0.3.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

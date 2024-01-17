@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact name="FullApplication_Windows">
+    <output-path>$PROJECT_DIR$/out/artifacts/FullApplication_Windows</output-path>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start.bat" />
+      <element id="directory" name="src">
+        <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources/java/jdk-17" />
+        <element id="artifact" artifact-name="Launcher" />
+        <element id="artifact" artifact-name="MainApplication" />
+        <element id="artifact" artifact-name="Updater" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_launcher.bat" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_main.bat" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_updater.bat" />
+      </element>
+    </root>
+  </artifact>
+</component>
