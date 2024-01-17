@@ -12,6 +12,7 @@
         <module>Launcher</module>
         <module>MainApplication</module>
         <module>Updater</module>
+        <module>Dev</module>
     </modules>
 
     <properties>

@@ -5,7 +5,6 @@ import java.io.IOException;
 public class Launcher {
 	public static void main(String[] args) {
 		System.out.println("Downloading required Jar file...");
-		Updater.main(null);
 		System.out.println("Launching downloaded Jar file...");
 		try {
 			// Credit: https://stackoverflow.com/a/8496537

@@ -12,7 +12,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class Updater {
-	private static final Logger LOGGER = LoggerFactory.getLogger(JSONParser.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Updater.class);
 
 	// Pulls latest release and it's contents
 	private static final String LATEST_RELEASE_API_CALL = "https://api.github.com/repos/SirDotJ/MaTSI_Lab/releases/latest";
