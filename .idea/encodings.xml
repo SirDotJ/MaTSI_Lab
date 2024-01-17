@@ -3,6 +3,10 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Launcher/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Launcher/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MainApplication/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MainApplication/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Updater/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Updater/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
