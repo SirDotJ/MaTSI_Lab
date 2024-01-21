@@ -1,0 +1,15 @@
+<configuration>
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>traceback-Updater.log</file>
+    <append>false</append>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="org.togu.logging.UpdaterLoggingLayout">
+        <pattern>[Log]: [%d{yyyy-MM-dd=HH-mm-ss-SSS}]=[file:%file]=[thread:%thread]=[method:%method]=[line:%line]=[%-5level] - "%message"; %exception %n</pattern>
+      </layout>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>

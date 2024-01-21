@@ -7,10 +7,10 @@
         <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources/java/jdk-17" />
         <element id="artifact" artifact-name="Launcher" />
         <element id="artifact" artifact-name="MainApplication" />
-        <element id="artifact" artifact-name="Updater" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_launcher.bat" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_main.bat" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_updater.bat" />
+        <element id="artifact" artifact-name="Updater_Full" />
       </element>
     </root>
   </artifact>

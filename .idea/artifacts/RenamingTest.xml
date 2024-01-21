@@ -12,7 +12,7 @@
             <element id="directory" name="src">
               <element id="artifact" artifact-name="Launcher" />
               <element id="artifact" artifact-name="MainApplication" />
-              <element id="artifact" artifact-name="Updater" />
+              <element id="artifact" artifact-name="Updater.jar" />
             </element>
           </element>
         </element>
