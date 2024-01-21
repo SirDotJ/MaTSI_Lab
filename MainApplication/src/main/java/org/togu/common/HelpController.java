@@ -8,9 +8,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 public class HelpController {
 	private static final String FORM_NAME = "/MaTDP_Method_Help.fxml";
@@ -23,16 +25,17 @@ public class HelpController {
 	public static void open(String title, String fileName) {
 
 		String descriptionContent;
-		try {
-			descriptionContent = Files.readString(Path.of(HelpController.class.getClassLoader().getResource("help/" + fileName).toURI()));
-		} catch (java.net.URISyntaxException | IOException e) {
+		InputStream helpStream = HelpController.class.getClassLoader().getResourceAsStream("help/" + fileName);
+		if (helpStream == null) {
 			Alerts.showError(
-					"No file found",
-					"Couldn't find file in resources",
-					"Please check that file " + fileName + " exists in help folder"
+				"Файл не найден в ресурсах",
+				String.format("Файл под именем \"%s\" не был найден в ресурсах", fileName),
+				"Сообщите разработчику программного средства о данной ошибке (пункт меню \"Помощь\"->\"Связь с разработчиком\")"
 			);
 			return;
 		}
+		BufferedReader reader = new BufferedReader(new InputStreamReader(helpStream));
+		descriptionContent = reader.lines().collect(Collectors.joining(System.lineSeparator()));
 
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader(HelpController.class.getResource(FORM_NAME));
