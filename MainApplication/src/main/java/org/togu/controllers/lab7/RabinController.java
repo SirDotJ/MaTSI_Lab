@@ -5,6 +5,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.togu.common.*;
+import org.togu.controllers.HelpController;
 import org.togu.lab7.Rabin;
 
 public class RabinController implements EncryptorForm, DecryptorForm {

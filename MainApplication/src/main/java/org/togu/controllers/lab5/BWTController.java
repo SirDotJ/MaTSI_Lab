@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import org.togu.common.DecoderForm;
 import org.togu.common.EncoderForm;
-import org.togu.common.HelpController;
+import org.togu.controllers.HelpController;
 import org.togu.lab5.BWT;
 
 public class BWTController implements EncoderForm, DecoderForm {

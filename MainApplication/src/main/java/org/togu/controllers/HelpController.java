@@ -1,4 +1,4 @@
-package org.togu.common;
+package org.togu.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import org.togu.common.Alerts;
 
 import java.io.BufferedReader;
 import java.io.IOException;

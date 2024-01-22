@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import org.togu.common.Alerts;
 import org.togu.common.DecryptorForm;
 import org.togu.common.EncryptorForm;
-import org.togu.common.HelpController;
+import org.togu.controllers.HelpController;
 import org.togu.lab1.HamiltonPathEncryptor;
 
 import java.util.ArrayList;

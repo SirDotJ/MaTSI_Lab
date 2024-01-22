@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.AnchorPane;
-import org.togu.common.HelpController;
 
 import java.io.IOException;
 
@@ -183,5 +182,9 @@ public class MainApplicationController {
 
 	public void openHelp() {
 		HelpController.open("О программе", "About.md");
+	}
+
+	public void openCommunication() {
+		CommunicationController.open();
 	}
 }

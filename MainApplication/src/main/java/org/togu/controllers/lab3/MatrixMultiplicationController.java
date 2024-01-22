@@ -3,6 +3,7 @@ package org.togu.controllers.lab3;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import org.togu.common.*;
+import org.togu.controllers.HelpController;
 import org.togu.lab3.MatrixMultiplicationEncryptor;
 
 public class MatrixMultiplicationController implements EncryptorForm, DecryptorForm {

@@ -21,7 +21,7 @@ public class Updater {
 	private static void downloadLatestAsset(String assetName, String extension) throws IllegalArgumentException {
 		String targetName = MetaInfo.getComponentInfo(assetName) + extension;
 
-		JSONObject latestRelease = JSONParser.readURL(LATEST_RELEASE_API_CALL);
+		JSONObject latestRelease = FileParser.readURLToJSONObject(LATEST_RELEASE_API_CALL);
 		JSONArray latestReleaseAssets = latestRelease.getJSONArray("assets");
 		for (int i = 0; i < latestReleaseAssets.length(); i++) {
 			JSONObject asset = latestReleaseAssets.getJSONObject(i);

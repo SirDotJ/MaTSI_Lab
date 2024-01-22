@@ -10,6 +10,10 @@ public class Main {
 	private static final String MAIN_APPLICATION_SCRIPT_FILE_NAME = "start_main.bat";
 	private static final String UPDATER_SCRIPT_FILE_NAME = "start_updater.bat";
 	public static void main(String[] args) {
+		// Used to specify logback.xml file to be used: one in the resource path, and not in modules this module depends on
+		System.setProperty("logback.configurationFile", "logback.xml");
+		LOGGER.info("Starting Launcher...");
+
 		Process mainApplication;
 		try {
 			ProcessBuilder mainApplicationBuilder = new ProcessBuilder();

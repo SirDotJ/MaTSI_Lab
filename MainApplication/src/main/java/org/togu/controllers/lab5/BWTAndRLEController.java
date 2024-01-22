@@ -6,7 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import org.togu.common.DecoderForm;
 import org.togu.common.EncoderForm;
-import org.togu.common.HelpController;
+import org.togu.controllers.HelpController;
 import org.togu.lab5.BWT;
 import org.togu.lab5.RLE;
 

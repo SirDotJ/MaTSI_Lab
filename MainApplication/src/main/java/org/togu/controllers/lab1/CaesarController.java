@@ -6,6 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import org.togu.common.*;
+import org.togu.controllers.HelpController;
 import org.togu.lab1.CaesarEncryptor;
 
 import java.security.InvalidAlgorithmParameterException;

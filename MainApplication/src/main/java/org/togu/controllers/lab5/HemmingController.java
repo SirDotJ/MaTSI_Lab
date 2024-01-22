@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.togu.common.Alerts;
-import org.togu.common.HelpController;
+import org.togu.controllers.HelpController;
 import org.togu.lab5.HemmingCode;
 
 public class HemmingController {

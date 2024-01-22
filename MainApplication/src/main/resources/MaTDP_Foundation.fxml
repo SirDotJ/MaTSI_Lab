@@ -53,6 +53,7 @@
         <Menu mnemonicParsing="false" text="Помощь">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#openHelp" text="О приложении" />
+                <MenuItem mnemonicParsing="false" onAction="#openCommunication" text="Связь с разработчиком" />
           </items>
         </Menu>
       </menus>

@@ -10,7 +10,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_launcher.bat" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_main.bat" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_updater.bat" />
-        <element id="artifact" artifact-name="Updater_Full" />
+        <element id="artifact" artifact-name="Updater" />
       </element>
     </root>
   </artifact>
