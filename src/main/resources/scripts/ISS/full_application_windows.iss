@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Тренажёр ИБ"
-#define MyAppVersion "0.9"
+#define MyAppVersion "0.10.0"
 #define MyAppPublisher "SirDotJ"
 #define MyAppURL "https://t.me/SirDotJ"
 #define MyAppExeName "Тренажёр ИБ.exe"

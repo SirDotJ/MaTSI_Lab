@@ -1,0 +1,11 @@
+{
+  "tag_name" : "v0.10.0",
+  "name" : "v0.10.0",
+  "draft" : "false",
+  "preRelease" : "false",
+  "generate_release_notes" : "false",
+  "assetPaths" : [
+    "out/artifacts/FullApplication_Windows/Installer.exe",
+    "out/artifacts/FullApplication_Windows/src.zip"
+  ]
+}

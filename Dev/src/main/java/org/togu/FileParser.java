@@ -64,6 +64,25 @@ public class FileParser {
 		return FileParser.class.getClassLoader().getResourceAsStream(resourceFilePath);
 	}
 
+	public static String getFileContents(String path) throws IllegalArgumentException {
+		BufferedReader fileReader;
+		try {  // resource
+			InputStream resourceStream = readResourceFile(path);
+			fileReader = new BufferedReader(new InputStreamReader(resourceStream, USED_CHARSET));
+		} catch (NullPointerException e) {
+			try {  // local
+				File file = readLocalFile(path);
+				InputStreamReader streamReader = new InputStreamReader(new FileInputStream(file.getAbsolutePath()), USED_CHARSET);
+				fileReader = new BufferedReader(streamReader);
+			} catch (NullPointerException | FileNotFoundException e1) {
+				LOGGER.error(String.format("No file found under path: \"%s\"", path), e1);
+				throw new IllegalArgumentException("No file found under provided path");
+			}
+		}
+
+		return readBufferedReader(fileReader);
+	}
+
 	private static String readBufferedReader(BufferedReader reader) {
 		StringBuilder builder = new StringBuilder();
         int letter;

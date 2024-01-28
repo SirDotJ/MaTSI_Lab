@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+/Dev/src/main/resources/meta/privateInfo.json
+/Dev/src/main/test/meta/privateInfo.json
+/traceback-Dev.log
+/traceback-Launcher.log
+/traceback-MainApplication.log
