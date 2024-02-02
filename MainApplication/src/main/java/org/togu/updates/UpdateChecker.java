@@ -8,6 +8,9 @@ import org.togu.githubapi.Release;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -67,8 +70,9 @@ public class UpdateChecker {
 	 * - false - if current is same as latest (i.e. No changes were made since launching application);
 	 * - true - if there is a newer version available.
 	 * @throws IllegalStateException Occurs if either of the releases is null, which indicates that it was never received from Repository.
+	 * @throws IOException Occurs if published date format could not be parsed
 	 */
-	boolean newerReleaseAvailable() throws IllegalStateException {
+	boolean newerReleaseAvailable() throws IllegalStateException, IOException {
 		try {
 			this.latest = ReleaseFetcher.fetchLatestRelease();
 		} catch (IOException e) {
@@ -79,10 +83,26 @@ public class UpdateChecker {
 			LOGGER.warn("Can't compare releases since current or latest is null. They were not received yet.");
 			throw new IllegalStateException("Current or latest release was never received");
 		}
+		Date latestPublishedDate;
+		try {
+			latestPublishedDate = DateFormat.getDateInstance().parse(this.latest.info.published_at());
+		} catch (ParseException e) {
+			LOGGER.error(String.format("Cannot parse published date format for latest release: \"%s\"", this.latest.info.published_at()));
+			throw new IOException("Can't parse latest published date");
+		}
+
+		Date currentPublishedDate;
+		try {
+			currentPublishedDate = DateFormat.getDateInstance().parse(this.current.info.published_at());
+		} catch (ParseException e) {
+			LOGGER.error(String.format("Cannot parse published date format for current release: \"%s\"", this.current.info.published_at()));
+			throw new IOException("Can't parse current published date");
+		}
+
 		return !Objects.equals(
 			this.current.info.id(),
 			this.latest.info.id()
-		);
+		) && (latestPublishedDate.after(currentPublishedDate));
 	}
 
 	private static final String UPDATE_PACKAGE_NAME = "src.zip";

@@ -29,18 +29,24 @@ public class UpdatesManager {
 	 * Checks up on checker and if there is an update available starts the updating process.
 	 */
 	public void update() {
-		if (!this.checker.newerReleaseAvailable()) {
-			Timer timer = new Timer();
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					Platform.runLater(() -> {
-						update();
-					});
-				}
-			}, this.updateInterval);
+		try {
+			if (!this.checker.newerReleaseAvailable()) {
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						Platform.runLater(() -> {
+							update();
+						});
+					}
+				}, this.updateInterval);
+				return;
+			}
+		} catch (IOException e) {
+			LOGGER.error("Could not determine newer release availability");
 			return;
 		}
+
 		LOGGER.info("Newer version is available");
 		String updatePackageDownloadUrl;
 		try {
@@ -96,15 +102,19 @@ public class UpdatesManager {
 
 	public static void forceCheckUpdate() {
 		LOGGER.info("User is checking for updates manually");
-		if (!singleton.checker.newerReleaseAvailable()) {
-			LOGGER.info("No updates available");
-			Alert noUpdate = new Alert(
-				Alert.AlertType.INFORMATION,
-				"Нет обновлений приложения. Если у вас возникли проблемы обратитесь к разработчику в пункте меню \"Помощь\" -> \"Связь с разработчиком\""
-			);
-			noUpdate.showAndWait();
-		} else {
-			singleton.update();
+		try {
+			if (!singleton.checker.newerReleaseAvailable()) {
+				LOGGER.info("No updates available");
+				Alert noUpdate = new Alert(
+					Alert.AlertType.INFORMATION,
+					"Нет обновлений приложения. Если у вас возникли проблемы обратитесь к разработчику в пункте меню \"Помощь\" -> \"Связь с разработчиком\""
+				);
+				noUpdate.showAndWait();
+			} else {
+				singleton.update();
+			}
+		} catch (IOException e) {
+			LOGGER.error("Could not determine newer release availability");
 		}
 	}
 
