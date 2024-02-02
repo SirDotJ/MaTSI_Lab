@@ -15,18 +15,24 @@ public class MetaInfo {
 		System.setProperty("logback.configurationFile", "logback.xml");
 	}
 
+	public static void main(String[] args) {
+		LOGGER.info("Dev started");
+	}
+
 	public static MetaInfo singleton = null;
 	private static final String APPLICATION_INFO_JSON_RELATIVE_PATH = "meta/applicationInfo.json";
 	private static final String COMPONENT_INFO_JSON_RELATIVE_PATH = "meta/componentsInfo.json";
 	private static final String API_INFO_JSON_RELATIVE_PATH = "meta/apiInfo.json";
 	private static final String PRIVATE_INFO_JSON_RELATIVE_PATH = "meta/privateInfo.json";
 	private static final String RELEASE_INFO_JSON_RELATIVE_PATH = "release/release_info.json";
+	private static final String CONFIGURATION_JSON_RELATIVE_PATH = "meta/configuration.json";
 
 	private final JSONObject APPLICATION_INFO;
 	private final JSONObject COMPONENT_INFO;
 	private final JSONObject API_INFO;
 	private final JSONObject PRIVATE_INFO;
 	private final JSONObject RELEASE_INFO;
+	private final JSONObject CONFIGURATION;
 
 	private MetaInfo() {
 		// APPLICATION_INFO
@@ -55,6 +61,9 @@ public class MetaInfo {
 			releaseInfo = null;
 		}
 		RELEASE_INFO = releaseInfo;
+
+		// CONFIGURATION
+		CONFIGURATION = FileParser.readResourceFileToJSONObject(CONFIGURATION_JSON_RELATIVE_PATH);
 	}
 
 	public static String getApplicationInfo(String key) {
@@ -107,5 +116,13 @@ public class MetaInfo {
 		JSONArray jsonArray = singleton.RELEASE_INFO.getJSONArray("assetPaths");
 		jsonArray.forEach(path -> assetFilePaths.add(path.toString()));
 		return assetFilePaths;
+	}
+
+	public static String getConfigurationInfo(String key) {
+		if (singleton == null) {
+			singleton = new MetaInfo();
+		}
+
+		return singleton.CONFIGURATION.get(key).toString();
 	}
 }

@@ -24,9 +24,11 @@ public class AlphabetConstants {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 	});
 	final static public Alphabet OTHER_KEYBOARD_KEYS = new Alphabet(new char[] {
-		' ', '~', '`', '!', '@', '\"', '\'', '#', '№', '$', ';', '%', ':', '^', '&', '?', '*', '(', ')', '-', '+', '=', '[', ']', '{', '}', '\\', '/', '.', '<', '>', '\t', '\b', '\n', '\r', '\f'
+		' ', '~', '`', '!', '@', '\"', '\'', '#', '№', '$', ';', '%', ':', '^', '&', '?', '*', '(', ')', '-', '+', '=', '[', ']', '{', '}', '\\', '/', '.', '<', '>', '\t', '\b', '\n', '\r', '\f', '_', ','
 	});
+	final static public Alphabet FULL_LATIN = new Alphabet(LATIN_NO_SPACE.toString() + LATIN_UPPER_CASE.toString());
+	final static public Alphabet FULL_CYRILLIC = new Alphabet(CYRILLIC_NO_SPACE.toString() + CYRILLIC_UPPER_CASE.toString());
 	final static public Alphabet FULL_WITH_SPACE = new Alphabet(LATIN_NO_SPACE.toString() + CYRILLIC_WITH_SPACE.toString());
 	final static public Alphabet FULL_NO_SPACE = new Alphabet(LATIN_NO_SPACE.toString() + CYRILLIC_NO_SPACE.toString());
-	public static final Alphabet FULL_KEYBOARD = new Alphabet(LATIN_WITH_SPACE.toString() + LATIN_UPPER_CASE.toString() + CYRILLIC_NO_SPACE.toString() + CYRILLIC_UPPER_CASE.toString() + NUMBERS.toString() + OTHER_KEYBOARD_KEYS.toString());
+	public static final Alphabet FULL_KEYBOARD = new Alphabet(LATIN_NO_SPACE.toString() + LATIN_UPPER_CASE.toString() + CYRILLIC_NO_SPACE.toString() + CYRILLIC_UPPER_CASE.toString() + NUMBERS.toString() + OTHER_KEYBOARD_KEYS.toString());
 }

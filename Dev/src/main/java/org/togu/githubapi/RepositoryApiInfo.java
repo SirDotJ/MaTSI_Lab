@@ -11,6 +11,7 @@ public record RepositoryApiInfo(
 	public String releases() {
 		return String.format("%s/releases", this.baseUrl());
 	}
+	public String latestRelease() { return String.format("%s/latest", this.releases()); }
 	public String releaseFromId(int id) {
 		return this.releaseFromId(String.valueOf(id));
 	}

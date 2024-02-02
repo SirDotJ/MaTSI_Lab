@@ -11,14 +11,14 @@ import java.util.List;
 public class CurrentRelease {
 	public final ReleasePostInfo postInfo;
 	public final List<File> assets;
-	public CurrentRelease() {
+	public CurrentRelease(boolean preRelease) {
 		this.postInfo = new ReleasePostInfo(
 			MetaInfo.getPrivateInfo("project_content_read_write_github_access_token"), // Authorization token
 			MetaInfo.getReleaseInfo("tag_name"), // Tag name
 			MetaInfo.getReleaseInfo("name"), // Name
 			getDescription(),
 			Boolean.parseBoolean(MetaInfo.getReleaseInfo("draft")), // Draft
-			Boolean.parseBoolean(MetaInfo.getReleaseInfo("preRelease")), // Prerelease
+			preRelease || Boolean.parseBoolean(MetaInfo.getReleaseInfo("preRelease")), // Prerelease
 			Boolean.parseBoolean(MetaInfo.getReleaseInfo("generate_release_notes")) // Generate release notes
 		);
 		this.assets = getAssets();

@@ -1,15 +1,16 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="Dev:jar">
+  <artifact name="Dev:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Dev_jar</output-path>
-    <root id="archive" name="Dev.jar">
-      <element id="module-output" name="Dev" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20220924/json-20220924.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/ch/qos/logback/logback-classic/1.4.14/logback-classic-1.4.14.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/ch/qos/logback/logback-core/1.4.14/logback-core-1.4.14.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar" path-in-jar="/" />
-      <element id="directory" name="meta">
-        <element id="dir-copy" path="$PROJECT_DIR$/Dev/src/main/resources/meta" />
+    <root id="root">
+      <element id="archive" name="Dev.jar">
+        <element id="module-output" name="Dev" />
       </element>
+      <element id="library" level="project" name="json" />
+      <element id="library" level="project" name="ch.qos.logback.classic" />
+      <element id="library" level="project" name="squareup.okhttp3.okhttp" />
+      <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.32" />
+      <element id="library" level="project" name="Maven: org.json:json:20230618" />
+      <element id="library" level="project" name="slf4j.api" />
     </root>
   </artifact>
 </component>

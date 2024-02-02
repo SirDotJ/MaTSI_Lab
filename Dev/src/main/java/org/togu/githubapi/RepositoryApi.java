@@ -67,6 +67,26 @@ public class RepositoryApi {
 	}
 
 	/**
+	 * Returns latest release and its information.
+	 * @return Latest release in a form of {@link org.togu.githubapi.Release} instance.
+	 * @throws IOException Occurs if there was an error getting a release
+	 */
+	public Release getLatestRelease() throws IOException {
+		String url = this.info.latestRelease();
+		Request request = this.getRequest(url);
+
+		JSONObject response;
+		try {
+			response = this.executeRequest(request);
+		} catch (IOException | NullPointerException e) {
+			LOGGER.error("No response", e);
+			throw new IOException("No response");
+		}
+
+		return new Release(response);
+	}
+
+	/**
 	 * Returns release and its information from repository through its tag name.
 	 * @param tagName Designated tag name of the release to get assets from.
 	 * @return Instance of {@link Release}.
@@ -133,6 +153,26 @@ public class RepositoryApi {
 		} catch (IOException e) {
 			LOGGER.error(String.format("Error posting release under tag name: \"%s\"", info.tag_name()), e);
 			throw new IOException("Error posting release", e);
+		}
+		return new Release(response);
+	}
+
+	public Release updateRelease(ReleasePostInfo info) throws IOException {
+		if (!releaseExists(info.tag_name())) {
+			LOGGER.error(String.format("Release under tag name: \"%s\" doesn't exist.", info.tag_name()));
+			throw new IOException("Provided release doesn't exist");
+		}
+		Release release = this.getRelease(info.tag_name());
+
+		String url = this.info.releaseFromId(release.info.id());
+		RequestBody data = info.toPostBody();
+		Request patchRequest = this.patchRequest(url, data);
+		JSONObject response;
+		try {
+			response = executeRequest(patchRequest);
+		} catch (IOException e) {
+			LOGGER.error(String.format("Error patching release under tag name: \"%s\"", info.tag_name()), e);
+			throw new IOException("Error patching release", e);
 		}
 		return new Release(response);
 	}
@@ -373,7 +413,7 @@ public class RepositoryApi {
 		try {  // Make request
 			response = this.client.newCall(request).execute();
 		} catch (IOException e) {
-			LOGGER.error("Received IOException while trying to process request: " + request);
+			LOGGER.error("Received IOException while trying to process request");
 			throw new IOException("Failed to make HTTP call", e);
 		}
 		if (!response.isSuccessful()) {  // Check if successful
@@ -388,7 +428,7 @@ public class RepositoryApi {
 			responseBodyContent = "";
 		}
 		if (responseBodyContent.equals("")) {
-			LOGGER.warn(String.format("Empty response. Check if request is correct: \"%s\"", request));
+			LOGGER.warn(String.format("Empty response. Check if request is correct. Error code: \"%s\". Message: \"%s\"", response.code(), response.message()));
 			throw new NullPointerException("Empty response");
 		}
 		response.body().close();

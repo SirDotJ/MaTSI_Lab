@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact name="UpdateHandler">
+    <output-path>$PROJECT_DIR$/out/artifacts/UpdateHandler</output-path>
+    <root id="root">
+      <element id="archive" name="UpdateHandler.jar">
+        <element id="module-output" name="UpdateHandler" />
+        <element id="module-output" name="Updater" />
+      </element>
+      <element id="library" level="project" name="json" />
+      <element id="library" level="project" name="ch.qos.logback.classic" />
+      <element id="library" level="project" name="slf4j.api" />
+    </root>
+  </artifact>
+</component>

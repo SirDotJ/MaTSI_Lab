@@ -1,1 +1,0 @@
-"jdk/bin/java.exe" -jar Updater.jar

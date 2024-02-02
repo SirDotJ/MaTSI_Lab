@@ -69,16 +69,17 @@
                   <Font size="14.0" />
                </font>
             </TextArea>
-            <VBox alignment="CENTER" prefHeight="85.0" prefWidth="92.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
+                  <Label text="Режим" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-                  <RadioButton fx:id="cyrillicRadioButton" mnemonicParsing="false" selected="true" text="Кириллица">
+                  <RadioButton fx:id="cyrillicRadioButton" mnemonicParsing="false" selected="true" text="Русский">
                      <toggleGroup>
-                        <ToggleGroup fx:id="selectedAlphabet" />
+                        <ToggleGroup fx:id="mode" />
                      </toggleGroup>
                   </RadioButton>
                   <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-                  <RadioButton fx:id="latinRadioButton" mnemonicParsing="false" text="Латиница" toggleGroup="$selectedAlphabet" />
+                  <RadioButton fx:id="latinRadioButton" mnemonicParsing="false" text="Английский" toggleGroup="$mode" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
                </children>
             </VBox>

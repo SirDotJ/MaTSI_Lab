@@ -1,12 +1,15 @@
 package org.togu;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.togu.updates.UpdatesManager;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -20,6 +23,7 @@ public class MainApplication extends Application {
 		LOGGER.info("Launching application...");
 		launch(args);
 	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -30,11 +34,20 @@ public class MainApplication extends Application {
 		}
 		primaryStage.show();
 		LOGGER.info("Application's stage is shown and started successfully!");
+		UpdatesManager.launch(new String[] {
+			"1",  // Minutes to wait between updating information about releases;
+			"2"  // Minutes to wait between checking for newer version and downloading it.
+		});
+		LOGGER.info("Updater has started");
+		UpdatesManager.singleton.update();
 	}
 	private void setupApplication(Stage stage) throws IOException {
 		Scene applicationScene = setupScene();
 		stage.setScene(applicationScene);
 		stage.setTitle(APPLICATION_TITLE);
+		stage.setOnCloseRequest(windowEvent -> {
+			System.exit(0); // Used to also close any remaining updater operations
+		});
 		LOGGER.info("Application is set up!");
 	}
 	private Scene setupScene() throws IOException {

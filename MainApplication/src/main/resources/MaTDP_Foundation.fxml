@@ -54,6 +54,8 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#openHelp" text="О приложении" />
                 <MenuItem mnemonicParsing="false" onAction="#openCommunication" text="Связь с разработчиком" />
+                  <MenuItem mnemonicParsing="false" onAction="#openAlphabetHelp" text="Об используемом алфавите" />
+                  <MenuItem mnemonicParsing="false" onAction="#checkForUpdates" text="Проверить наличие обновлений" />
           </items>
         </Menu>
       </menus>

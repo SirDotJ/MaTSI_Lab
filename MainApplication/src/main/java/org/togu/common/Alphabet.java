@@ -8,7 +8,6 @@ public class Alphabet {
 		CYRILLIC,
 		LATIN
 	}
-    private final static boolean DEFAULT_LOWER_CASE = true;
     private final List<Character> alphabet;
     private final TYPE type;
 

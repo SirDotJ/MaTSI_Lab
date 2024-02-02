@@ -1,0 +1,1 @@
+"jdk/bin/java.exe" -jar UpdaterInitializer.jar %1 %2 %3

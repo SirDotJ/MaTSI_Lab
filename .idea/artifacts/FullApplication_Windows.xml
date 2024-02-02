@@ -5,12 +5,14 @@
       <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start.bat" />
       <element id="directory" name="src">
         <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources/java/jdk-17" />
-        <element id="artifact" artifact-name="Launcher" />
-        <element id="artifact" artifact-name="MainApplication" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_launcher.bat" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_main.bat" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_update_initializer.bat" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_update_handler.bat" />
         <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/scripts/Windows/start_updater.bat" />
-        <element id="artifact" artifact-name="Updater" />
+        <element id="artifact" artifact-name="Launcher" />
+        <element id="artifact" artifact-name="MainApplication" />
+        <element id="file-copy" path="$PROJECT_DIR$/MainApplication/src/main/resources/newFile.txt" />
       </element>
     </root>
   </artifact>

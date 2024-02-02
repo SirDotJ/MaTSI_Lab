@@ -1,7 +1,6 @@
 package org.togu.controllers.lab7;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.togu.common.*;
@@ -22,12 +21,7 @@ public class MerkleHellmanController implements EncryptorForm, DecryptorForm {
 	@FXML
 	TextArea outputMessage;
 
-	@FXML
-	private RadioButton cyrillicRadioButton;
-	@FXML
-	private RadioButton latinRadioButton;
-
-	private final MerkleHellman encryptor = new MerkleHellman();
+	private final MerkleHellman encryptor = new MerkleHellman(AlphabetConstants.FULL_KEYBOARD);
 	private int getBitLength() {
 		return Integer.parseInt(this.bitLengthInputTextField.getText());
 	}
@@ -40,18 +34,7 @@ public class MerkleHellmanController implements EncryptorForm, DecryptorForm {
 		return superIncreasingList;
 	}
 
-	private Alphabet getSelectedAlphabet() {
-		if (cyrillicRadioButton.isSelected())
-			return USED_CYRILLIC_ALPHABET;
-		else
-			return USED_LATIN_ALPHABET;
-	}
-
-	public static final Alphabet USED_CYRILLIC_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
-	public static final Alphabet USED_LATIN_ALPHABET = AlphabetConstants.LATIN_WITH_SPACE;
-
 	private boolean initializeCryptosystem() {
-		Alphabet alphabet = this.getSelectedAlphabet();
 		int bitLength = this.getBitLength();
 		List<Integer> superincreasingList = this.getSuperincreasingList();
 		try {
@@ -64,7 +47,6 @@ public class MerkleHellmanController implements EncryptorForm, DecryptorForm {
 			);
 			return false;
 		}
-		this.encryptor.setNewAlphabet(alphabet);
 		return true;
 	}
 
@@ -97,11 +79,11 @@ public class MerkleHellmanController implements EncryptorForm, DecryptorForm {
 			return;
 		String encryptedText = this.encryptor.encrypt(this.inputMessage.getText());
 		this.outputMessage.setText(encryptedText);
-		System.out.println("Public key: " + this.encryptor.getPublicKeyString());
-		System.out.println("Private key: " + this.encryptor.getPrivateKey());
 	}
 	@Override
 	public void decrypt() {
+		if (!this.initializeCryptosystem())
+			return;
 		String decryptedText = this.encryptor.decrypt(this.inputMessage.getText());
 		this.outputMessage.setText(decryptedText);
 	}

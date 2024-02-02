@@ -1,0 +1,1 @@
+"jdk/bin/java.exe" -jar UpdateHandler.jar %1 %2 %3

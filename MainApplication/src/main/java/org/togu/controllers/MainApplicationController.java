@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.AnchorPane;
+import org.togu.updates.UpdatesManager;
 
 import java.io.IOException;
 
@@ -186,5 +187,11 @@ public class MainApplicationController {
 
 	public void openCommunication() {
 		CommunicationController.open();
+	}
+	public void openAlphabetHelp() {
+		HelpController.open("Об используемых алфавитах", "AboutAlphabet.md");
+	}
+	public void checkForUpdates() {
+		UpdatesManager.forceCheckUpdate();
 	}
 }

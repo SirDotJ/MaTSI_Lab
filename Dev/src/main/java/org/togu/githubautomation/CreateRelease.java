@@ -10,7 +10,7 @@ public class CreateRelease {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateRelease.class);
 
 	public static void main(String[] args) {
-		CurrentRelease release = new CurrentRelease();
+		CurrentRelease release = new CurrentRelease(true);
 		ProjectRepository repository = new ProjectRepository();
 		Release newRelease;
 		try {
@@ -18,6 +18,8 @@ public class CreateRelease {
 			newRelease = repository.createRelease(release.postInfo, true);
 			LOGGER.info("Uploading release assets...");
 			repository.uploadReleaseAssets(release.assets, newRelease);
+			CurrentRelease finalRelease = new CurrentRelease(false);
+			repository.updateRelease(finalRelease.postInfo);
 		} catch (IOException e) {
 			LOGGER.error("Failed to create project release", e);
 			return;

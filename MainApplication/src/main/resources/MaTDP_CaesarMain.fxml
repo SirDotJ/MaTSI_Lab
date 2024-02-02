@@ -4,15 +4,12 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.togu.controllers.lab1.CaesarController">
    <children>
@@ -88,19 +85,6 @@
                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </padding>
             </TextArea>
-            <VBox alignment="CENTER" prefHeight="84.0" prefWidth="122.0">
-               <children>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-                  <RadioButton fx:id="cyrillicRadioButton" mnemonicParsing="false" selected="true" text="Кириллица">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="selectedAlphabet" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-                  <RadioButton fx:id="latinRadioButton" mnemonicParsing="false" text="Латиница" toggleGroup="$selectedAlphabet" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-               </children>
-            </VBox>
             <Separator prefHeight="7.0" prefWidth="129.0" visible="false" />
          </children>
       </HBox>

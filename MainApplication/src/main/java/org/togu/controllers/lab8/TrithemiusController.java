@@ -1,7 +1,6 @@
 package org.togu.controllers.lab8;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.togu.common.*;
@@ -27,12 +26,7 @@ public class TrithemiusController implements EncryptorForm, DecryptorForm {
 	@FXML
 	TextArea outputMessage;
 
-	@FXML
-	private RadioButton cyrillicRadioButton;
-	@FXML
-	private RadioButton latinRadioButton;
-
-	private final Trithemius encryptor = new Trithemius();
+	private final Trithemius encryptor = new Trithemius(AlphabetConstants.FULL_KEYBOARD);
 
 	private int getCoefficientA() {
 		return Integer.parseInt(this.coefficientA.getText());
@@ -44,20 +38,8 @@ public class TrithemiusController implements EncryptorForm, DecryptorForm {
 		return Integer.parseInt(this.coefficientC.getText());
 	}
 
-	private Alphabet getSelectedAlphabet() {
-		if (cyrillicRadioButton.isSelected())
-			return USED_CYRILLIC_ALPHABET;
-		else
-			return USED_LATIN_ALPHABET;
-	}
-
-	public static final Alphabet USED_CYRILLIC_ALPHABET = AlphabetConstants.CYRILLIC_WITH_SPACE;
-	public static final Alphabet USED_LATIN_ALPHABET = AlphabetConstants.LATIN_WITH_SPACE;
-
 	private boolean initializeCryptosystem() {
 		Alphabet previousAlphabet = this.encryptor.getAlphabet();
-		Alphabet alphabet = this.getSelectedAlphabet();
-		this.encryptor.setNewAlphabet(alphabet);
 
 		int coefficientA = this.getCoefficientA();
 		int coefficientB = this.getCoefficientB();
@@ -84,11 +66,11 @@ public class TrithemiusController implements EncryptorForm, DecryptorForm {
 	}
 
 	public void generateFunction() {
-		int coefficientValueRange = 100;
+		int coefficientValueRange = 1000;
 		List<Integer> coefficients;
 		do {
 			coefficients = FunctionMath.randomCoefficients(3, coefficientValueRange);
-		} while (!FunctionMath.checkCoefficientValidityForTrithemius(this.getSelectedAlphabet(), coefficients));
+		} while (!FunctionMath.checkCoefficientValidityForTrithemius(AlphabetConstants.FULL_KEYBOARD, coefficients));
 		this.coefficientA.setText(String.valueOf(coefficients.get(0)));
 		this.coefficientB.setText(String.valueOf(coefficients.get(1)));
 		this.coefficientC.setText(String.valueOf(coefficients.get(2)));
@@ -102,7 +84,7 @@ public class TrithemiusController implements EncryptorForm, DecryptorForm {
 		coefficients.add(this.getCoefficientB());
 		coefficients.add(this.getCoefficientC());
 
-		if (!FunctionMath.checkCoefficientValidityForTrithemius(this.getSelectedAlphabet(), coefficients))
+		if (!FunctionMath.checkCoefficientValidityForTrithemius(AlphabetConstants.FULL_KEYBOARD, coefficients))
 			this.functionOutput.setText("Шифрация по функции не однозначна!");
 		else
 			this.functionOutput.setText( // Ниже просто парсинг в функцию вида Ap^2 + Bp + C с учётом знаков и нулевых коэффициентов
